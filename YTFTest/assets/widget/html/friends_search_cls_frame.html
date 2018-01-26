@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>登录</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="bgf8">
+		<ul class="bgff">
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="" checked="checked" class="select-sex mr20 db">
+					<span>不限</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="白羊座" class="select-sex mr20 db">
+					<span>白羊座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="金牛座" class="select-sex mr20 db">
+					<span>金牛座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="双子座" class="select-sex mr20 db">
+					<span>双子座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="巨蟹座" class="select-sex mr20 db">
+					<span>巨蟹座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="狮子座" class="select-sex mr20 db">
+					<span>狮子座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="处女座" class="select-sex mr20 db">
+					<span>处女座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="天秤座" class="select-sex mr20 db">
+					<span>天秤座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="摩羯座" class="select-sex mr20 db">
+					<span>摩羯座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="射手座" class="select-sex mr20 db">
+					<span>射手座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="水瓶座" class="select-sex mr20 db">
+					<span>水瓶座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="双鱼座" class="select-sex mr20 db">
+					<span>双鱼座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="cls" value="天蝎座" class="select-sex mr20 db">
+					<span>天蝎座</span> </label>
+			</li>
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			$("input[name='cls']").each(function() {
+				if ($(this).val() == YTF.htmlParam.star) {
+					$(this).prop("checked", true);
+				}
+			});
+		};
+
+		function setCls() {
+			YTF.eventSend({
+				eventName : 'select_option',
+				attr : {
+					type : 'cls',
+					title : $("input[name='cls']:checked").next("span").html(),
+					value : $("input[name='cls']:checked").val()
+				}
+			}, function(ret, err) {
+				if (ret) {
+					YTF.winClose();
+				}
+			});
+		};
+	</script>
+</html>

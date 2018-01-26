@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>笔遇</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+<link rel="stylesheet" href="../css/chart.css" />
+</head>
+<style type="text/css">
+body, html {
+	width: 100%;
+	height: 100%;
+	background: inherit;
+}
+.hidden {
+	display: none;
+}
+.list img {
+	width:1.2rem;
+	vertical-align:middle;
+}
+</style>
+<script id="dataTmpl" type="text/x-dot-template">
+  <div class="clh-item bgff bt bb mb30"  id="item{{=it.id}}" data-id="{{=it.id}}" data-uid="{{=it.user_uid}}">
+    <div class="cit p30 yt">
+      <div class="img-wrap user-photo user-photo-s round mr30" style="background-image: url({{=(it.face)?photoUrl + it.face:'../images/bg-img-avatar.png'}});"> </div>
+      <div class="yt-f1">
+        <div class="lh1">
+          <h3 class="list-title dib yt-te max-w400-hmc">{{=it.biname}}</h3>
+          <span class="ml10 dib bg-sex bg-sex-w fz24 cff"> <i class="icon {{=setSex(it.sex)}} mr10"></i>{{=it.nage}}</span> </div>
+        <div class="mt20 lh1 yt yt-ac">
+          <div class="ci-tags fz20 cff">  {{=setCategory(it.category)}}  </div>
+          <div class="yt-f1 tx-r fz24 c99"> <span>{{=it.distance}}米以内</span> <span class="plr20">|</span> <span>{{=getDateDiff(it.time)}}</span> </div>
+        </div>
+        <div class="mt20 fz28 c66 lh16 wb-ba-hmc">
+          <p class="lh16 fz26"> {{=it.content}} </p>
+          <ul class="ci-imgs-list clear mt20">{{=imgList(it.img)}}</ul>
+        </div>
+      </div>
+    </div>
+    <div class="cib yt yt-ac ptb15-hmc bt">
+      <div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br share-tap"> <i class="icon-hi icon-share-hmc mr10"></i>
+        <div class="fz28 c99"> (<span id="share{{=it.id}}">{{=setNumber(it.share_num)}}</span>) </div>
+      </div>
+      <div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br zan-tap"> <i class="icon-hi icon-zan-hmc mr10"></i>
+        <div class="fz28 c99"> (<span id="zan{{=it.id}}">{{=setNumber(it.praise_num)}}</span>) </div>
+      </div>
+      <div class="yt-f1 yt yt-ac yt-pc ptb15-hmc comment-tap"> <i class="icon-hi icon-comment-hmc mr10"></i>
+        <div class="fz28 c99"> (<span id="comment{{=it.id}}">{{=setNumber(it.comment_num)}}</span>) </div>
+      </div>
+    </div>
+  </div>
+</script>
+<script id="listTmpl" type="text/x-dot-template">
+{{ for(var i= 0; i < it.length; i ++){ }}
+  <li class="yt">
+    <div class="user-photo user-photo-s round mr20" style="background-image: url({{=(it[i].face)?photoUrl + it[i].face:'../images/bg-img-avatar.png'}});"> </div>
+    <div class="yt-f1">
+      <div class="yt yt-ac lh1">
+        <h3 class="list-title yt-f1 yt-te">{{=it[i].biname}}</h3>
+        <div class="fz24 c99"> {{=it[i].time}} </div>
+      </div>
+      <div class="fz28 c66 lh16 mt10 wb-ba-hmc"> {{=it[i].content}} </div>
+    </div>
+  </li>
+  {{ } }}
+</script>
+<body class="yt yt-ver" style="overflow:hidden;">
+<div class="yt-f1" style="overflow:auto;">
+    <div class="card-list-hmc mt30">
+    
+    </div>
+    <div class="list" style="height:auto;">
+
+    </div>
+</div>
+<footer class="ptb20 plr20 bgff bt mt20 yt yt-ver" id="footer" style="height:auto; position:relative; bottom:0;">
+<div class="yt yt-ac chat-toolbar" style="background-color:#FFF; height:auto;">
+  <div class="bgf5 bdrds6-hmc yt-f1 yt yt-ac ptb10">
+	<div contentEditable="true" class="plr20 input-text chat-text yt-f1" id="chatText" style="line-height:1.2rem;"></div>
+    <div class="bl plr20" id="openEmoj"> <i class="icon-hi icon-emoji-hmc"></i> </div>
+  </div>
+  <div class="ml20 p20 fz24 c66 bgf5 bdrds6-hmc" style="line-height:1.2rem;" id="okComment"> 发送 </div>
+</div>
+<div class="expression-wrap pt10" style="width:100%; clear:both;"></div>
+</footer>
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../script/doT.min.js" type="text/javascript"></script>
+<script src="../script/expression.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+page = 1;
+pageSize = 15;
+isPage = false;
+var _obj = $ytf.chatExpression({
+	expressionFile: "../images/emoj/",    //表情目录
+	chatText: "#chatText",                //输入框
+	expressionMain: ".expression-wrap"    //表情显示盒子
+ });
+ytfready = function(){
+	data = YTF.getHtmlParam();
+	var dataList = doT.template($("#dataTmpl").text());
+		$(".card-list-hmc").html(dataList(data));
+		
+	YTF.eventListenerAdd({
+		eventName: 'scrollToBottom',
+		attr:{
+				scrollToBottomHeight: 10　
+				}　
+	},function(ret,err){　
+		if (ret){
+			if(isPage){
+				page++;
+				getData(0);
+				}
+		}
+	});
+	getData(0);
+}
+
+function getData(f){
+	showProgress("数据获取中...");
+	YTF.ajax({　
+			url: serverUrl + 'app/comment/list?id='+data.id+'&page='+page+'&pageSize='+pageSize,
+			methodType:'get',
+			isReport:false,
+			headers:{
+			   logtoken:userToken
+			}
+	},function(ret, err){
+		YTF.hideProgress();
+		if(ret){
+			if(f){
+				$(".list").html("");
+				}
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else if(ret.status == 1){
+				if(ret.data.data.length > pageSize){
+					isPage == true;
+					};
+					var dataList = doT.template($("#listTmpl").text());
+						$(".list").append(dataList(ret.data.data));
+			}else{
+				YTF.toast({
+							msg:ret["msg"],
+							duration:2000,
+							global:false,
+						});
+				}
+		}else{
+			YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+		}
+	})
+}
+
+function addComment(){
+	var content = $(".chat-text").html();
+	showProgress("数据提交中...");
+	YTF.ajax({
+		url: serverUrl + 'app/comment/add',
+		methodType: 'post',
+		isReport:false,
+		headers:{
+		   logtoken:userToken
+		},
+		data:{
+			values:{
+				'id':data.id,
+				'content':content
+				}
+			}
+	},function(ret, err){
+		YTF.hideProgress();
+		if (ret) {
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else if(ret.status == 1){
+				$("#comment"+data.id).html(parseInt($("#comment"+data.id).html())+1);
+				YTF.toast({
+							msg:ret["data"].integral_msg,
+							duration:2000,
+							global:false,
+						});
+				getData(1);
+				$(".chat-text").html("");
+				}else{
+				YTF.toast({
+							msg:ret["msg"],
+							duration:2000,
+							global:false,
+						});
+					}
+			console.log(JSON.stringify(ret));
+		} else {
+			YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+		}
+	})
+}
+
+//发布评论
+$("#okComment").bind("tap",function(){
+	var content = $(".chat-text").html();
+	if(!content){
+		YTF.toast({
+					msg:"发布评论不能为空！",
+					duration:2000,
+					global:false,
+				});
+		}
+	addComment();
+	})
+
+//打开分享界面
+$(".card-list-hmc").delegate(".share-tap","tap",function(){
+		$(this).addClass("active").siblings().removeClass("active");
+		YTF.winOpen({
+					winName : "share",
+					htmlUrl : "./share.html",
+					htmlParam : {
+							id : data.id,
+							wind : "comment"
+						}
+					});
+	})
+//点赞
+$(".card-list-hmc").delegate(".zan-tap","tap",function(){
+		$(this).addClass("active").siblings().removeClass("active");
+		var id = $(this).closest("div .clh-item").attr("data-id");
+			addPraise(id);
+		
+	})
+	
+$(".card-list-hmc").delegate("img","tap",function(){
+	var imgArr = [];
+	$(this).closest(".ci-imgs-list").children("li").each(function(index, element) {
+        imgArr.push($(this).children("img").attr("src"));
+    });
+	console.log(imgArr.join(","));
+	if($(this).attr("data-type") == "show"){
+			var ImageBrowser = YTF.require("ImageBrowser");
+			ImageBrowser.imageBrowser({
+				images: imgArr
+			}, function(ret, err) {
+				//alert(ret)
+			});
+		}
+	})
+//打开表情面板
+$("#openEmoj").bind("tap",function(){
+        _obj.toggle(function(e){
+            console.log(e)
+        })
+	})
+	
+//打开用户主页
+$(".card-list-hmc").delegate(".user-photo,.list-title","tap",function(){
+	var uid = $(this).closest(".clh-item").attr("data-uid");
+	YTF.winOpen({
+				winName : "users_info_win",
+				htmlUrl : "./users_info_win.html",
+				htmlParam : {
+						type : 0,
+						uid : uid
+					}
+				});
+	})
+function setSex(i){
+	switch(i){
+		case '0':
+			return "";
+		break;
+		case '1':
+			return "icon-sex-m";
+		break;
+		case '2':
+			return "icon-sex-w";
+		break;
+		}
+	}
+	
+function setCategory(i){
+	switch(i){
+		case "1":
+			return "公开信";
+		break;
+		case "2":
+			return "征友";
+		break;
+		case "3":
+			return "分享";
+		break;
+		}
+	}
+	
+function imgList(j){
+	var temp = '';
+	for(var i = 0; i<j.length; i++){
+		temp += '<li class="img-wrap"><img src="'+photoUrl + j[i] +'" data-type="show"/></li>';
+		}
+	return temp;
+	}
+function setNumber(n){
+	if(n){
+		if(parseInt(n) > 999){
+			return n+'+';
+			}
+		return n;
+		}
+	}
+//点赞提交
+function addPraise(id){
+	showProgress("数据提交中...");
+	YTF.ajax({　
+			url: serverUrl + 'app/dynamic/Praise',
+			methodType:'post',
+			isReport:false,
+			headers:{
+			   logtoken:userToken
+			},
+			data:{
+				values:{
+					'id':id
+					}
+				}
+	},function(ret, err){
+		YTF.hideProgress();
+		if(ret){
+			console.log(JSON.stringify(ret));
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else if(ret.status == 1){
+				var number = $("#zan"+id).html();
+				if(ret.msg == "点赞成功"){
+					$("#zan"+id).html((parseInt(number)+1));
+					}else{
+						$("#zan"+id).html((parseInt(number)-1));
+						}
+				}
+			YTF.toast({
+						msg:ret["msg"],
+						duration:2000,
+						global:false,
+					});
+		}else{
+			YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+		}
+	})
+}
+</script>
+</html>

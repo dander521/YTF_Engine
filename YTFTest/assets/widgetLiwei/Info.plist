@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>UIApplicationShortcutItems</key>
+        <array>
+            <dict>
+                <key>UIApplicationShortcutItemType</key>
+                <string>com.yuantuan.YTF.add</string>
+                <key>UIApplicationShortcutItemTitle</key>
+                <string>Add</string>
+                <key>UIApplicationShortcutItemSubtitle</key>
+                <string></string>
+                <key>UIApplicationShortcutItemIconFile</key>
+                <string>assets/widget/images/home</string>
+                <key>UIApplicationShortcutItemUserInfo</key>
+                <dict>
+                    <key>key1</key>
+                    <string>value1</string>
+                </dict>
+            </dict>
+            <dict>
+                <key>UIApplicationShortcutItemType</key>
+                <string>com.yuantuan.YTF.done</string>
+                <key>UIApplicationShortcutItemTitle</key>
+                <string>Done</string>
+                <key>UIApplicationShortcutItemIconType</key>
+                <string>UIApplicationShortcutIconTypeCompose</string>
+                <key>UIApplicationShortcutItemUserInfo</key>
+                <dict>
+                    <key>key2</key>
+                    <string>value2</string>
+                </dict>
+            </dict>
+        </array>
+    </dict>
+</plist>

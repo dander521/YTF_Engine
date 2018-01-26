@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>猿团新闻</title>
+		<link rel="stylesheet" href="../../css/ytui.css" />
+		<link rel="stylesheet" href="../../css/common.css" />
+
+	</head>
+
+	<body class="">
+		<div id="wrap">
+			<!--header部分开始-->
+			<div id="header">
+				<header class="header-bar bg-main">
+					<div class="header-left " ontouchstart="closeWin()">
+						<i class="icon icon-pre"></i>
+					</div>
+					<h2 id="title" class="header-title">窗口组
+		        </h2>
+					<div class="header-right">
+					</div>
+				</header>
+
+			</div>
+			<!--header部分结束-->
+			<!--main部分开始-->
+			<div id="main">
+
+			</div>
+			<nav id="nav" class="nav">
+				<div class="nav-item frameGroup0 active " onclick="changeMainTab(0)">
+					<i class="icon icon-home fz42 db"></i>
+					<span class="fz24 db">frame0</span>
+				</div>
+				<div class="nav-item frameGroup1 " onclick="changeMainTab(1)">
+					<i class="icon icon-home fz42 db"></i>
+					<span class="fz24 db">frame1</span>
+				</div>
+				<div class="nav-item frameGroup2 " onclick="changeMainTab(2)">
+					<i class="icon icon-home fz42 db"></i>
+					<span class="fz24 db">frame2</span>
+				</div>
+				<div class="nav-item frameGroup3 " onclick="changeMainTab(3)">
+					<i class="icon icon-home fz42 db"></i>
+					<span class="fz24 db">frame3</span>
+				</div>
+			</nav>
+		</div>
+
+	</body>
+	<script src="../../script/zepto.js"></script>
+	<script src="../../script/common.js"></script>
+	<script>
+								var frameGroup = new Array("frameGroup0", "frameGroup1", "frameGroup2", "frameGroup3");
+		ytfready = function() {
+			openFrameGroup();
+		}
+		function openFrameGroup() {
+			var width = YTF.windowWidth;
+			var windowHeight = YTF.windowHeight;
+			var navEl = $('#nav');
+			var headerEl = $('#header');
+			var y = headerEl.height();
+			var height = windowHeight - navEl.height() - headerEl.height();
+
+			var frames = [];
+			for(var i in frameGroup) {
+				var frameObj = {
+					frameName: frameGroup[i],
+					htmlUrl: filePath + '' + frameGroup[i] + '.html',
+					isBounces:true,
+					background:"#00ff00",
+					isVScrollBar:true,
+					isJScrollBar:false, 
+					isScale:true,         
+					isEdit:false,    
+					softInputMode:"auto",  
+				}
+				frames.push(frameObj);
+			}
+			YTF.frameGroupOpen({
+				frameGroupName: "frameGroupType",
+				isScroll: true,
+				isVScrollBar: false,
+				isLoop: true,
+				// isEdit:true,
+				xywh: {
+					x: 0,
+					y: y,
+					w: width,
+					h: height,
+					marginLeft: 0,
+					marginTop: 0,
+					marginBottom: 0,
+					marginRight: 0
+				},
+				index: 0,
+				frames: frames
+			}, function(ret, err) {
+				var type = "frameGroup" + ret.index;
+				setFrameGroupStatus(type);
+			});
+		}
+
+		//切换首页header状态
+		function setFrameGroupStatus(type) {
+			if(type == null) {
+				return;
+			}
+			$("#nav .active").removeClass('active');
+			$("#nav ." + type).addClass('active');
+		}
+
+		/**
+		 * 切换frame，index为下标
+		 */
+		function changeMainTab(index) {
+			YTF.frameGroupSetIndex({
+				index: index
+			});
+		}
+
+		/**
+
+		 */
+		function closeWin() {
+			YTF.winClose();
+		}
+	</script>
+
+</html>

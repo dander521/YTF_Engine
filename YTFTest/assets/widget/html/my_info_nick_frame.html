@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>笔名</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="bgf8">
+		<div class="dx-psw bgff bb">
+			<input type="text" id="nickName" class="input-text bgn bn dx-input" placeholder="给自己起个笔名吧！">
+		</div>
+		<p class="fz28 c99 p30">
+			一个好听的笔名能增加自己的魅力哦！2至4个字为佳，最多不超过6个字
+		</p>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var nickName = "";
+		ytfready = function() {
+			nickName = YTF.htmlParam.biname;
+			$("#nickName").val(nickName);
+		}
+		/**
+		 *确定
+		 */
+		function submitInfo() {
+			nickName = $("#nickName").val();
+			if (checkIsEmpty(nickName)) {
+				YTF.toast({
+					msg : '请输入笔名'
+				});
+			} else if (nickName.length > 6) {
+				YTF.toast({
+					msg : '格式有误！'
+				});
+			} else {
+				YTF.eventSend({
+					eventName : 'biname_edit',
+					attr : {
+						biname : nickName
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			}
+		};
+	</script>
+</html>

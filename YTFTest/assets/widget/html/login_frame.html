@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>登录</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<ul class="plr30 lgrlist mt30">
+			<li class="yt bb yt-ac">
+				<i class="dx-icon-phone"></i>
+				<div class="yt-f1">
+					<input name="phone" type="text" class="input-text bgn bn" id="phone" placeholder="手机号/用户名">
+				</div>
+			</li>
+			<li class="yt bb yt-ac">
+				<i class="dx-icon-lock"></i>
+				<div class="yt-f1">
+					<input name="password" type="password" class="input-text bgn bn" id="password" placeholder="输入至少8位密码">
+				</div>
+			</li>
+		</ul>
+		<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36" id="goto_login">
+			登录
+		</div>
+		<div class="clear c66 fz28 p30">
+			<div class="fl">
+				忘记密码
+			</div>
+			<div class="fr register">
+				注册
+			</div>
+		</div>
+		<!--第三方登陆-->
+		<div class="mt40 ml20 mr20">
+			<div class="yt yt-ac">
+				<div class="yt-f1 bt"></div>
+				<div class="fz28 c66 plr30 pb10">
+					使用第三方软件登录
+				</div>
+				<div class="yt-f1 bt"></div>
+			</div>
+			<div class="yt yt-ac yt-pc tx-c m30 sns-login">
+				<div class="yt-f1 yt yt-ac yt-pc yt-ver" id="wx">
+					<i class="icon-hi icon-sns-wechat-hmc"></i>
+					<p>
+						微信
+					</p>
+				</div>
+				<div class="yt-f1 yt yt-ac yt-pc yt-ver" id="QQ">
+					<i class="icon-hi icon-sns-qq-hmc"></i>
+					<p>
+						QQ
+					</p>
+				</div>
+				<div class="yt-f1 yt yt-ac yt-pc yt-ver" id="wb">
+					<i class="icon-hi icon-sns-weibo-hmc"></i>
+					<p>
+						微博
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			//alert("----登录页----"+userToken);
+		}
+
+		$("#goto_login").bind("tap", function() {
+			var phone = $("#phone").val();
+			var password = $("#password").val();
+			if (checkIsEmpty(phone)) {
+				YTF.toast({
+					msg : '请输入手机号！'
+				});
+			} else if (!checkPhone(phone)) {
+				YTF.toast({
+					msg : '手机号格式有误！'
+				});
+			} else if (checkIsEmpty(password)) {
+				YTF.toast({
+					msg : '请输入密码！'
+				});
+			} else {
+				showProgress("登录中...")
+				YTF.ajax({
+					url : serverUrl + 'app/login/login',
+					methodType : 'post',
+					isReport : false,
+					data : {
+						values : {
+							'phone' : phone,
+							'password' : password
+						}
+					}
+				}, function(ret, err) {
+					YTF.hideProgress();
+					if (ret) {
+						switch(ret.status) {
+						case 1:
+							localStorage.setItem("logtoken", ret["data"]["logtoken"]);
+							localStorage.setItem("userInfo", JSON.stringify(ret["data"]));
+							YTF.winOpen({
+								winName : 'index_main',
+								htmlUrl : 'index.html'
+							});
+							window.setTimeout(function() {
+								YTF.winClose({
+									winName : 'login_win'
+								});
+							}, 2000);
+							break;
+						default:
+							YTF.toast({
+								msg : ret.msg
+							});
+						}
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				})
+			}
+		});
+
+		/**
+		 *注册
+		 */
+		$(".register").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'register_win',
+				htmlUrl : './register_win.html'
+			});
+		});
+		/**
+		 *微信登录
+		 */
+		$("#wx").bind("tap", function() {
+			var weixin = YTF.require("weixin");
+			if (weixin.isInstalled() == 1) {
+				weixin.auth(function(ret, err) {
+					if (ret) {
+						switch(ret.status) {
+						case 0:
+							var tcode = ret.code;
+							weixin.getToken({
+								code : tcode
+							}, function(ret, err) {
+								if (ret) {
+									//alert("-----555---" + ret.openid);
+									thirdLogin(ret.openid, "weixin");
+								} else {
+									YTF.toast({
+										msg : err.msg
+									});
+								}
+							});
+							break;
+						}
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			} else {
+				YTF.toast({
+					msg : '请先安装微信客户端！'
+				});
+			}
+		});
+		/**
+		 *QQ登录
+		 */
+		$("#QQ").bind("tap", function() {
+			var qq = YTF.require("qq");
+			if (qq.isInstalled() == 1) {
+				qq.login(function(ret, err) {
+					if (ret) {
+						//alert("-----555---" + ret.openid);
+						thirdLogin(ret.openid, "qq");
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			} else {
+				YTF.toast({
+					msg : '请先安装QQ客户端！'
+				});
+			}
+		});
+
+		/**
+		 *微博登录
+		 */
+		$("#wb").bind("tap", function() {
+			var weibo = YTF.require("weibo");
+			if (weibo.isInstalled() == 1) {
+				weibo.auth(function(ret, err) {
+					if (ret) {
+						switch(ret.status) {
+						case 0:
+							alert("-----555---" + ret.uid);
+							thirdLogin(ret.uid, "weibo");
+							break;
+						default:
+							YTF.toast({
+								msg : ret.code
+							});
+						}
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			} else {
+				YTF.toast({
+					msg : '请先安装微博客户端！'
+				});
+			}
+		});
+		/**
+		 *第三方登录
+		 */
+		function thirdLogin(token, type) {
+			showProgress("登录中...")
+			YTF.ajax({
+				url : serverUrl + 'app/login/third-login',
+				methodType : 'post',
+				isReport : false,
+				data : {
+					values : {
+						type : type,
+						token : token
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				if (ret) {
+					switch(ret.status) {
+					case 1:
+						//alert("---QQ登录成功--"+ret["data"]["logtoken"]);
+						localStorage.setItem("logtoken", ret["data"]["logtoken"]);
+						localStorage.setItem("userInfo", JSON.stringify(ret["data"]));
+						switch(ret.data.user_type) {
+						case "new":
+							YTF.winOpen({
+								winName : 'register_personal_info_win',
+								htmlUrl : './register_personal_info_win.html'
+							});
+							break;
+						case "old":
+							YTF.winOpen({
+								winName : 'index_main',
+								htmlUrl : './index.html'
+							});
+							break;
+						};
+						window.setTimeout(function() {
+							YTF.winClose({
+								winName : 'login_win'
+							});
+						}, 2000);
+						break;
+					default:
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			})
+		};
+
+	</script>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openDataBaseSync('dbName','fs://111/name.db')">DB：openDataBase</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="executeSqlSync(sqlCreantTable)">DB：创建表</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="executeSqlSync(sqlInsert3)">DB：插入一条数据长度为3</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="selectSqlSync(sqlSelect3)">DB：查询刚才插入的长度为3的内容</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="selectSqlSync(sqlSelectAll)">DB：查询刚才device表的所有数据</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="executeSqlSync(sqlUpdate)">DB：将222的数据部分更改为4位</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="selectSqlSync(sqlSelectAll)">DB：查询刚才device表的所有数据</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="executeSqlSync(sqlInsert4)">DB：插入一条新数据长度为4</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="selectSqlSync(sqlSelectAll)">DB：查询刚才device表的所有数据</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="executeSqlSync(sqlDelect)">DB：删除222</div>
+			</div>
+            <div class="mt30 ajaxdiv">
+                <div class="btn bg-main mr20" onclick="selectSqlSync(sqlSelectAll)">DB：查询刚才device表的所有数据</div>
+            </div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeDataBaseSync()">DB：关闭数据库</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="selectSqlSync(sqlSelectAll)">DB：查询刚才device表的所有数据</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script>
+	var DBTest;
+	//插入长度为3的数据到device表
+	var sqlInsert3 = 'INSERT INTO device (mac,did,ip,passCode,isConnected,isOnline,isLAN,isDisabled) VALUES ("111","222","333","444","555","666","777","888")';
+	//插入长度为4的数据到device表
+	var sqlInsert4 = 'INSERT INTO device (mac,did,ip,passCode,isConnected,isOnline,isLAN,isDisabled) VALUES ("1111","2222","3333","4444","5555","6666","7777","8888")';
+	//查询did长度为3的222的数据
+	var sqlSelect3 = 'SELECT * FROM device WHERE did="222"';
+	//查询所有device的数据
+	var sqlSelectAll = 'SELECT * FROM device';
+	//将222的数据部分更改为4位
+	var sqlUpdate = 'UPDATE device SET  ip="3333",isConnected="5555",isOnline="6666",isLAN="7777",isDisabled="8888" WHERE did ="222"';
+
+	var sqlDelect = 'DELETE FROM  device  WHERE did="222"';
+	
+	var sqlCreantTable = 'CREATE TABLE IF NOT EXISTS device(did VARCHAR(20) PRIMARY KEY NOT NULL, mac VARCHAR(20),ip VARCHAR(20),passCode VARCHAR(20),isConnected VARCHAR(20),isOnline VARCHAR(20),isLAN VARCHAR(20),isDisabled VARCHAR(20));';
+
+	ytfready = function(){
+		DBTest= YTF.require("DB");
+	}
+	
+
+	function openDataBaseSync(name,path){
+		var retData = DBTest.openDataBaseSync({
+			name:name,
+			path:path
+		});
+		alert(JSON.stringify(retData));
+	}
+	
+	function closeDataBaseSync(){
+		var retData = DBTest.closeDataBaseSync();
+		alert(JSON.stringify(retData));
+	}
+	
+	function transactionSync(operation){
+		var retData = DBTest.transactionSync({
+			operation:operation
+		});
+		alert(JSON.stringify(retData));
+	}
+	
+	function executeSqlSync(sql){
+		var retData = DBTest.executeSqlSync({
+			sql:sql
+		});
+		alert(JSON.stringify(retData));
+	}
+	
+	function selectSqlSync(sql){
+		var retData = DBTest.selectSqlSync({
+			sql:sql
+		});
+		alert(JSON.stringify(retData));
+	}
+</script>
+</html>

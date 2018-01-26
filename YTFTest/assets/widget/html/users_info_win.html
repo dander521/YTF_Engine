@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>登录</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body class="bgf8">
+<header class="header-bar bg-main" id="header">
+  <div class="header-left"> <i class="icon icon-pre"></i> </div>
+  <h2 class="header-title">TA的资料</h2>
+  <div class="header-right fz32 mail-input" style="display:none;"> 删除TA </div>
+</header>
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+ytfready = function(){
+	uid = YTF.htmlParam.uid;
+	type = YTF.htmlParam.type;
+	var typeArr = [1,2,3];
+	if(typeArr.indexOf(type) != -1){
+		$(".header-right").show();
+		}
+	statusBarFix(document.getElementById("header"));
+	var w = YTF.windowWidth;
+	var windowHeight = YTF.windowHeight;
+	var headerEl = $('header');
+	var y = headerEl.height();
+	var h = windowHeight - y;
+	openFrame("users_info_frame", "./users_info_frame.html", 0, y, w, h);
+	$(".header-left").bind("tap", function() {
+		YTF.winClose();
+	});
+}
+
+$(".header-right").bind("tap",function(){
+	delPeople();
+});
+
+function delPeople(){
+    YTF.ajax({
+        url: serverUrl + 'app/friends/del',
+        methodType: 'post',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+				'type': type,
+                'toid': uid
+            }
+        }
+    },
+    function(ret,err){
+		if(ret.status == 1){
+			window.setTimeout(function(){
+				switch(type){
+					case 0:
+						openLoginWin("login_win","./login_win.html");
+						break;
+					case 1:
+						YTF.excJs({
+						  winName : "index_main",
+						  frameGroupName : "indexGroup",
+						  index : 1,
+						  script : "biyouList(1)"
+						});
+						break;
+					case 2:
+						YTF.excJs({
+						  winName : "index_main",
+						  frameGroupName : "indexGroup",
+						  index : 1,
+						  script : "shurenList(1)"
+						});
+						break;
+					}
+					YTF.winClose();
+				},1000);
+			}
+		YTF.toast({
+				msg:ret.msg,
+				duration:2000,
+				global:false,
+			});
+		});
+}
+</script>
+</html>

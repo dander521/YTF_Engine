@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<!-- <meta name="viewport" content="width=640,minimum-scale=0.5,maximum-scale=1.0,user-scalable=no, initial-scale=1.0" /> -->
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openframe2()">打开子窗口2</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="YTF.frameClose()">关闭当前子窗口</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeAndOpenWin2()">关闭当前窗口，并打开窗口2</div>
+			</div>
+            <div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setFrameXYWH()">设置Frame窗口属性功能：改变frame的坐标与位置</div>
+			</div>
+            <div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setFrameIsBounces()">设置Frame窗口属性功能：设置frame可以弹动</div>
+			</div>
+            <div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setFrameNotBounces()">设置Frame窗口属性功能：设置frame禁止弹动</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	
+	ytfready = function(){
+		
+	}
+	/**
+	 * 打开子窗口2
+	 */
+	function openframe2(){
+		var type = "newFrameAct2";
+		var frameUrl = filePath +"newFrameAct2.html";
+		var frameName = "子窗口2";
+		YTF.excJs({
+            winName:"newFrameActWin",
+            script:"openFrame('"+type+"','"+frameUrl+"','"+frameName+"');"
+	   });
+	}
+    
+	
+    function closeAndOpenWin2(){
+        openframe2();
+        YTF.frameClose();
+    }
+    //设置窗口坐标与位置
+    function setFrameXYWH(){
+        YTF.frameSetAttr(
+        {
+            xywh: {
+                x: 50,
+                y: 50,
+                w: 200,
+                h: 200
+            },
+        });
+    }
+    //设置禁止弹动
+    function setFrameNotBounces(){
+        YTF.frameSetAttr(
+        {
+            isBounces: false
+        });
+    }
+    
+    //设置弹动
+    function setFrameIsBounces(){
+        YTF.frameSetAttr(
+        {
+            isBounces: true
+        });
+    }
+    
+</script>
+</html>

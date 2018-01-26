@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+	<link rel="stylesheet" href="../../css/ytui.css" />
+	<style type="text/css">
+		.inputAjaxUrl{
+			width: 90%;
+			/*height: 30px;*/
+			font-size: 18px;
+			line-height: 25px;
+			padding: 5px;
+			/*margin-left: 20px;*/
+			border:1px solid #ccc;
+		}
+		.ajaxUrlDiv{
+			text-align:center;
+		}
+		#wrap{
+			padding: 10px 10px;
+		}
+		.ajaxButton{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+		.centerMy{
+			text-align:center;
+		}
+		.border_radius{
+			border-radius:70px;
+		}
+		.size40{
+			width: 140px;
+			height: 140px;
+		}
+	</style>
+	
+</head>
+<body style="background: #FFFFFF;">
+	<div id="wrap">
+		<div class="img-user centerMy">
+			<img id="imgUpload" class="border_radius size40" src="../../images/ic_launcher.png"  />
+		</div>
+		<div class="mt30 ajaxButton">
+			<div class="btn bg-main mr20"  onclick="uploadImg()">上传头像</div>
+		</div>
+	</div>
+</body>
+<script src="../../script/common.js"></script>
+<script src="../../script/zepto.js"></script>
+<script src="../../script/ajax.js"></script>
+<script>
+	
+	ytfready=function(){
+		
+	}
+	function uploadImg(){
+		media_album();
+	}
+	
+	
+	
+</script>
+</html>

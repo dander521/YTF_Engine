@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>笔友</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+<style type="text/css">
+body, html {
+	width: 100%;
+	height: 100%;
+	background: inherit;
+}
+.hidden {
+	display: none;
+}
+</style>
+<script id="biyouTmpl" type="text/x-dot-template">
+{{ for(var i= 0; i < it.length; i ++){ }}
+  <li class="yt yt-ac" data-uid="{{=it[i].from_uid}}">
+    <div class="img-wrap user-photo user-photo-s mr20" style="background-image: url({{=(it[i].fface)?photoUrl + it[i].fface:'../images/bg-img-avatar.png'}});"></div>
+    <h3 class="list-title yt-f1 yt-te">{{=it[i].fname}}</h3>
+  </li>
+  {{ } }}
+</script>
+<script id="shurenTmpl" type="text/x-dot-template">
+{{ for(var i= 0; i < it.length; i ++){ }}
+  <li class="yt yt-ac" data-uid="{{=it[i].from_uid}}">
+    <div class="img-wrap user-photo user-photo-s mr20" style="background-image: url({{=(it[i].fface)?photoUrl + it[i].fface:'../images/bg-img-avatar.png'}});"></div>
+    <h3 class="list-title yt-f1 yt-te">{{=it[i].fname}}</h3>
+  </li>
+  {{ } }}
+</script>
+<script id="guanzhuTmpl" type="text/x-dot-template">
+{{ for(var i= 0; i < it.length; i ++){ }}
+  <li class="yt yt-ac" data-uid="{{=it[i].from_uid}}">
+    <div class="img-wrap user-photo user-photo-s mr20" style="background-image: url({{=(it[i].face)?photoUrl + it[i].face:'../images/bg-img-avatar.png'}});"></div>
+    <h3 class="list-title yt-f1 yt-te">{{=it[i].biname}}</h3>
+  </li>
+  {{ } }}
+</script>
+<script id="shenqingTmpl" type="text/x-dot-template">
+{{ for(var i= 0; i < it.length; i ++){ }}
+{{if(it[i].status == 0){ }}
+  <li class="bt bgff yt p30 mb30" data-type="{{=it[i].type}}" data-id="{{=it[i].id}}">
+    <div class="img-wrap user-photo user-photo-s mr20"  data-type="{{=it[i].type}}" data-uid="{{=it[i].from_uid}}" style="background-image: url({{=(it[i].fface)?photoUrl + it[i].fface:'../images/bg-img-avatar.png'}});"></div>
+    <div class="yt-f1 yt-te">
+      <h3 class="fz28 c33 yt-te yt yt-ac"><span class="dib yt-te userName"  data-type="{{=it[i].type}}" data-uid="{{=it[i].from_uid}}">{{=it[i].fname}}</span>申请加您为<span class="color-orange">{{=friendType(it[i].type)}}</span></h3>
+      <p class="fz28 c66 yt-te yt yt-ac mt10">验证信息：<span class="dib pl20 yt-te">{{=it[i].info}}</span></p>
+      <p class="fz24 c99 yt-te mt10">{{=formatDate(it[i].time,"yyyy-MM-dd HH:mm:ss")}}</p>
+      <div class="yt yt-ac mt20">
+        <button class="btn btn-bd-green btn-s plr40 mr30 min-w158-hmc refuse">拒绝</button>
+        <button class="btn btn-bd-green btn-s plr40 min-w158-hmc accept">接受</button>
+      </div>
+    </div>
+  </li>
+  {{ } }}
+  {{if(it[i].status == 2){ }}
+    <li class="mb30 ptb30 bgff bt bb yt yt-ac" data-id="{{=it[i].id}}">
+      <div class="yt-f1 yt-te plr30">
+        <h3 class="fz28 c33 yt-te yt yt-ac">您的笔友申请已经被<span class="dib pl20 yt-te">{{=it[i].tname}}</span>拒绝</h3>
+        <p class="fz28 c66 yt-te yt yt-ac mt20">回复信息：<span class="dib pl20 yt-te">{{=it[i].errmsg}}</span></p>
+      </div>
+      <div class="plr30 ptb20 bl yt yt-ac"> <i class="icon-hi icon-del-hmc delApply"></i> </div>
+    </li>
+  {{ } }}
+  {{ } }}
+</script>
+<body class="yt yt-ver">
+<div class="tabs-nav-line tabs-nav-line-second bgff">
+<a href="#" class="tabs-nav-line-li active" data-type="1"><p class="dib fz28"> 笔友 </p></a>
+<a href="#" class="tabs-nav-line-li" data-type="2"><p class="dib fz28"> 熟人 </p></a>
+<a href="#" class="tabs-nav-line-li" data-type="3"><p class="dib fz28"> 关注 </p></a>
+<a href="#" class="tabs-nav-line-li" data-type="4"><p class="dib fz28"> 申请 </p></a>
+</div>
+<div class="bn mt20 yt-f1" style="overflow:auto">
+<div id="biyou">
+    <ul class="list biyouItem"></ul>
+</div>
+<div id="shuren" style="display:none;">
+    <ul class="list shurenItem"></ul>
+</div>
+<div id="guanzhu" style="display:none;">
+    <ul class="list guanzhuItem"></ul>
+</div>
+<div id="shenqing" style="display:none;">
+    <ul class="list shenqingItem" style="border-top:0px !important;"></ul>
+</div>
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../script/doT.min.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+page_1 = page_2 = page_3 = page_4 = 1;
+pageSize_1 = pageSize_2 = pageSize_3 = pageSize_4 =15;
+isPage_1 = isPage_2 = isPage_3 = isPage_4 = false;
+type = 1;
+ytfready = function() {
+	YTF.eventListenerAdd({
+		eventName: 'scrollToBottom',
+		attr:{
+				scrollToBottomHeight: 10　
+				}　
+	},function(ret,err){　
+		if (ret){
+			switch(type){
+				case 1:
+					if(isPage_1){
+						page_1++;
+						biyouList(0);
+						}
+				break;
+				case 2:
+					if(isPage_2){
+						page_2++;
+						shurenList(0);
+						}
+				break;
+				case 3:
+					if(isPage_3){
+						page_3++;
+						guanzhuList(0);
+						}
+				break;
+				case 4:
+					if(isPage_4){
+						page_4++;
+						shenqingList(0);
+						}
+				break;
+				}
+		}
+	});
+	biyouList(0);
+}
+//顶部tab切换
+$(".tabs-nav-line-second").delegate("a","tap",function(){
+	$(this).addClass("active").siblings().removeClass("active");
+	type = $(this).attr("data-type");
+	switch(type){
+		case "1":
+			biyouList(1);
+			break;
+		case "2":
+			shurenList(1);
+			break;
+		case "3":
+			guanzhuList(1);
+			break;
+		case "4":
+			shenqingList(1);
+		}
+	
+})
+
+//打开我的笔友资料界面
+$(".biyouItem").delegate("li","tap",function(){
+	var uid = $(this).attr("data-uid");
+	YTF.winOpen({
+		winName : "users_info_win",
+		htmlUrl : "./users_info_win.html",
+		htmlParam : {
+				'type' : 1,
+				'uid' : uid
+			}
+	});
+})
+
+//打开我的熟人资料界面
+$(".shurenItem").delegate("li","tap",function(){
+	var uid = $(this).attr("data-uid");
+	YTF.winOpen({
+		winName : "users_info_win",
+		htmlUrl : "./users_info_win.html",
+		htmlParam : {
+				'type' : 2,
+				'uid' : uid
+			}
+	});
+})
+
+//打开我的关注资料界面
+$(".guanzhuItem").delegate("li","tap",function(){
+	var uid = $(this).attr("data-uid");
+	YTF.winOpen({
+		winName : "users_info_win",
+		htmlUrl : "./users_info_win.html",
+		htmlParam : {
+				'type' : 5,
+				'uid' : uid
+			}
+	});
+})
+
+//同意笔友申请事件
+$(".shenqingItem").delegate(".accept","tap",function(){
+	var id = $(this).closest("li").attr("data-id");
+	setshenqing(id);
+	});
+//拒绝笔友申请	事件
+$(".shenqingItem").delegate(".refuse","tap",function(){
+	var id = $(this).closest("li").attr("data-id");
+	YTF.winOpen({
+		winName : "friends_add_refuse_win",
+		htmlUrl : "./friends_add_refuse_win.html",
+		htmlParam : {
+				'id' : id
+			}
+	});
+	})
+//删除申请记录	事件
+$(".shenqingItem").delegate(".delApply","tap",function(){
+	var id = $(this).closest("li").attr("data-id");
+	delApply(id);
+	});
+//打开用户信息事件
+$(".shenqingItem").delegate(".user-photo,.userName","tap",function(){
+	var type = $(this).attr("data-type");
+	var uid = $(this).attr("data-uid");
+	if(type == 1){
+		type = 4;
+		}
+	YTF.winOpen({
+		winName : "users_info_win",
+		htmlUrl : "./users_info_win.html",
+		htmlParam : {
+				'type' : type,
+				'uid' : uid
+			}
+	});
+	})
+
+//删除笔友申请拒绝记录	
+function delApply(id){
+    showProgress("数据提交中...");
+    YTF.ajax({
+        url: serverUrl + 'app/friends/del-reject',
+        methodType: 'post',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+                'id': id
+            }
+        }
+    },
+    function(ret,err){
+		console.log("删除好友申请："+JSON.stringify(ret));
+		YTF.hideProgress();
+		if(ret){
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else if(ret.status == 1){
+				shenqingList(1);
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+				}
+			}else{
+				YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+			}
+		});
+	}
+
+//处理好友申请
+function setshenqing(id){
+    showProgress("数据提交中...");
+    YTF.ajax({
+        url: serverUrl + 'app/friends/affirm',
+        methodType: 'post',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+                'id': id,
+				'status': 1
+            }
+        }
+    },
+    function(ret,err){
+		console.log("同意好友申请："+JSON.stringify(ret));
+		YTF.hideProgress();
+		if(ret){
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else if(ret.status == 1){
+				shenqingList(1);
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+				}
+			}else{
+				YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+			}
+		});
+}
+
+function biyouList(f){
+	showProgress("数据获取中...");
+	YTF.ajax({
+		url : serverUrl + 'app/friends/friends-list?type=1&page='+page_1+'&pageSize='+pageSize_1,
+		methodType : 'get',
+			headers:{
+			   logtoken:userToken
+			}
+	}, function(ret, err) {
+		YTF.hideProgress();
+		$("#biyou").show().siblings().hide();
+		if (ret){
+			console.log("笔友："+JSON.stringify(ret));
+			if(f){
+				$(".biyouItem").html("");
+				}
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					if(ret.data.data.length > pageSize_1){
+						isPage_1 == true;
+						};
+						var dataList = doT.template($("#biyouTmpl").text());
+							$(".biyouItem").append(dataList(ret.data.data));
+					break;
+				case 2:
+					noData(".biyouItem","biyouList(1)","暂无笔友");
+					break;
+				default:
+
+				}
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+		} else {
+			netErr(".biyouItem","biyouList(1)");
+		}
+	});
+}
+
+function shurenList(f){
+	showProgress("数据获取中...");
+	YTF.ajax({
+		url : serverUrl + 'app/friends/friends-list?type=2&page='+page_2+'&pageSize='+pageSize_2,
+		methodType : 'get',
+			headers:{
+			   logtoken:userToken
+			}
+	}, function(ret, err) {
+		YTF.hideProgress();
+		$("#shuren").show().siblings().hide();
+		if (ret){
+			console.log("熟人："+JSON.stringify(ret));
+			if(f){
+				$(".shurenItem").html("");
+				}
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					if(ret.data.data.length > pageSize_2){
+						isPage_2 == true;
+						};
+						var dataList = doT.template($("#shurenTmpl").text());
+							$(".shurenItem").append(dataList(ret.data.data));
+					break;
+				case 2:
+					noData(".shurenItem","shurenList(1)","暂无熟人");
+					break;
+				default:
+
+				}
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+		} else {
+			netErr(".shurenItem","shurenList(1)");
+		}
+	});
+}
+
+function guanzhuList(f){
+	showProgress("数据获取中...");
+	YTF.ajax({
+		url : serverUrl + 'app/attention/list?page='+page_3+'&pageSize='+pageSize_3,
+		methodType : 'get',
+			headers:{
+			   logtoken:userToken
+			}
+	}, function(ret, err) {
+		YTF.hideProgress();
+		$("#guanzhu").show().siblings().hide();
+		if (ret){
+			console.log("关注："+JSON.stringify(ret));
+			if(f){
+				$(".guanzhuItem").html("");
+				}
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					if(ret.data.data.length > pageSize_3){
+						isPage_3 == true;
+						};
+						var dataList = doT.template($("#guanzhuTmpl").text());
+							$(".guanzhuItem").append(dataList(ret.data.data));
+					break;
+				case 2:
+					noData(".guanzhuItem","guanzhuList(1)","暂无关注");
+					break;
+				default:
+
+				}
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+		} else {
+			netErr(".guanzhuItem","guanzhuList(1)");
+		}
+	});
+}
+
+function shenqingList(f){
+	showProgress("数据获取中...");
+	YTF.ajax({
+		url : serverUrl + 'app/friends/apply-list?page='+page_4+'&pageSize='+pageSize_4,
+		methodType : 'get',
+			headers:{
+			   logtoken:userToken
+			}
+	}, function(ret, err) {
+		YTF.hideProgress();
+		$("#shenqing").show().siblings().hide();
+		if (ret){
+			console.log("申请："+JSON.stringify(ret));
+			if(f){
+				$(".shenqingItem").html("");
+				}
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					if(ret.data.data.length > pageSize_4){
+						isPage_4 == true;
+						};
+						var dataList = doT.template($("#shenqingTmpl").text());
+							$(".shenqingItem").append(dataList(ret.data.data));
+					break;
+				case 2:
+					noData(".shenqingItem","shenqingList(1)","暂无申请");
+					break;
+				default:
+
+				}
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+		} else {
+			netErr(".shenqingItem","guanzhuList(1)");
+		}
+	});
+}
+
+function friendType(i){
+	switch(i){
+		case '1':
+			return '笔友';
+			break;
+		case '2':
+			return '熟人';
+			break;
+		}
+	}
+</script>
+</html>

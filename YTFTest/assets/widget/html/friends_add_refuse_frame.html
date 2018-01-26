@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>笔遇</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body class="bgf8">
+<div class="bgff dx-textarea p30 mt20 bb bt">
+  <textarea name="refuse_msg" id="refuse_msg" placeholder="请输入拒绝理由"></textarea>
+</div>
+<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36" id="friend_ok">确定</div>
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+ytfready = function(){
+	id = YTF.htmlParam.id;
+}
+
+$("#friend_ok").bind("tap",function(){
+	var msg = $("#refuse_msg").val();
+		setshenqing(id);
+	});
+
+
+//处理好友申请
+function setshenqing(id){
+    showProgress("数据提交中...");
+    YTF.ajax({
+        url: serverUrl + 'app/friends/affirm',
+        methodType: 'post',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+                'id': id,
+				'status': 2
+            }
+        }
+    },
+    function(ret,err){
+		console.log("拒绝好友申请："+JSON.stringify(ret));
+		YTF.hideProgress();
+		if(ret){
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else if(ret.status == 1){
+				YTF.excJs({
+					winName : "index_main",
+					frameGroupName : 'indexGroup',
+					index : 1,
+					script : 'shenqingList(1)'
+				});
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+				}
+				window.setTimeout(function(){
+					YTF.winClose();
+					},1200);
+			}else{
+				YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+			}
+		});
+}
+</script>
+</html>

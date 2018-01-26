@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>邮件</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<div class="yt yt-ac bgff bb plr30 mt30">
+			<b class="db fz32 c33">收信人：</b>
+			<div class="dx-psw yt-f1">
+				<input type="text" id="receiver" class="input-text bgn bn dx-input" readonly="readonly" placeholder="选择收信人">
+			</div>
+		</div>
+		<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36">
+			确定
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var toid = "";
+		var toName = "";
+		var tface = "";
+		var taddress = "";
+		var tpostcode = "";
+		ytfready = function() {
+
+			/**
+			 *选择收信人监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'receiver_select'
+			}, function(ret, err) {
+				if (ret) {
+					toid = ret.uid;
+					toName = ret.name;
+					tface = ret.face;
+					taddress = ret.address;
+					tpostcode = ret.postcode;
+					$("#receiver").val(toName);
+				}
+			});
+		};
+
+		/**
+		 *选择收信人
+		 */
+		$(".dx-psw").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'email_receiver_select_win',
+				htmlUrl : './email_receiver_select_win.html'
+			});
+		});
+		/**
+		 *确定
+		 */
+		$(".bg-second").bind("tap", function() {
+			if (checkIsEmpty(toid)) {
+				YTF.toast({
+					msg : '请选择收信人！'
+				});
+			} else {
+				YTF.winOpen({
+					winName : 'email_send_step_win',
+					htmlUrl : './email_send_step_win.html',
+					htmlParam : {
+						toid : toid,
+						toName : toName,
+						tface : tface,
+						taddress : taddress,
+						tpostcode : tpostcode
+					}
+				});
+			}
+		});
+	</script>
+</html>

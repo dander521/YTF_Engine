@@ -1,0 +1,64 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	background: #DEE2E5;
+  	height: 100%;
+  	width: 100%;
+}
+
+/*设置nav为盒子布局，水平分布*/
+#titlist ul{
+    list-style: none;
+    /*float: right;*/
+}
+/*设置nav中的各列表标签为1，平均分配空间*/
+#titlist ul li{
+   /*margin-right: 1px;*/
+    line-height: 35px;
+    text-align:center;
+    
+    width: 18%;
+    height: 35px;
+    float:left;
+    
+    font-size: 16px;
+    color: #333;
+    text-decoration:none ;
+    background: #DEE2E5;
+    margin: 2px 1% 0px 1%;
+}
+.bgtitle{
+	line-height: 30px;
+	font-size: 17px;
+	
+	width: 100%;
+    height: 30px;
+    font-family:"黑体";
+}
+.bg{
+	margin:0px 0px 1px 0px;
+	background: #E7EBEE;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.bg1{
+	margin:0px 0px 8px 0px;
+	background: #E7EBEE;
+	padding: 2px 10px 2px 10px;
+}
+.jianjieCon{
+	/*font-family:"新宋体";*/
+	font-size: 15px;
+	color:#333333;
+}
+#titlist li.active a, #titlist a.active{
+    color:#D42D34;
+}
+#audioBox{
+	background-image: url("../image/audioBg.jpg");
+	background-size:100% auto;
+}
+
+

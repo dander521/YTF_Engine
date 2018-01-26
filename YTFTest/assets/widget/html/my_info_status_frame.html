@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>目前状态</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<script id="status-template" type="text/x-dot-template">
+			{{ for(var i=0; i< it.length; i++) { }}
+			<li class="bb bgff">
+			<label class="fz32 c33 yt yt-ac p30">
+			<input type="radio" name="state" id="" value="{{=it[i].name}}" class="select-sex mr20 db" />
+			<b>{{=it[i].name}}</b>
+			{{ if(it[i].down.length > 0){ }}
+			<div class="yt-f1 tx-r select-icon">
+			<i class="icon icon-up"></i>
+			</div>
+			</label>
+			<ul class="student-list">
+			{{ for(var j=0;j<it[i].down.length;j++){ }}
+			<li class="bb pl30">
+			<label class="fz32 c33 yt yt-ac p30">
+			<input type="radio" name="state-mini" id="" value="{{=(it[i].down)[j].name}}" class="select-sex mr20 db" />
+			<b>{{=(it[i].down)[j].name }}</b>
+			</label>
+			</li>
+			{{ } }}
+			</ul>
+			{{ }else{ }}
+			</label>
+			{{ } }}
+			</li>
+			{{ } }}
+		</script>
+	</head>
+
+	<body>
+		<ul class="student-select" id="ul">
+
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/doT.min.js" type="text/javascript"></script>
+	<script>
+		var status = "";
+		ytfready = function() {
+			showInfos();
+			status = YTF.getHtmlParam().status;
+		};
+
+		function showInfos() {
+			YTF.ajax({
+				url : serverUrl + 'app/job/getinfo',
+				methodType : 'get',
+				isReport : false
+			}, function(ret, err) {
+				//$(".student-select").children().remove();
+				//console.log(JSON.stringify(ret))
+				if (ret) {
+					if (ret.status == 1) {
+						var dataList = $('#ul');
+						var tpl = doT.template($('#status-template').text());
+						console.log(ret.data.length);
+						dataList.append(tpl(ret.data));
+						if (!checkIsEmpty(status)) {
+							$("input[name='state']").each(function(index) {
+								if ($(this).val() == status) {
+									$(this).prop("checked", true);
+									$(this).change();
+								}
+							});
+							$("input[name='state-mini']").each(function(index) {
+								if ($(this).val() == status) {
+									$(this).prop("checked", true);
+									var obj = $(this).parents("ul").parent("li").children("label");
+									obj.find("i").addClass("icon-down");
+									obj.find("input").prop("checked", true);
+									$(this).parents("ul").addClass("active");
+
+								}
+							});
+						}
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+		$(function() {
+			$(".student-select").delegate("label", "change", function() {
+				var Obj = $(this).parents("li").siblings("li")
+				if ($(this).children("input").prop("checked") && $(this).siblings(".student-list").length > 0) {
+					Obj.find(".student-list").removeClass("active");
+					Obj.removeClass("mb30");
+					$(this).siblings(".student-list").addClass("active").parents("li").addClass("mb30");
+					Obj.find("input[name='state-mini']:checked").prop("checked",false);
+					$(".select-icon i").removeClass("icon-down")
+				} else {
+					$(this).siblings(".student-list").removeClass("active").parents("li").removeClass("m30");
+					Obj.find("input").prop("checked", false);
+					Obj.find(".student-list").removeClass("active");
+					Obj.removeClass("mb30");
+					var obj = $(this).parents("ul").parent("li").children("label");
+					obj.find("i").addClass("icon-down");
+				}
+			})
+		});
+		/**
+		 *保存 
+		 */
+		function submitInfo() {
+			var state = $("input[name='state']:checked").val();
+			var s_sub = $("input[name='state-mini']:checked").val();
+			if (!checkIsEmpty(s_sub)) {
+				state = s_sub;
+			};
+			if (checkIsEmpty(state)) {
+				YTF.toast({
+					msg : '请选择状态！'
+				});
+			} else {
+				YTF.eventSend({
+					eventName : 'status_select',
+					attr : {
+						status : state
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			}
+		};
+
+	</script>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>头像</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<div class="dx-photo"></div>
+		<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36">
+			确定
+		</div>
+		<div class="dialog-wrap" id="action">
+            <div class="action-main">
+                <div class="action-content">
+                    <button id="camera">拍照</button>
+                    <button id="photo">从相册中选取</button>
+                </div>
+                <button class="action-cancel"  onclick="$(this).closest('.dialog-wrap').removeClass('dialog-show')">取消</button>
+            </div>
+            <div class="dialog-mark"></div>
+        </div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var face = "";
+		ytfready = function() {
+			face = YTF.htmlParam.face;
+			$(".dx-photo").css("background-image", "url(" + photoUrl + face + ")");
+		};
+		/**
+		 *选择获取图片的方式
+		 */
+		function selectWay() {
+			$(".dx-photo-more").addClass("active");
+			$(document).on('tap', function() {
+				$(".dx-photo-more").removeClass("active");
+			});
+		};
+		/**
+		 *确定
+		 */
+		$(".bg-second").bind("tap", function() {
+			YTF.eventSend({
+				eventName : 'face_edit',
+				attr : {
+					face : face
+				}
+			}, function(ret, err) {
+				YTF.winClose();
+			});
+		});
+		/**
+		 * 
+		 */
+		$(".dx-photo").bind("tap",function(){
+			$("#action").addClass('dialog-show');
+		});
+
+		//测试
+		$(".action-content button").bind('tap', function() {
+			$("#action").removeClass('dialog-show');
+			//alert($(this).attr('id'));
+			var id = $(this).attr('id');
+			switch(id) {
+			case 'camera':
+				imgSelect();
+				break;
+			case 'photo':
+				imgSelect();
+				break;
+			};
+		});
+		/**
+		 *图片选择
+		 */
+		function imgSelect() {
+			var data = {
+				isEdit : true,
+				isCheckbox : false
+			}
+			YTF.mediaGetPicture(data, function(ret, err) {
+				if (ret) {
+					$(".dx-photo").css("background-image", "url(" + ret.imagePath + ")")
+					uploadImg(ret.imagePath);
+				} else {
+
+				};
+			});
+		};
+
+		/**
+		 *上传图片
+		 */
+		function uploadImg(path) {
+			YTF.showProgress({
+				bottomText : "上传中...",
+				gifSize : {
+					w : 60,
+					h : 60
+				},
+				xywh : {
+					w : 130,
+					h : 130
+				}
+			});
+			YTF.ajax({
+				url : serverUrl + 'app/user/upimg',
+				methodType : 'post',
+				isReport : false,
+				data : {
+					files : {
+						s : path
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				//alert(JSON.stringify(ret));
+				if (ret) {
+					if (ret.status == 1) {
+						face = ret.data.path;
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+	</script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>注册</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<div class="dx-dialog active">
+			<div class="dialogmask"></div>
+			<div class="dx-dialogcontent">
+				<div class="dialog-cbox">
+					<div class="dialog-success-btn"></div>
+					<h2 class="dialog-tit fz32 tx-c c33">注册成功</h2>
+					<div class="dialog-contxt mt30">
+						哇哦！您现在拥有了一个专属邮编了
+					</div>
+					<div class="dialog-contxt mt20" id="tip">
+
+					</div>
+					<div class="dialog-num">
+
+					</div>
+					<div class="dialog-num-v"></div>
+					<div class="bg-second fz32 tx-c know-btn yt yt-ac yt-pc">
+						我知道了
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			var num = localStorage.getItem("postcode");
+			$(".dialog-num").html(num);
+			$("#tip").html(YTF.getHtmlParam().tip);
+		}
+		/**
+		 *进入资料设置
+		 */
+		$(".bg-second").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'register_personal_info_win',
+				htmlUrl : './register_personal_info_win.html'
+			});
+		});
+	</script>
+</html>

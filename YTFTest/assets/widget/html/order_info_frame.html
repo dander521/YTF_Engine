@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>订单</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<style>
+			.hidden {
+				display: none !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mt30 p30 bgff yt yt-ac bb">
+			<i class="icon-hi icon-big-stamp"></i>
+			<div class="yt-f1 yt-te plr20">
+				<h3 class="fz32 c33"><em class="dib fz42" id="num"></em>枚邮币</h3>
+				<p class="mt10 fz24 c99">
+					用于寄信时支付邮资
+				</p>
+			</div>
+			<div class="fz26 c99">
+				<div class="yt yt-ac yt-pe">
+					<i class="icon-hi icon-integral-nc"></i>
+					<div class="fz24 c33 ml10">
+						<em class="dib color-red jifen"></em>积分
+					</div>
+				</div>
+				<div class="dib mt5 cff bg-blue ptb10 plr20 tx-c main-round price">
+
+				</div>
+			</div>
+		</div>
+		<div class="mt30">
+			<div class="ptb30 tx-c fz36 c33">
+				选择支付方式
+			</div>
+			<ul class="list" id="ul">
+				<li>
+					<label class="yt yt-ac fz32 c33">
+						<input type="radio" name="if" value="1" class="select-sex mr20 db">
+						<div class="yt-f1 yt-te fz28 c99">
+							付费购买
+						</div> <div class="dib cff bg-blue ptb10 plr20 tx-c main-round price">
+
+						</div> </label>
+				</li>
+				<li>
+					<label class="yt yt-ac fz32 c33">
+						<input type="radio" name="if" value="2" checked="checked" class="select-sex mr20 db">
+						<div class="yt-f1 yt-te fz28 c99">
+							积分兑换
+						</div> <i class="icon-hi icon-integral-nc"></i>
+						<div class="fz24 c33 ml10">
+							<em class="dib color-red jifen"></em>积分
+						</div> </label>
+				</li>
+			</ul>
+		</div>
+		<div class="mt60 pt30 yt yt-ac yt-pc yt-ver">
+			<button class="btn btn-b bg-second db" id="change">
+				确认兑换
+			</button>
+			<button class="btn btn-b bg-second db hidden" id="pay">
+				确认购买
+			</button>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var youbi = 0;
+		var integral = 0;
+		ytfready = function() {
+			youbi = YTF.htmlParam.num;
+			integral = YTF.htmlParam.integral;
+			$("#num").html(youbi);
+			$(".jifen").html(youbi * 10);
+			$(".price").html("￥" + (youbi / 10).toFixed(2));
+		};
+
+		/**
+		 *选择方式
+		 */
+		$("#ul input[name='if']").bind("change", function() {
+			var val = $(this).val();
+			switch(val) {
+			case '1':
+				$("#change").addClass("hidden");
+				$("#pay").removeClass("hidden");
+				break;
+			case '2':
+				$("#pay").addClass("hidden");
+				$("#change").removeClass("hidden");
+				break;
+			};
+		});
+		/**
+		 *兑换
+		 */
+		$("#change").bind("tap", function() {
+			if ((youbi * 10) > (integral * 1)) {
+				YTF.toast({
+					msg : '兑换失败，您的积分不足！'
+				});
+			} else {
+				showProgress("兑换中...")
+				YTF.ajax({
+					url : serverUrl + 'app/youbi/integral',
+					methodType : 'post',
+					isReport : false,
+					headers : {
+						logtoken : userToken
+					},
+					data : {
+						values : {
+							youbi : youbi
+						}
+					}
+				}, function(ret, err) {
+					YTF.hideProgress();
+					if (ret) {
+						switch(ret.status) {
+						case 0:
+							openLoginWin("login_win","./login_win.html");
+							break;
+						case 1:
+							YTF.toast({
+								msg : '兑换成功！'
+							});
+							YTF.eventSend({
+								eventName : 'jifen_change',
+								attr : {
+									integral : integral - (youbi * 10),
+									youbi : youbi
+								}
+							}, function(ret, err) {
+								YTF.winClose();
+							});
+							break;
+						default:
+							YTF.toast({
+								msg : ret.msg
+							});
+						}
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				})
+			}
+		});
+		/**
+		 *购买
+		 */
+		$("#pay").bind("tap", function() {
+			
+		});
+
+	</script>
+</html>

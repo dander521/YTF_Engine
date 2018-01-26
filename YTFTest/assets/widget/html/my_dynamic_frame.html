@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>登录</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+		<script id="listTmpl" type="text/x-dot-template">
+			{{ for(var i= 0; i < it.length; i ++){ }}
+			<div class="clh-item bgff bt bb mb30" id="dyn_{{=it[i].id}}" data-data='{{=JSON.stringify(it[i])}}'>
+			<div class="cit p30 yt">
+			<div class="img-wrap user-photo user-photo-s round mr30" style="background-image: url('{{=photoUrl}}{{=it[i].face}}');"></div>
+			<div class="yt-f1">
+			<div class="lh1 yt yt-ac">
+			<div class="yt-f1">
+			<h3 class="list-title dib yt-te max-w400-hmc">{{=it[i].biname}}</h3>
+			<span class="ml10 dib bg-sex bg-sex-w fz24 cff">
+			{{ if(it[i].sex == '1'){ }}
+			<i class="icon icon-sex-m mr10">
+			{{ }else{ }}
+			<i class="icon icon-sex-w mr10">
+			{{ } }}
+			</i>{{=it[i].nage}}</span>
+			</div>
+			<i class="icon-hi icon-del-hmc" data-id="{{=it[i].id}}"></i>
+			</div>
+			<div class="mt20 lh1 yt yt-ac">
+			<div class="ci-tags fz20 cff">
+			{{ if(it[i].category == '1'){ }}
+			公开信
+			{{ }else if(it[i].category == '2'){ }}
+			征友
+			{{ }else{ }}
+			分享
+			{{ } }}
+			</div>
+			<div class="yt-f1 tx-r fz24 c99">
+			<span>{{=getDateDiff(it[i].time)}}</span>
+			</div>
+			</div>
+			<div class="mt20 fz28 c66 lh16 wb-ba-hmc">
+			<p>{{=it[i].content}}</p>
+			{{ if(it[i].img.length > 0){ }}
+			<ul class="ci-imgs-list clear mt20">
+			{{ for(var j=0;j<it[i].img.length;j++){ }}
+			<li class="img-wrap"><img src="{{=photoUrl}}{{=(it[i].img)[j]}}"/></li>
+			{{ } }}
+			</ul>
+			{{ } }}
+			</div>
+			</div>
+			</div>
+			<div class="cib yt yt-ac ptb15-hmc bt" data-id="{{=it[i].id}}">
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br">
+			<i class="icon-hi icon-share-hmc mr10"></i>
+			<div class="fz28 c99" id="share{{=it[i].id}}">
+			{{ if(it[i].share_num >999){ }}
+			(999+)
+			{{ }else{ }}
+			{{=it[i].share_num}}
+			{{ } }}
+			</div>
+			</div>
+			{{ if(it[i].praise == 0){ }}
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br zan-tap">
+			{{ }else{ }}
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br zan-tap active">
+			{{ } }}
+			<i class="icon-hi icon-zan-hmc mr10"></i>
+			<div class="fz28 c99" id="zan{{=it[i].id}}">
+			{{ if(it[i].praise_num >999){ }}
+			(999+)
+			{{ }else{ }}
+			{{=it[i].praise_num}}
+			{{ } }}
+			</div>
+			</div>
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc comment-tap">
+			<i class="icon-hi icon-comment-hmc mr10"></i>
+			<div class="fz28 c99" id="comment{{=it[i].id}}">
+			{{ if(it[i].comment_num >999){ }}
+			(999+)
+			{{ }else{ }}
+			{{=it[i].comment_num}}
+			{{ } }}
+			</div>
+			</div>
+			</div>
+			</div>
+			{{ } }}
+		</script>
+	</head>
+
+	<body>
+		<div class="mt30 p30 bgff bb wb-ba-hmc fz32 c66" style="display: none;">
+			<span class="dib mr10 c33">尼古拉斯赵四</span>评论了您的动态，点击查看吧！
+		</div>
+		<div class="card-list-hmc mt30">
+			<!--<div class="clh-item bgff bt bb mb30">
+			<div class="cit p30 yt">
+			<div class="img-wrap user-photo user-photo-s round mr30" style="background-image: url(../images/bg-img-avatar.png);"></div>
+			<div class="yt-f1">
+			<div class="lh1 yt yt-ac">
+			<div class="yt-f1">
+			<h3 class="list-title dib yt-te max-w400-hmc">爱吃西红柿的小猫爱吃西红柿的小猫爱吃西红柿的小猫爱吃西红柿的小猫爱吃西红柿的小猫</h3>
+			<span class="ml10 dib bg-sex bg-sex-w fz24 cff"><i class="icon icon-sex-w mr10"></i>18</span>
+			</div>
+			<i class="icon-hi icon-del-hmc"></i>
+			</div>
+			<div class="mt20 lh1 yt yt-ac">
+			<div class="ci-tags fz20 cff">
+			公开信
+			</div>
+			<div class="yt-f1 tx-r fz24 c99">
+			<span>100米以内</span>
+			<span class="plr20">|</span>
+			<span>57分钟前</span>
+			</div>
+			</div>
+			<div class="mt20 fz28 c66 lh16 wb-ba-hmc">
+			<p>
+			问风儿人何时归，梅花独开人憔悴，雪中独行 月光泻千里。穿透岁月的记忆轮回，君问红妆为谁醉，白衣似雪两行泪。Everything is going on, but don't give up trying.万事随缘，但不要放弃努力。
+			</p>
+			<ul class="ci-imgs-list clear mt20">
+			<li class="img-wrap"><img src="../images/img-stamp-collecting-list-li.png"/></li>
+			<li class="img-wrap"><img src="../images/img-stamp-collecting-list-li.png"/></li>
+			<li class="img-wrap"><img src="../images/img-stamp-collecting-list-li.png"/></li>
+			<li class="img-wrap"><img src="../images/img-stamp-collecting-list-li.png"/></li>
+			<li class="img-wrap"><img src="../images/img-stamp-collecting-list-li.png"/></li>
+			<li class="img-wrap"><img src="../images/img-stamp-collecting-list-li.png"/></li>
+			</ul>
+			</div>
+			</div>
+			</div>
+			<div class="cib yt yt-ac ptb15-hmc bt">
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br">
+			<i class="icon-hi icon-share-hmc mr10"></i>
+			<div class="fz28 c99">
+			(999+)
+			</div>
+			</div>
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br active">
+			<i class="icon-hi icon-zan-hmc mr10"></i>
+			<div class="fz28 c99">
+			(999+)
+			</div>
+			</div>
+			<div class="yt-f1 yt yt-ac yt-pc ptb15-hmc">
+			<i class="icon-hi icon-comment-hmc mr10"></i>
+			<div class="fz28 c99">
+			(999+)
+			</div>
+			</div>
+			</div>
+			</div>-->
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/doT.min.js" type="text/javascript"></script>
+	<script>
+		var page = 1;
+		//总页数
+		var totalPage = 1;
+		ytfready = function() {
+			showInfos(page);
+			YTF.eventListenerAdd({
+				eventName : 'scrollToBottom',
+				attr : {
+					scrollToBottomHeight : 10
+				}
+			}, function(ret, err) {
+				if (ret) {
+					if ((page + 1) > totalPage) {
+						YTF.toast({
+							msg : '当前已为最后一页！'
+						});
+					} else {
+						page++;
+						showInfos(page);
+					}
+				}
+			});
+		};
+
+		$(function() {
+			//点赞
+			$(".card-list-hmc").delegate(".zan-tap", "tap", function() {
+				var id = $(this).parent().attr("data-id");
+				addPraise(id);
+			});
+
+			$(".card-list-hmc").delegate(".icon-del-hmc", "tap", function() {
+				var id = $(this).attr("data-id");
+				YTF.confirm({
+					msg : '确认删除此动态信息吗？'
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.buttonIndex == "1") {
+							delDynamic(id);
+						}
+					} else {
+
+					}
+				});
+
+			});
+			//打开评论界面
+			$(".card-list-hmc").delegate(".comment-tap", "tap", function() {
+				var argsData = $(this).closest(".clh-item").attr("data-data");
+				YTF.winOpen({
+					winName : "comment_win",
+					htmlUrl : "./comment_win.html",
+					htmlParam : eval("(" + argsData + ")")
+				});
+			})
+		})
+		/**
+		 *展示信息
+		 */
+		function showInfos(index) {
+			page = index;
+			YTF.showProgress({
+				bottomText : "加载中...",
+				gifSize : {
+					w : 60,
+					h : 60
+				},
+				xywh : {
+					w : 130,
+					h : 130
+				}
+			});
+			YTF.ajax({
+				url : serverUrl + 'app/dynamic/my',
+				isReport : false,
+				methodType : 'get',
+				headers : {
+					logtoken : localStorage.getItem("logtoken")
+				},
+				data : {
+					values : {
+						page : page,
+						pageSize : 10
+					}
+				}
+			}, function(ret, err) {
+				console.log("---1111----" + JSON.stringify(ret));
+				YTF.hideProgress();
+				if (ret) {
+					if (ret.status == 0) {
+						openLoginWin("login_win", "./login_win.html");
+					} else if (ret.status == 1) {
+						//计算总页数
+						totalPage = (parseInt(ret.data.total) + parseInt(ret.data.pageSize) - 1) / ret.data.pageSize;
+						var userList = doT.template($("#listTmpl").text());
+						$(".card-list-hmc").append(userList(ret.data.data));
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					netErr(".card-list-hmc", "showInfos(1)");
+				}
+			});
+		};
+		/**
+		 *点赞
+		 */
+		function addPraise(id) {
+			//showProgress("数据提交中...");
+			console.log(id);
+			YTF.ajax({
+				url : serverUrl + 'app/dynamic/Praise',
+				methodType : 'post',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						id : id
+					}
+				}
+			}, function(ret, err) {
+				//YTF.hideProgress();
+				if (ret) {
+					if (ret.status == 1) {
+						var number = $("#zan" + id).html();
+						if (ret.msg == "点赞成功") {
+							$("#zan" + id).parent().addClass("active");
+							$("#zan" + id).html((parseInt(number) + 1));
+						} else {
+							$("#zan" + id).parent().removeClass("active");
+							$("#zan" + id).html((parseInt(number) - 1));
+						}
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					netErr(".card-list-hmc", "showInfos(1)");
+				}
+			});
+		};
+		/**
+		 *删除动态
+		 */
+		function delDynamic(id) {
+			showProgress("删除中...");
+			YTF.ajax({
+				url : serverUrl + 'app/dynamic/del',
+				methodType : 'post',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						id : id
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				if (ret) {
+					if (ret.status == 1) {
+						$(".card-list-hmc").children("#dyn_" + id).remove();
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					netErr(".card-list-hmc", "showInfos(1)");
+				}
+			});
+		};
+	</script>
+</html>

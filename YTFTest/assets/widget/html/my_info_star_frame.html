@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>星座</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<ul class="bgff">
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="白羊座" class="select-sex mr20 db">
+					<span>白羊座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="金牛座" class="select-sex mr20 db">
+					<span>金牛座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="双子座" class="select-sex mr20 db">
+					<span>双子座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="巨蟹座" class="select-sex mr20 db">
+					<span>巨蟹座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="狮子座" class="select-sex mr20 db">
+					<span>狮子座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="处女座" class="select-sex mr20 db">
+					<span>处女座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="天秤座" class="select-sex mr20 db">
+					<span>天秤座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="摩羯座" class="select-sex mr20 db">
+					<span>摩羯座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="射手座" class="select-sex mr20 db">
+					<span>射手座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="水瓶座" class="select-sex mr20 db">
+					<span>水瓶座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="双鱼座" class="select-sex mr20 db">
+					<span>双鱼座</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="constellation" id="" value="天蝎座" class="select-sex mr20 db">
+					<span>天蝎座</span> </label>
+			</li>
+
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var star = "";
+		ytfready = function() {
+			star = YTF.htmlParam.star;
+			$("input[name='constellation']").each(function() {
+				if ($(this).val() == star) {
+					$(this).prop("checked", true);
+				}
+			});
+		}
+		/**
+		 *确定
+		 */
+		function submitInfo() {
+			star = $("input[name='constellation']:checked").val();
+			if (checkIsEmpty(star)) {
+				YTF.toast({
+					msg : '请选择星座！'
+				});
+			} else {
+				YTF.eventSend({
+					eventName : 'star_edit',
+					attr : {
+						star : star
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			}
+		};
+	</script>
+</html>

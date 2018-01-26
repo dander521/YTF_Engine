@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>性别</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="bgf8">
+		<ul class="bgff">
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="sex" id="" value="1" class="select-sex mr20 db">
+					<span>男</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30">
+					<input type="radio" name="sex" id="" value="2" class="select-sex mr20 db">
+					<span>女</span> </label>
+			</li>
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var sex = "";
+		ytfready = function() {
+			sex = YTF.htmlParam.sex;
+			$("input[name='sex']").each(function() {
+				if (sex == $(this).val()) {
+					$(this).prop("checked", true);
+				}
+			});
+		};
+		/**
+		 *确定
+		 */
+		function submitInfo() {
+			sex = $("input[name='sex']:checked").val();
+			if (checkIsEmpty(sex)) {
+				YTF.toast({
+					msg : '请选择性别！'
+				});
+			} else {
+				YTF.eventSend({
+					eventName : 'sex_edit',
+					attr : {
+						sex : sex
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			}
+		};
+	</script>
+</html>

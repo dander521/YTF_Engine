@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+			font-size:29px;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="imageBrowser()">imageBrowser</div>
+			</div>
+	</div>
+	</body>
+
+<script>
+	var imgUrl;
+	var imgFs;
+	var ImageBrowserTest;
+	ytfready = function(){
+		ImageBrowserTest= YTF.require("ImageBrowser");
+	}
+	
+	function imageBrowser(){
+		ImageBrowserTest.imageBrowser({
+			images:[
+				"http://g.hiphotos.baidu.com/image/pic/item/241f95cad1c8a7866f726fe06309c93d71cf5087.jpg",
+				imgUrl,
+				// imgFs,
+				"http://g.hiphotos.baidu.com/image/pic/item/4a36acaf2edda3cce291552403e93901213f92b9.jpg",
+				"http://b.hiphotos.baidu.com/image/pic/item/d788d43f8794a4c274c8110d0bf41bd5ad6e3928.jpg",
+				"http://c.hiphotos.baidu.com/image/pic/item/f7246b600c3387448982f948540fd9f9d72aa0bb.jpg",
+				"http://c.hiphotos.baidu.com/image/pic/item/267f9e2f070828382dcc0b20bd99a9014d08f1c5.jpg",
+				"http://e.hiphotos.baidu.com/image/pic/item/83025aafa40f4bfb27bfbf2b014f78f0f7361865.jpg",
+				"http://c.hiphotos.baidu.com/image/pic/item/6c224f4a20a446237bf654449d22720e0cf3d7dc.jpg"
+			]
+		},function(ret,err){
+			if(ret)
+			alert(ret);
+		});
+	}
+
+
+function getLocalPic(){
+		YTF.mediaGetPicture({
+	        sourceType:"album",
+	        isCheckbox:false
+	    }, function(ret, err){
+            if(ret.imagePath[0]){
+                 imgUrl=ret.imagePath[0];
+                 alert(imgUrl);
+                 var index = imgUrl.lastIndexOf("\/");  
+				 imgFs= imgUrl.substring(index + 1, imgUrl.length);
+				 imgFs= "fs://"+imgFs;
+            }else{
+                 alert(err);
+            }
+        });
+	}
+</script>
+</html>

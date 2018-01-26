@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>需求</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<p class="fz26 c66 p30 tx-c">
+			最多选择四项
+		</p>
+		<ul class="interests-list bgff">
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="倾诉" class="dx-checkbox mr20">
+					<span>倾诉</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="安慰" class="dx-checkbox mr20">
+					<span>安慰</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="鼓励" class="dx-checkbox mr20">
+					<span>鼓励</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="学习" class="dx-checkbox mr20">
+					<span>学习</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="友谊" class="dx-checkbox mr20">
+					<span>友谊</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="认可" class="dx-checkbox mr20">
+					<span>认可</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="陪伴" class="dx-checkbox mr20">
+					<span>陪伴</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="恋爱" class="dx-checkbox mr20">
+					<span>恋爱</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox"  name="needs" id="" value="理解" class="dx-checkbox mr20">
+					<span>理解</span> </label>
+			</li>
+			<li class="bb">
+				<label class="p30 yt yt-ac fz32 c33">
+					<input type="checkbox" name="needs" id="" value="分担" class="dx-checkbox mr20">
+					<span>分担</span> </label>
+			</li>
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			var needs = YTF.getHtmlParam().need;
+			if (!checkIsEmpty(needs)) {
+				$("input[name='needs']").each(function(index) {
+					if (needs.indexOf($(this).val()) != -1) {
+						$(this).prop("checked", true);
+					}
+				});
+			}
+		}
+		$(function() {
+			$(".interests-list").delegate("label", "change", function() {
+				var length = $("input[name='needs']:checked").length;
+				if (length > 4) {
+					$(this).children("input").prop("checked", false);
+				}
+			})
+		});
+
+		function submitInfo() {
+			var needs = "";
+			$("input[name='needs']:checked").each(function(index) {
+				if (index == 0) {
+					needs = $(this).val();
+				} else {
+					needs += "," + $(this).val();
+				}
+			});
+			if (checkIsEmpty(needs)) {
+				YTF.toast({
+					msg : '请选择需求！'
+				});
+			} else {
+				YTF.eventSend({
+					eventName : 'needs_select',
+					attr : {
+						need : needs
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			}
+		};
+	</script>
+</html>

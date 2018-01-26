@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../css/ytui.css" />
+
+</head>
+
+<body class="">
+    <div id="wrap">
+    	<!--header部分开始-->
+        <div id="header" >
+		    <header  class="header-bar bg-main" >
+		        <div class="header-left " onclick="openSide()">
+		            <i class="icon icon-menu"></i>
+		        </div>
+		        <h2 class="header-title">YTF-DEMO
+		        </h2>
+		        <div class="header-right">
+		        </div>
+		    </header>
+
+        </div>
+        <!--header部分结束-->
+        <!--main部分开始-->
+        <div id="main">
+                
+        </div>
+
+    </div>
+
+
+</body>
+<script type="text/javascript" src="../script/common.js"></script>
+<script src="../script/zepto.js"></script>
+<script>
+	
+  {var op={};
+  if(arguments && arguments.length){
+  	if(arguments.length  == 0){
+  		var moduleInfo = {};moduleInfo.nativeObj=this.nativeObj;moduleInfo.methodName =funPreName+funName  ;moduleInfo.op = op;try{return JSON.parse(YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo)))}catch(e){return YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo));}
+  	}else if(arguments.length  == 1 && typeof arguments[0]!='function' ){
+  		op.args=arguments[0];var moduleInfo = {};moduleInfo.nativeObj=this.nativeObj;moduleInfo.methodName =funPreName+funName ;moduleInfo.op = op; try{return JSON.parse(YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo)))}catch(e){return YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo));}  
+   }else if(arguments.length  == 1 && typeof arguments[0]==='function' ){
+   	op.cbId= funName+ timeLogStr+ YTFcb.id++;YTFcb.fn[op.cbId]=arguments[0];var moduleInfo = {};moduleInfo.nativeObj=this.nativeObj;moduleInfo.methodName =funPreName+funName ;moduleInfo.op = op;try{return JSON.parse(YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo)))}catch(e){return YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo));} 
+  }else if(arguments.length  == 2 && typeof arguments[1]==='function' ){
+  	op.args=arguments[0];op.cbId=funName+ timeLogStr+ YTFcb.id++;YTFcb.fn[op.cbId]=arguments[1];var moduleInfo = {};moduleInfo.nativeObj=this.nativeObj;moduleInfo.methodName =funPreName+funName ;moduleInfo.op = op; try{return JSON.parse(YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo)))}catch(e){return YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo));}  
+  }}
+  else{
+  	var moduleInfo = {};
+  	moduleInfo.nativeObj=this.nativeObj;
+  	moduleInfo.methodName =funPreName+funName ;moduleInfo.op = op;
+  	try{return JSON.parse(YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo)))}
+  	catch(e){return YtfPublicMethod.YTFMethod_switch(JSON.stringify(moduleInfo));}
+  	 }
+  	}
+  require : function() { var arg = arguments[0]; var nativeObj = window.YtfPublicMethod.YTFMethod_require(arg);if(nativeObj==null)return null;var strTmp ='new ' + arg + '(nativeObj)' ;var obj = eval('('+strTmp+')');return obj;},getHtmlParam : function() { var arg = window.YtfAppInfo.ytfNative_htmlParam();var obj = JSON.parse(arg);return obj;}, 
+  function apiBriage(objName,funName,args){var funName= funName;var objName=objName;var excstr =objName+'.ytfNative_'+funName+'(JSON.stringify(op))' ;var excstrNoParam =objName+'.ytfNative_'+funName+'()' ;var op={};if(args && args.length && args.length !=0 ){if(typeof args[0]==='function'){op.lastUrl = window.location.href;   op.cbId=
+  funName +  timeLogStr+ YTFcb.id++;YTFcb.fn[op.cbId]=args[0]}else{if(args.length===1&&typeof args[0]!='function'){op.lastUrl = window.location.href; op.args=args[0]}else{if(args.length===2&&typeof args[1]==='function'){op.lastUrl = window.location.href;   op.args=args[0];op.cbId=funName +  timeLogStr+ YTFcb.id++;YTFcb.fn[op.cbId]=args[1]}}};}else{return eval('('+excstrNoParam+')');}return eval('('+excstr+')');};
+  javascript:var  timeStamp = new Date().getTime();var timeLogStr = 'timeLog'+timeStamp;window.onerror=fnErrorTrap;function fnErrorTrap(sMsg,sUrl,sLine){var errObj={}; errObj.sMsg = sMsg;errObj.sUrl = sUrl; errObj.sLine = sLine;window.YtfPublicMethod.YTFMethod_jsErr(JSON.stringify(errObj));}window.YTFcb={fn:{},id:1,on:function(cbId,ret,ytf_imagebrowser_err,del){var retObj=null;var errObj=null; if('' != ret) { try{retObj = JSON.parse(ret);}catch(e){retObj=ret}}if('' != ytf_imagebrowser_err) {errObj = JSON.parse(ytf_imagebrowser_err);}this.fn[cbId]&&this.fn[cbId](retObj,errObj);if(del){delete this.fn[cbId]}},gc:function(cbId){delete this.fn[cbId]}};
+  javascript:if(window.ytfready){window.ytfready()};if(window.ytfready){window.ytfready()};
+
+	
+	
+	// var returnData='{"522fdff2';
+	// var returnData = '';
+	
+	// alert(fun1());
+	// alert(JSON.stringify(fun1()));
+	function fun1(){
+		// alert(000);
+		var returnData='{"key":"222"}';
+		try{return JSON.parse(returnData)}catch(e){return returnData;}
+	}
+	
+	ytfready = function(){
+	    YTF.launchRemove();
+		openFrame('winList');
+		keyBackListenerAdd();
+    }
+  
+    /**
+	 * 打开窗口1
+	 */
+		function openFrame(type){
+			var htmlUrl = filePath+'sort.html';
+			var width = YTF.windowWidth;
+            var windowHeight = YTF.windowHeight;
+	        var headerEl = $('header');
+			var y= headerEl.height();
+            var height = windowHeight - y;
+			YTF.frameOpen({
+					frameName:type,
+					htmlUrl:htmlUrl,
+					isBounces:true,
+					isVScrollBar:true,
+					isHScrollBar:true,
+					isScale:true,
+					xywh:{
+						x: 0,
+						y: y,
+						w: width,
+						h: height,
+						marginLeft:0,    //相对父 window 左外边距的距离
+   						marginTop:0,    //相对父 window 上外边距的距离
+    					marginBottom:0,    //相对父 window 下外边距的距离
+   						marginRight:0    //相对父 window 右外边距的距离
+					},
+					isReload:false,
+					isEdit:true
+				});
+		}
+		
+		/**打开侧滑*/
+	function openSide(){
+        YTF.drawerOpen({
+            sideName:"side_drawer"
+        });
+	}
+
+	/**关闭侧滑*/
+	function sideClose(){
+        YTF.drawerClose({
+            sideName:"side_drawer"
+        });
+	}
+	
+	function keyBackCallback(ret){
+		if(ret){
+			YTF.webUIConfirm({
+	            title:"应用退出提醒",
+	            msg:"是否要退出应用？",
+	            buttons:["确定","取消"]
+		    },function(ret,err){
+		        if(ret){
+		        	if(ret.buttonIndex ==1){
+		        		YTF.appClose();
+		        	}else{
+		        	}
+		        }
+		    });
+		}
+	}
+	
+	function keyBackListenerAdd(){
+		YTF.eventListenerAdd(
+	      {eventName: 'keyBack'},
+	      function(ret, err){
+	        if( ret ){
+	            keyBackCallback(ret);
+	            }else{
+	              console.log(err);
+	        }
+        });
+	}
+
+</script>
+
+</html>

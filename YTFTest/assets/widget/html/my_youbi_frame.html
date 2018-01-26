@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>头像</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<div class="mt30 bgff">
+			<div class="p30 yt yt-ac bb">
+				<i class="icon-hi icon-big-stamp"></i>
+				<div class="yt-f1 yt-te plr20">
+					<h3 class="fz40 c33">邮币</h3>
+					<p class="mt10 fz24 c99">
+						用于寄信时支付邮资
+					</p>
+				</div>
+				<div class="fz26 c99">
+					剩余：<em class="dib color-red youbi"></em>枚
+				</div>
+			</div>
+			<div class="ptb20 plr40">
+				<p class="fz24 c99">
+					如何获取：1邮币=10积分<em class="dib mr20">（兑换）</em>10邮币=1元<em class="dib">（购买）</em>
+				</p>
+				<div class="mt30 mb30 ptb30 yt yt-ac yt-pc">
+					<button class="btn btn-b bg-second db">
+						获取更多邮币
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			var data = eval("(" + localStorage.getItem("userInfo") + ")");
+			$(".youbi").html(data.youbi);
+			
+			/**
+			 *邮币、积分变更监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'jifen_change'
+			}, function(ret, err) {
+				var data = eval("(" + localStorage.getItem("userInfo") + ")");
+				data.youbi = data.youbi * 1 + ret.youbi * 1;
+				localStorage.setItem("userInfo",JSON.stringify(data))
+				$(".youbi").html(data.youbi);
+			});
+		};
+		/**
+		 *获取更多邮币
+		 */
+		$(".bg-second").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'get_youbi_win',
+				htmlUrl : './get_youbi_win.html'
+			});
+		});
+	</script>
+</html>

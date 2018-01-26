@@ -1,0 +1,41 @@
+.expression-wrap {
+  height: 0;
+  padding: 0 0.53333rem;
+  overflow-y: auto;
+  transition: .3s ease;
+}
+.expression-wrap:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.expression-wrap > i {
+  display: block;
+  width: 1.50667rem;
+  height: 1.50667rem;
+  float: left;
+  margin: 0.22rem;
+}
+
+.expression-wrap > i img{
+	width:1.2rem;
+	height:auto;
+}
+.chat-text {
+	margin-left:0.2rem;
+	/*line-height:1.3rem;*/
+	}
+.chat-text img{
+	width:1rem;
+	height:auto;
+	vertical-align:middle;
+}
+
+.expression-wrap.expression-open {
+  height: 8rem;
+  padding: 0.53333rem;
+}
+.chat-toolbar {
+  -webkit-user-select: none;
+  user-select: none;
+}

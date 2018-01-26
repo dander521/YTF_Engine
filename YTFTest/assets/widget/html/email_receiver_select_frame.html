@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>邮件</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<link rel="stylesheet" href="../css/sort.css" />
+		<script id="listTmpl" type="text/x-dot-template">
+			{{ for(var i= 0; i < it.length; i ++){ }}
+			<div class="sort_list yt yt-ac" data-code="{{=it[i].postcode}}" data-face="{{=it[i].fface}}" data-address="{{=it[i].province}}{{=it[i].city}}" data-id="{{=it[i].from_uid}}" data-name="{{=it[i].fname}}">
+			<div class="img-wrap user-photo size60-hmc" style="background-image: url('{{=serverUrl}}{{=it[i].fface}}');"></div>
+			<div class="num_name list-title ml20">{{=it[i].fname}}</div>
+			</div>
+			{{ } }}
+		</script>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div id="letter"></div>
+			<div class="sort_box">
+				<!--<div class="sort_list yt yt-ac">
+				<div class="img-wrap user-photo size60-hmc" style="background-image: url(../images/bg-img-avatar.png);">
+
+				</div>
+				<div class="num_name list-title ml20">
+				林静
+				</div>
+				</div>
+				<div class="sort_list yt yt-ac">
+				<div class="img-wrap user-photo size60-hmc" style="background-image: url(../images/bg-img-avatar.png);">
+
+				</div>
+				<div class="num_name list-title ml20">
+				安静
+				</div>
+				</div>-->
+			</div>
+			<!--以下代码显示/隐藏字母排序选择控制条-->
+			<div class="initials">
+				<ul></ul>
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/jquery.charfirst.pinyin.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/sort.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/doT.min.js" type="text/javascript"></script>
+	<script>
+		var page = 1;
+		var totalPage = 1;
+		ytfready = function() {
+			showInfos();
+		};
+
+		$(function() {
+			$(".sort_box").delegate("div.sort_list", "tap", function() {
+				//console.log("--------"+$(this).attr("data-id"));
+				var uid = $(this).attr("data-id");
+				var name = $(this).attr("data-name");
+				var address = $(this).attr("data-address");
+				var face = $(this).attr("data-face");
+				var postcode = $(this).attr("data-code");
+				YTF.eventSend({
+					eventName : 'receiver_select',
+					attr : {
+						uid : uid,
+						name : name,
+						face : face,
+						address : address,
+						postcode : postcode
+
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			});
+		});
+
+		/**
+		 *展示数据
+		 */
+		function showInfos() {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/friends/friends-list',
+				methodType : 'post',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						pageSize : 200
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				console.log("---6667--" + JSON.stringify(ret));
+				if (ret) {
+					switch(ret.status) {
+					case 0:
+						openLoginWin("login_win","./login_win.html");
+						break;
+					case 1:
+						var userList = doT.template($("#listTmpl").text());
+						$(".sort_box").append(userList(ret.data.data));
+						sort_info();
+						break;
+					default:
+						YTF.toast({
+							msg : ret.msg
+						});
+					};
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+	</script>
+</html>

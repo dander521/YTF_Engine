@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+			font-size:29px;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="createDirectory('fs://111/222')">createDirectory</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="createFile('fs://111/222/333.txt')">createFile</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectory('fs://111')">removeDirectory</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectory('fs://111/222')">removeDirectoryFile</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="fileExist('fs://111/222/333.txt')">fileExist</div>
+			</div>
+			<!-- 目录及文件确认创建成功，下一步对文件进行读写操作测试 -->
+				<!-- 可写模式打开文件测试 -->
+                <!-- ...读写模式.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openFile('fs://111/222/333.txt',2)">openFile</div>
+			</div>
+            <!-- ...参数补全.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="wirteFile('aaaaaaaaaa',0,false)">wirteFile</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readUpFile(8)">readUpFile</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDownFile(8)">readDownFile</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getFileAttribute('fs://111/222/333.txt')">getFileAttribute</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getFileMD5('fs://111/222/333.txt')">getFileMD5</div>
+			</div>
+            <!-- ...参数补全.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLength('fs://111/222/333.txt',0,4)">readTxtFileByLength</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="writeTxtFileByLength('fs://111/222/333.txt','cc',0,3)">writeTxtFileByLength</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeFile('fs://111/222/333.txt')">closeFile</div>
+			</div>
+			
+			<!-- 读写操作测试完毕，进行文件重命名、移动、复制、删除等操作测试 -->
+            <!-- copy 将文件copy到文件夹 -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="copyFileToDir('fs://111/222/333.txt','fs://111/444')">copyFileToDir</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectory('fs://111/444')">removeDirectory</div>
+			</div>
+			
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="renameFile('fs://111/444/333.txt','fs://111/444/555.txt')">renameFile</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectory('fs://111/444')">removeDirectory</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="moveFileToDir('fs://111/444/555.txt','fs://111/222')">removeFile</div>
+			</div>	
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script>
+	var FileTest;
+	var fd;
+	var codingType="utf8";
+
+	ytfready = function(){
+		FileTest= YTF.require("File");
+	}
+	
+	function setCT_U(){
+		codingType="utf8";
+	}
+	function setCT_G(){
+		codingType="gbk";
+	}
+	function createDirectory(path){
+		FileTest.createDirectory({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function removeDirectory(path){
+		FileTest.removeDirectory({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function createFile(path){
+		FileTest.createFile({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	function removeFile(path){
+		FileTest.removeFile({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function copyFileToDir(oldPath,newPath){
+		FileTest.copyFileToDir({
+			oldPath:oldPath,
+			newPath:newPath
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+
+	function moveFileToDir(oldPath,newPath){
+		FileTest.moveFileToDir({
+			oldPath:oldPath,
+			newPath:newPath
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function renameFile(oldPath,newPath){
+		FileTest.renameFile({
+			oldPath:oldPath,
+			newPath:newPath
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function readDirectory(path){
+		FileTest.readDirectory({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function openFile(path,flags){
+		FileTest.openFile({
+			path:path,
+			flags:flags
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+				if(ret.fd){
+					fd = ret.fd;
+				}
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+
+	function readFile(offset,length){
+		FileTest.readFile({
+			fd:fd,
+			offset:offset,
+			codingType:codingType,
+			length:length
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function readUpFile(length){
+		FileTest.readUpFile({
+			fd:fd,
+			codingType:codingType,
+			length:length
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function readDownFile(length){
+		FileTest.readDownFile({
+			fd:fd,
+			codingType:codingType,
+			length:length
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function wirteFile(data,offset,overwrite){
+		FileTest.wirteFile({
+			fd:fd,
+			data:data,
+			offset:offset,
+			overwrite:overwrite,
+			codingType:codingType
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function closeFile(){
+		FileTest.closeFile({
+			fd:fd
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	function fileExist(path){
+		FileTest.fileExist({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function getFileAttribute(path){
+		FileTest.getFileAttribute({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function readTxtFileByLength(path,start,length){
+		FileTest.readTxtFileByLength({
+			path:path,
+			substring:{
+				start:start,
+				length:length
+			}
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	function writeTxtFileByLength(path,content,start,strategy){
+		FileTest.writeTxtFileByLength({
+			path:path,
+			content:content,
+			place:{
+				start:start,
+				strategy:strategy
+			},
+			codingType:codingType
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+	
+	function getFileMD5(path){
+		FileTest.getFileMD5({
+			path:path
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+			}else if(err){
+				toastMsg(JSON.stringify(err));
+			}
+		});
+	}
+	
+
+</script>
+</html>

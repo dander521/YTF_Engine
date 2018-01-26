@@ -1,0 +1,9 @@
+var JPush ={
+sideName:"侧滑Win的名字",
+htmlUrl:"侧滑Win的地址",//页面地址，可以为本地文件路径，支持相对路径和绝对路径，以及widget:///、fs://等协议路径，也可以为远程地址
+htmlParam:{
+params:"自己定义字段和参数"
+},//可选项）页面参数，页面中可以通过YTF.htmlParaml获取
+isEdit:false,//可选项）是否允许长按页面时弹出选择菜单
+softInputMode:"auto"//（可选项）当键盘弹出时，输入框被盖住时，当前页面的调整方式，参考键盘弹出页面调整方式常量，只iOS有效
+}

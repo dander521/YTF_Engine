@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>邮件</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<link rel="stylesheet" href="../css/swiper.min.css" />
+		<script id="listTmpl" type="text/x-dot-template">
+			{{ for(var i= 0; i < it.length; i ++){ }}
+			<div class="swiper-slide">
+			<div class="mail-pic" data-index="{{=i}}" data-url="{{=photoUrl}}{{=it[i]}}" style="background-image: url('{{=photoUrl}}{{=it[i]}}');">
+			</div>
+			</div>
+			{{ } }}
+			<div class="swiper-slide"></div>
+			<div class="swiper-slide"></div>
+			<div class="swiper-slide"></div>
+			<div class="swiper-slide"></div>
+		</script>
+	</head>
+
+	<body>
+		<div class="view-mail m30"></div>
+
+		</div>
+		<div class="view-container m30">
+			<section class="swiper-wrapper">
+				<!--<div class="swiper-slide">
+				<div class="mail-pic" data-url="../images/meinv.jpg" style="background-image: url(../images/meinv.jpg);">
+
+				</div>
+				</div>-->
+			</section>
+		</div>
+
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/swiper.min.js" type="text/javascript"></script>
+	<script src="../script/doT.min.js" type="text/javascript"></script>
+	<script>
+		var homeNavSwiper = null;
+		ytfready = function() {
+			showInfos(YTF.htmlParam.id);
+		};
+
+		/**
+		 * 展示数据
+		 */
+		function showInfos(id) {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/letter/detail',
+				methodType : 'get',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						id : id
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				$("body").children(".mail-div").remove();
+				//console.log("-------9000------" + JSON.stringify(ret));
+				if (ret) {
+					switch(ret.status) {
+					case 0:
+						openLoginWin("login_win","./login_win.html");
+						break;
+					case 1:
+						var userList = doT.template($("#listTmpl").text());
+						$(".swiper-wrapper").append(userList(ret.data.img));
+						$(".view-mail").css("background-image", "url(" + photoUrl + (ret.data.img)[0] + ")");
+						homeNavSwiper = new Swiper('.view-container', {
+							direction : 'horizontal',
+							freeMode : false,
+							loop : false,
+							paginationClickable : true,
+							slidesPerView : 5,
+							onSlideChangeStart : function(swiper) {
+								var Url = $(".view-container").find(".swiper-slide").eq(swiper.activeIndex).children(".mail-pic").attr("data-url");
+								$(".view-mail").css("background-image", "url(" + Url + ")");
+							}
+						});
+						break;
+					default:
+						YTF.toast({
+							msg : ret.msg
+						});
+					};
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+	</script>
+</html>

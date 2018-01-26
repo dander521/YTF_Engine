@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>动态</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body>
+<script id="listTmpl" type="text/x-dot-template">
+{{ for(var i= 0; i < it.length; i ++){ }}
+  <div class="clh-item bgff bt bb mb30" id="item{{=it[i].id}}" data-id="{{=it[i].id}}" data-uid="{{=it[i].user_uid}}" data-data='{{=JSON.stringify(it[i])}}'>
+    <div class="cit p30 yt">
+      <div class="img-wrap user-photo user-photo-s round mr30" style="background-image: url({{=(it[i].face)?photoUrl + it[i].face:'../images/bg-img-avatar.png'}});"></div>
+      <div class="yt-f1">
+        <div class="lh1">
+          <h3 class="list-title dib yt-te max-w400-hmc">{{=it[i].biname}}</h3>
+          <span class="ml10 dib bg-sex bg-sex-w fz24 cff"><i class="icon {{=setSex(it[i].sex)}} mr10"></i>{{=it[i].nage}}</span> </div>
+        <div class="mt20 lh1 yt yt-ac">
+          <div class="ci-tags fz20 cff"> {{=setCategory(it[i].category)}} </div>
+          <div class="yt-f1 tx-r fz24 c99"> <span>{{=it[i].distance}}米以内</span> <span class="plr20">|</span> <span>{{=getDateDiff(it[i].time)}}</span> </div>
+        </div>
+        <div class="mt20 fz28 c66 lh16 wb-ba-hmc">
+          <p class="lh16 fz26"> {{=it[i].content}} </p>
+          <ul class="ci-imgs-list clear mt20">{{=imgList(it[i].img)}}</ul>
+        </div>
+      </div>
+    </div>
+    <div class="cib yt yt-ac ptb15-hmc bt">
+      <div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br share-tap"> <i class="icon-hi icon-share-hmc mr10"></i>
+        <div class="fz28 c99"> (<span id="share{{=it[i].id}}">{{=setNumber(it[i].share_num)}}</span>) </div>
+      </div>
+      <div class="yt-f1 yt yt-ac yt-pc ptb15-hmc br zan-tap"> <i class="icon-hi icon-zan-hmc mr10"></i>
+        <div class="fz28 c99"> (<span id="zan{{=it[i].id}}">{{=setNumber(it[i].praise_num)}}</span>) </div>
+      </div>
+      <div class="yt-f1 yt yt-ac yt-pc ptb15-hmc comment-tap"> <i class="icon-hi icon-comment-hmc mr10"></i>
+        <div class="fz28 c99"> (<span id="comment{{=it[i].id}}">{{=setNumber(it[i].comment_num)}}</span>) </div>
+      </div>
+    </div>
+  </div>
+  {{ } }}
+</script> 
+<div class="card-list-hmc mt30">
+  
+</div>
+<!--<div class="dialog-wrap">
+    <div class="action-main bgff cat-main yt">
+        <ul class="cm-nav yt-f1">
+            <li class="active" data-value="0">不限</li>
+            <li data-value="1">最新</li>
+            <li id="cm-all">全部</li>
+        </ul>
+        <div class="cm-content yt-f2">
+            <ul>
+                <li class="active" data-value="2">全部</li>
+                <li data-value="3">公开信</li>
+                <li data-value="4">分享</li>
+                <li data-value="5">征友</li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../script/doT.min.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+page = 1;
+pageSize = 15;
+isPage = false;
+Screen = "";
+category = "";
+lat = 30.5656544;
+lon = 104.077898;
+listData = [];
+ytfready = function(){
+	coor = eval("("+localStorage.getItem("location")+")");
+	//lat  = (coor.latitude)?coor.latitude:0;
+	//lon = (coor.longitude)?coor.longitude:0;
+	//筛选菜单事件监听
+	YTF.eventListenerAdd({
+				eventName: 'selectMenu'
+		},
+		function(ret, err) {
+				if(ret){
+					switch(ret.selectID){
+						case "0":
+							category = "";
+							break;
+						case "1":
+							Screen = "";
+							break;
+						case "2":
+							category = "";
+							break;
+						case "3":
+							category = "1";
+							break;
+						case "4":
+							category = "3";
+							break;
+						case "5":
+							category = "2";
+							break;
+						}
+					YTF.webUIHidePopupWindow({
+							popName : "menu"
+						});
+					page = 1;
+					getData(1);
+				}
+		});
+	//动态刷新事件监听
+	YTF.eventListenerAdd({
+		　eventName: 'resLsit'
+		},function(ret,err){
+		　　if(ret){
+				switch(ret["type"]){
+					case 'resIndex':
+						getData(1);
+						break;
+					}
+		　　}
+		});
+	//分享事件监听
+	YTF.eventListenerAdd({
+		　eventName: 'resShare'
+		},function(ret,err){
+		　　if(ret){
+				shareOk(ret.id,ret.proof);
+		　　}
+		});
+	YTF.eventListenerAdd({
+		eventName: 'scrollToBottom',
+		attr:{
+				scrollToBottomHeight: 10　
+				}　
+	},function(ret,err){　
+		if (ret){
+			if(isPage){
+				page++;
+				getData(0);
+				}
+		}
+	});
+	getData(0);
+}
+
+function shareOk(id,proof){
+	YTF.ajax({　
+			url: serverUrl + 'app/share/callback',
+			methodType:'get',
+			isReport:false,
+			headers:{
+			   logtoken:userToken
+			},
+			data:{
+				values:{
+					'proof':proof
+					}
+				}
+	},function(ret, err){
+		if(ret){
+			if(ret.status == 1){
+				var number = $("#share"+id).html();
+					$("#share"+id).html(parseInt(parseInt(number) + 1));
+				YTF.toast({
+						msg:ret["data"].integral_msg,
+						duration:2000,
+						global:false,
+					});
+				}else{
+					YTF.toast({
+							msg:ret["msg"],
+							duration:2000,
+							global:false,
+						});
+					}
+		}else{
+			YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+		}
+	})
+}
+
+function getData(f){
+	showProgress("数据加载中...");
+	YTF.ajax({　
+			url: serverUrl + 'app/dynamic/list?screen='+Screen+'&category='+category+'&lat='+lat+'&lon='+lon+'&page='+page+'&pageSize='+pageSize,
+			methodType:'get',
+			isReport:false,
+			headers:{
+			   logtoken:userToken
+			}
+	},function(ret, err){
+		YTF.hideProgress();
+		if(ret){
+			if(f){
+				$(".card-list-hmc").html("");
+				}
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					listData = ret.data.data;
+					if(ret.data.data.length >= pageSize){
+						isPage = true;
+						};
+						var dataList = doT.template($("#listTmpl").text());
+							$(".card-list-hmc").append(dataList(ret.data.data));
+					break;
+				case 2:
+					if(page < 2){
+						noData(".card-list-hmc","getData(0)","");
+						}else{
+							YTF.toast({
+										msg:ret["msg"],
+										duration:2000,
+										global:false,
+									});
+							}
+					isPage = false;
+					break;
+				default:
+					isPage = false;
+					YTF.toast({
+								msg:ret["msg"],
+								duration:2000,
+								global:false,
+							});
+				}
+		}else{
+			netErr(".card-list-hmc","getData(0)");
+		}
+	})
+}
+
+function selectShow(){
+	YTF.webUIShowPopupWindow({
+		  popName : "menu",
+		  htmlUrl : "./menu.html",
+		  rect:{
+			  	location:"top"
+			  },
+		  childBackground:"rgba(255,255,255,0)"
+		});
+	//$(".menu_box").toggleClass("active");
+	}
+
+$(function(){	
+	$(".cat-main,.cm-nav").on("tap", function(ev) {
+		ev.stopPropagation();
+	});
+	$(".cm-nav li").on('tap', function() {
+			$(this).addClass("active").siblings("li").removeClass("active");
+			if($('#cm-all').hasClass('active')){
+				$(".cm-content").addClass('active');
+			} else {
+				$(".cm-content").removeClass('active');
+				var selectID = $(this).attr("data-value");
+				switch(selectID){
+					case "0":
+						category = "";
+						break;
+					case "1":
+						Screen = "";
+						break;
+					}
+				page = 1;
+				getData(1);
+				window.setTimeout(function(){
+						selectShow();
+					},100);
+			};
+		});
+	$(".cm-content li").on('tap', function() {
+		$(this).addClass("active").siblings("li").removeClass("active");
+		var selectID = $(this).attr("data-value");
+		switch(selectID){
+			case "2":
+				category = "";
+				break;
+			case "3":
+				category = "1";
+				break;
+			case "4":
+				category = "3";
+				break;
+			case "5":
+				category = "2";
+				break;
+			}
+		page = 1;
+		getData(1);
+		window.setTimeout(function(){
+				selectShow();
+			},100);
+	});
+	
+	//打开分享界面
+	$(".card-list-hmc").delegate(".share-tap","tap",function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			var id = $(this).closest("div .clh-item").attr("data-id");
+			YTF.winOpen({
+						winName : "share",
+						htmlUrl : "./share.html",
+						htmlParam : {
+								id : id,
+								wind : "list"
+							}
+						});
+		})
+	//点赞
+	$(".card-list-hmc").delegate(".zan-tap","tap",function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			var id = $(this).closest("div .clh-item").attr("data-id");
+				addPraise(id);
+		})
+	//打开评论界面
+	$(".card-list-hmc").delegate(".comment-tap","tap",function(){
+			var argsData = $(this).closest(".clh-item").attr("data-data");
+			$(this).addClass("active").siblings().removeClass("active");
+			YTF.winOpen({
+						winName : "comment_win",
+						htmlUrl : "./comment_win.html",
+						htmlParam : eval("("+argsData+")")
+						});
+		})
+	//预览图片
+	$(".card-list-hmc").delegate("img","tap",function(){
+		var imgArr = [];
+		$(this).closest(".ci-imgs-list").children("li").each(function(index, element) {
+			imgArr.push($(this).children("img").attr("src"));
+		});
+		if(imgArr.length){
+			var ImageBrowser = YTF.require("ImageBrowser");
+				ImageBrowser.imageBrowser({
+					images: imgArr
+				},function(ret, err) {
+					//alert(ret)
+				});
+			}
+		})
+	//打开用户主页
+	$(".card-list-hmc").delegate(".user-photo,.list-title","tap",function(){
+		var uid = $(this).closest(".clh-item").attr("data-uid");
+		YTF.winOpen({
+					winName : "users_info_win",
+					htmlUrl : "./users_info_win.html",
+					htmlParam : {
+							type : 0,
+							uid : uid
+						}
+					});
+		})
+})
+
+function setSex(i){
+	switch(i){
+		case '0':
+			return "";
+		break;
+		case '1':
+			return "icon-sex-m";
+		break;
+		case '2':
+			return "icon-sex-w";
+		break;
+		}
+	}
+function setCategory(i){
+	switch(i){
+		case "1":
+			return "公开信";
+		break;
+		case "2":
+			return "征友";
+		break;
+		case "3":
+			return "分享";
+		break;
+		}
+	}
+function imgList(j){
+	var temp = '';
+	for(var i = 0; i<j.length; i++){
+		temp += '<li class="img-wrap"><img src="'+photoUrl + j[i] +'"/></li>';
+		}
+	return temp;
+	}
+function setNumber(n){
+	if(n){
+		if(parseInt(n) > 999){
+			return n+'+';
+			}
+		return n;
+		}
+	}
+	
+//点赞提交
+function addPraise(id){
+	showProgress("数据提交中...");
+	YTF.ajax({　
+			url: serverUrl + 'app/dynamic/Praise',
+			methodType:'post',
+			isReport:false,
+			headers:{
+			   logtoken:userToken
+			},
+			data:{
+				values:{
+					'id':id
+					}
+				}
+	},function(ret, err){
+		YTF.hideProgress();
+		if(ret){
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}if(ret.status == 1){
+				var number = $("#zan"+id).html();
+				if(ret.msg == "点赞成功"){
+					$("#zan"+id).html((parseInt(number)+1));
+					}else{
+						$("#zan"+id).html((parseInt(number)-1));
+						}
+				}
+			YTF.toast({
+						msg:ret["msg"],
+						duration:2000,
+						global:false,
+					});
+		}else{
+			YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+		}
+	})
+}
+</script>
+</html>

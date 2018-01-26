@@ -1,0 +1,25 @@
+	.editor{padding: 10px 3%;background: #FFFFFF;height: auto;}
+
+
+	.span_cover{padding:5px 0px; color: #999;font-size: 15px;}
+	
+	.pic_li{float:left;width:50px;height:50px;
+		border:1px solid #ccc;
+	}
+	.pic_li img{width:50px;height:50px;}
+	.add_pic_word{font-size: 12px;color: #999999;}
+	.add_pic{font-size:30px;text-align: center;line-height: 50px;color: #ccc;}
+	
+	.add_cover_pic{width:100%;height:auto;border:dashed 1px #CCCCCC;margin:10px 0; text-align: center;color: #AAAAAA;display: block;}
+	.add_cover_pic span{display: inline-block;vertical-align: middle;}
+	.add_cover_pic .add_icon{ font-size:27px;line-height: 60px;font-weight:lighter;}
+	.add_cover_pic .add_text{font-size:15px;line-height: 60px; font-weight:lighter;}
+	
+
+/*.list_div{border-bottom: solid 1px #DDDDDD;}*/	
+/*电视台列表*/
+.pic_list{padding-right:10px;}
+.pic-item{text-align:center;width:25%;float:left;margin-bottom: 10px;}
+.pic-item img{width:100%;display: block;max-height:100%;position: absolute;left:0;top:0;}
+.img-wrap{border:dashed 1px #CCCCCC;margin-right:4px;margin-left:0px;position: relative;}
+.img-wrap:before{content:'';display:block;padding-top:70%;}

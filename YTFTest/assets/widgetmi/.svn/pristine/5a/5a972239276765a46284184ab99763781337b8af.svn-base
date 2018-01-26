@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+	<link rel="stylesheet" href="../../css/ytui.css" />
+	<style type="text/css">
+		.inputAjaxUrl{
+			width: 90%;
+			/*height: 30px;*/
+			font-size: 18px;
+			line-height: 25px;
+			padding: 5px;
+			/*margin-left: 20px;*/
+			border:1px solid #ccc;
+		}
+		.ajaxUrlDiv{
+			text-align:center;
+		}
+		#wrap{
+			padding: 10px 10px;
+		}
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	
+</head>
+<body style="background: #FFFFFF;">
+	<div id="wrap">
+		<div class="ajaxUrlDiv mt10">
+			<input  class="inputAjaxUrl " type="text" id="ajaxUrlInputID" value="http://139.129.52.244/2.php"/>
+		</div>
+		<div class="ajaxUrlDiv mt10">
+			<input  class="inputAjaxUrl " type="text" id="ajaxUrlContentID" value="hehe"/>
+		</div>
+		<div class="mt30 ajaxdiv">
+			<div class="btn bg-main mr20" onclick="ajaxBtn()">提交Post请求</div>
+		</div>
+		
+	</div>
+</body>
+<script src="../../script/common.js"></script>
+<script src="../../script/zepto.js"></script>
+<script src="../../script/ajax.js"></script>
+<script>
+	ytfready=function(){
+		
+	}
+
+	function ajaxBtn(){
+		var ajaxUrl = $('#ajaxUrlInputID').val();
+		var ajaxContent = $('#ajaxUrlContentID').val();
+		nimingAjaxPost(ajaxUrl,ajaxContent);
+	}
+</script>
+</html>

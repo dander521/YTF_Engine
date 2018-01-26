@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>登录</title>
+<link rel="stylesheet" href="ytfui/css/ytui.css" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+<div class="guid-page">
+  <div class="guid-btn"> 开启书信之旅 </div>
+  <div class="guid-logo"></div>
+  <div class="guid-copyright"> Copyright © 2016-2021 biyu </div>
+</div>
+</body>
+<script src="ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script src="ytfui/js/zepto.min.js"></script>
+<script src="script/common.js"></script>
+<script>
+ytfready = function(){
+	if(userToken){
+		YTF.winOpen({
+			winName: 'index_main',
+			htmlUrl: './html/index.html',
+			animation:{
+					type:"none",
+					subType:"from_right",
+					duration:300
+				}
+		});
+	}else{
+			YTF.winOpen({
+				winName: 'login_win',
+				htmlUrl: './html/login_win.html',
+				animation:{
+						type:"none",
+						subType:"from_right",
+						duration:300
+					}
+			});
+		}
+	//getLocation();
+}
+</script>
+</html>

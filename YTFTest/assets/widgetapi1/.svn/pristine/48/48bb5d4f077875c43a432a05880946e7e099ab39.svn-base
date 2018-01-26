@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<body>
+		<section class="mt20">
+        <div class="pb20 pl30">
+            <h2 class="h4">图文列表</h2>
+        </div>
+        <ul class="list" id="eventList">
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li class="yt yt-ac">
+               
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title yt-te">标题</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                        <p class="fz26 lh14 yt-te2">我们擅于发掘富有价值的洞察并具有最广泛的能力，深谙业务与技术，能迅速、明确的交付业务成果，帮您解决最为复杂的业务难题。</p>
+                    </div>
+            </li>
+            <li>
+                <a href="#" class="yt yt-ac">
+                    <div class="list-img mr20" style="background-image:url(../../images/1.png)"></div>
+                    <div class="yt-f1">
+                        <div class="list-title">我们是创业者的技术合伙人 我们提供创业一条龙服务</div>
+                        <span class="fz26">时间：2015-10-10</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+	</body>
+<script src="../../script/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../script/zepto.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	ytfready = function(){
+		eventListenerAdd('scrollToBottom');
+	}
+	
+	function eventListenerAdd(eventName){
+		var str = '<li><a href="#" class="yt yt-ac"><div class="list-img mr20" style="background-image:url(../../images/1.png)"></div><div class="yt-f1"><div class="list-title">我们是创业者的技术合伙人 我们提供创业一条龙服务</div><span class="fz26">时间：2015-10-10</span></div></a></li>';
+		YTF.eventListenerAdd(
+	      {eventName: eventName},
+	      function(ret, err){
+	        if( ret ){
+				  $('#eventList').append(str);
+	              toastMsg('已经滑动到底部，加载更多列表！');
+	            }else{
+	              console.log(err);
+	        }
+        });
+	}
+	
+</script>
+</html>

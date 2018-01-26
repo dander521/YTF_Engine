@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="init()">YTFAudio：init</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="play()">YTFAudio：play</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="pause()">YTFAudio：pause</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setVoice()">YTFAudio：setVoice</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getVoice()">YTFAudio：getVoice</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="play()">setCurrent：setCurrent</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getCurrent()">YTFAudio：getCurrent</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getState()">YTFAudio：getState</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="scanAudioLibrary()">YTFAudio：scanAudioLibrary</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getAttr()">YTFAudio：getAttr</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="clearCache()">YTFAudio：clearCache</div>
+			</div><br /><div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="addEventListener()">YTFAudio：addEventListener</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="removeEventListener()">YTFAudio：removeEventListener</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script>
+	var YTFAudioTest;
+	ytfready = function(){
+		YTFAudioTest= YTF.require("YTFAudio");
+	}
+	
+	function init(){
+		YTFAudioTest.init({
+			url:"http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15",
+			hz:1000
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+
+	function play(){
+		YTFAudioTest.play();
+	}
+	
+	function pause(){
+		YTFAudioTest.pause();
+	}
+	
+	function stop(){
+		YTFAudioTest.stop();
+	}
+	
+	function setVoice(){
+		YTFAudioTest.setVoice({
+			mode:1,
+			type:1
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getVoice(){
+		var voiceNum =YTFAudioTest.getVoice();
+		alert(getVoice);
+	}
+	
+	function setCurrent(){
+		YTFAudioTest.setVoice({
+			seekTo:2000
+		});
+	}
+	
+	function getCurrent(){
+		var current = YTFAudioTest.getCurrent();
+		alert(current);
+	}
+	
+	function getState(){
+		var current = YTFAudioTest.getState();
+		alert(current);
+	}
+	
+	function scanAudioLibrary(){
+		YTFAudioTest.scanAudioLibrary(function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getAttr(){
+		YTFAudioTest.getAttr(function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function clearCache(){
+		YTFAudioTest.clearCache({
+			// path:""
+		});
+	}
+	
+	function addEventListener(){
+		YTFAudioTest.addEventListener(function(ret,err){
+			if(ret)
+				toastMsg(JSON.stringify(ret));
+			else if(err)
+				toastMsg(JSON.stringify(err));
+		});
+	}
+	
+	function removeEventListener(){
+		YTFAudioTest.removeEventListener();
+	}
+	
+</script>
+</html>

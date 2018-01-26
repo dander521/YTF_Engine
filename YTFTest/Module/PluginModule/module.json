@@ -1,0 +1,234 @@
+[
+  {
+    "class" : "JumpToApp",
+    "methods" : [
+      "openAppStore"
+    ],
+    "moduleName" : "JumpAppStore",
+    "syncMethods" : [
+      "targetAppIsInstall"
+    ]
+  },
+  {
+    "class" : "QQLoginShare",
+    "methods" : [
+      "login",
+      "logout",
+      "getUserInfo",
+      "shareText",
+      "shareImage",
+      "shareWebPage",
+      "shareMusic",
+      "shareVideo"
+    ],
+    "moduleName" : "qq",
+    "syncMethods" : [
+      "testTongbu",
+      "isInstalled"
+    ]
+  },
+  {
+    "class" : "YTFAliPayModule",
+    "methods" : [
+      "pay"
+    ],
+    "moduleName" : "aliPay",
+    "syncMethods" : []
+  },
+  {
+    "class" : "YTFLocationModule",
+    "methods" : [
+      "getLocation",
+      "noViewStopLocation",
+      "viewLocationMethod"
+    ],
+    "moduleName" : "SystemLocation",
+    "syncMethods" : []
+  },
+  {
+    "class" : "YTFJPushModule",
+    "doAppLaunch" : "NO",
+    "methods" : [
+      "ytfStartJPush",
+      "setListener",
+      "removeListener",
+      "removeMessage",
+      "stopPush",
+      "resumePush",
+      "isPushStopped",
+      "getRegistrationId"
+    ],
+    "moduleName" : "YTFJPush",
+    "syncMethods" : []
+  },
+  {
+    "class" : "YTFWeiboModule",
+    "doAppLaunch" : "YES",
+    "methods" : [
+      "auth",
+                 "getUserInfo",
+      "cancelAuth",
+      "shareText",
+      "shareImage",
+      "share"
+    ],
+    "moduleName" : "weibo",
+    "syncMethods" : ["isInstalled"]
+  },
+  {
+    "class" : "YTFWeChatModule",
+    "doAppLaunch" : "YES",
+    "methods" : [
+      "auth",
+      "shareText",
+      "shareImage",
+      "shareVideo",
+      "shareMusic",
+      "shareWebPage",
+      "getToken",
+      "getUserInfo",
+      "refreshToken",
+      "pay"
+    ],
+    "moduleName" : "weixin",
+    "syncMethods" : [
+      "isInstalled",
+      "checkShareTimeline"
+    ]
+  },
+  {
+    "class" : "PhotoBrowserModule",
+    "methods" : [
+      "openBrowserView"
+    ],
+    "moduleName" : "PhotoBrowser",
+    "syncMethods" : []
+  },
+  {
+    "class" : "YTFMovieMainClass",
+    "methods" : [
+      "instanceMovie",
+      "addListenerMovie",
+      "setPlayStatusMovie",
+      "setFullScreenStatusMovie"
+    ],
+    "moduleName" : "YTFMovie"
+  },
+  {
+    "class" : "YTFFileOperationModule",
+    "methods" : [
+      "createDirectory",
+      "removeDirectory",
+      "createFile",
+      "removeFile",
+      "copyFileToDir",
+      "moveFileToDir",
+      "renameFile",
+      "readDirectory",
+      "openFile",
+      "readFile",
+      "readUpFile",
+      "readDownFile",
+      "wirteFile",
+      "closeFile",
+      "fileExist",
+      "getFileAttribute",
+      "readTxtFileByLength",
+      "writeTxtFileByLength",
+      "getFileMD5"
+    ],
+    "moduleName" : "File",
+    "syncMethods" : [
+      "createDirectorySync",
+      "removeDirectorySync",
+      "createFileSync",
+      "removeFileSync",
+      "copyFileToDirSync",
+      "moveFileToDirSync",
+      "renameFileSync",
+      "readDirectorySync",
+      "openFileSync",
+      "readFileSync",
+      "readUpFileSync",
+      "readDownFileSync",
+      "wirteFileSync",
+      "closeFileSync",
+      "fileExistSync",
+      "getFileAttributeSync",
+      "readTxtFileByLengthSync",
+      "writeTxtFileByLengthSync",
+      "getFileMD5Sync"
+    ]
+  },
+  {
+    "class" : "YTFDataBaseModule",
+    "methods" : [
+      "openDataBase",
+      "closeDataBase",
+      "transaction",
+      "executeSql",
+      "selectSql"
+    ],
+    "moduleName" : "DB",
+    "syncMethods" : [
+      "openDataBaseSync",
+      "closeDataBaseSync",
+      "transactionSync",
+      "executeSqlSync",
+      "selectSqlSync"
+    ]
+  },
+ {
+ "class" : "YTFQRCodeModule",
+ "methods" : [
+              "openScanQRCodeView",
+              "decodeQRCodeImage",
+              "encodeQRCodeImage"
+              ],
+ "moduleName" : "QR",
+ "syncMethods" : []
+ },
+ {
+ "class" : "AmapLocation",
+ "methods" : [
+              "getLocation"
+              ],
+ "moduleName" : "YTFAmap",
+ "syncMethods" : []
+ },
+ {
+ "class" : "YTFPhotoBrowserModule",
+ "methods" : [
+              "imageBrowser"
+              ],
+ "moduleName" : "ImageBrowser",
+ "syncMethods" : []
+ }
+ ,
+ {
+ "class" : "TestClass",
+ "methods" : [
+              "addViewCoustum"
+              ],
+ "moduleName" : "TestModule",
+ "syncMethods" : []
+ },
+ {
+ "class" : "TimeSelectorManager",
+ "methods" : [
+              "open",
+              "close"
+              ],
+ "moduleName" : "timeSelector",
+ "syncMethods" : []
+ },
+ {
+ "class" : "LocationSelectorManager",
+ "methods" : [
+              "open",
+              "close"
+              ],
+ "moduleName" : "citySelector",
+ "syncMethods" : []
+ }
+]

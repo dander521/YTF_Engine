@@ -1,0 +1,6 @@
+/*公用布局*/
+#wrap{height: 100%;display: -webkit-box;-webkit-box-orient: vertical;}
+#main{-webkit-box-flex: 1;}
+.space-box{height:1px;display:block;}
+
+html,body{height: 100%;background: #eee;font-size:100%;}

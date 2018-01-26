@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>登录</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="bgf8">
+		<ul class="bgff">
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="" checked="checked" class="select-sex mr20 db">
+					<span>不限</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="0-12" class="select-sex mr20 db">
+					<span>12岁以下</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="12-18" class="select-sex mr20 db">
+					<span>12岁至18岁</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="18-24" class="select-sex mr20 db">
+					<span>18岁至24岁</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="24-30" class="select-sex mr20 db">
+					<span>24岁至30岁</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="30-40" class="select-sex mr20 db">
+					<span>30岁至40岁</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="40-50" class="select-sex mr20 db">
+					<span>40岁至50岁</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="50-60" class="select-sex mr20 db">
+					<span>50岁至60岁</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="age" value="60-200" class="select-sex mr20 db">
+					<span>60岁以上</span> </label>
+			</li>
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			$("input[name='age']").each(function() {
+				if ($(this).val() == YTF.htmlParam.age) {
+					$(this).prop("checked", true);
+				}
+			});
+		}
+		/**
+		 *确认
+		 */
+		function setAge() {
+			YTF.eventSend({
+				eventName : 'select_option',
+				attr : {
+					type : 'age',
+					title : $("input[name='age']:checked").next("span").html(),
+					value : $("input[name='age']:checked").val()
+				}
+			}, function(ret, err) {
+				if (ret) {
+					YTF.winClose();
+				}
+			});
+		};
+	</script>
+</html>

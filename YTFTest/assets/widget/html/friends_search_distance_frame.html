@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>登录</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="bgf8">
+		<ul class="bgff">
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="distance" value="" checked="checked" class="select-sex mr20 db">
+					<span>不限</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="distance" value="city" class="select-sex mr20 db">
+					<span>同城</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="distance" value="province" class="select-sex mr20 db">
+					<span>省内</span> </label>
+			</li>
+			<li>
+				<label class="yt yt-ac fz32 c33 p30 bb">
+					<input type="radio" name="distance" value="nprovince" class="select-sex mr20 db">
+					<span>省外</span> </label>
+			</li>
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			$("input[name='distance']").each(function() {
+				if ($(this).val() == YTF.htmlParam.distance) {
+					$(this).prop("checked", true);
+				}
+			});
+		};
+
+		function setDistance() {
+			YTF.eventSend({
+				eventName : 'select_option',
+				attr : {
+					type : 'distance',
+					title : $("input[name='distance']:checked").next("span").html(),
+					value : $("input[name='distance']:checked").val()
+				}
+			}, function(ret, err) {
+				YTF.winClose();
+			});
+		};
+	</script>
+</html>

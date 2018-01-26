@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxButton{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getLocalPic()">weibo插件：选取一个缩略图片</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="isInstalled()">weibo插件：isInstalled</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="auth()">weibo插件：auth</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="cancelAuth()">weibo插件：cancelAuth</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getUserInfo()">weibo插件：getUserInfo</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getWeiboAppSupportAPI()">weibo插件：getWeiboAppSupportAPI</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareText()">weibo插件：shareText</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareImage()">weibo插件：shareImage</div>
+			</div>
+			
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="share('webpage',webUrl)">weibo插件：share    Web</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="share('music',musicUrl)">weibo插件：share     Music</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="share('video',videoUrl)">weibo插件：share    Video</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="share('voice',voiceUrl)">weibo插件：share    Voice</div>
+			</div>
+		
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	var weiboTest;
+	var imgUrl;
+	var token;
+	var uid;
+	
+	var webUrl="http://www.baidu.com";
+	var musicUrl="http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15";
+	var videoUrl = "https://v.qq.com/x/cover/ixq8wba4w2vh08n/b0022j1ja62.html";
+	var voiceUrl = "http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15";
+
+	ytfready= function(){
+		weiboTest = YTF.require("weibo");
+		alert(JSON.stringify(weiboTest));
+	}
+	
+	function isInstalled(){
+		var isInstall = weiboTest.isInstalled();
+		alert(isInstall);
+	}
+	
+	function auth(){
+		weiboTest.auth(function(ret,err){
+			if(ret)
+			{
+				alert(JSON.stringify(ret));
+				if(ret.token)
+				token = ret.token;
+				uid=ret.uid;
+			}else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function cancelAuth(){
+		weiboTest.cancelAuth(function(ret,err){
+			if(ret)
+			{
+				alert(JSON.stringify(ret));
+			}else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	
+	function getWeiboAppSupportAPI(){
+		var apiVer =weiboTest.getWeiboAppSupportAPI();
+		alert(apiVer);
+	}
+	
+	function getUserInfo(){
+		weiboTest.getUserInfo({
+			uid:uid,
+			access_token:token
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareText(){
+		weiboTest.shareText({
+			text:"texttest",
+			supportType:2
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareImage(){
+		weiboTest.shareImage({
+			imageUrl:imgUrl,
+			text:"heheda",
+			supportType:2
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareWeb(){
+		weiboTest.shareWeb({
+			shareType:"text,image,webpage",
+			supportType:2,
+			imageUrl:imgUrl,
+			text:"ceshitext",
+			shareUrl:"http://www.baidu.com",
+			title:"呵呵哒",
+			description:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	function shareMusic(){
+		weiboTest.shareMusic({
+			shareType:"text,image,music",
+			supportType:2,
+			imageUrl:imgUrl,
+			text:"ceshitext",
+			shareUrl:"http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15",
+			title:"呵呵哒",
+			description:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	function shareVideo(){
+		weiboTest.shareVideo({
+			shareType:"text,image,video",
+			supportType:2,
+			imageUrl:imgUrl,
+			text:"ceshitext",
+			shareUrl:"https://v.qq.com/x/cover/ixq8wba4w2vh08n/b0022j1ja62.html",
+			title:"呵呵哒",
+			description:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareVoice(){
+		weiboTest.shareVideo({
+			shareType:"text,image,voice",
+			supportType:2,
+			imageUrl:imgUrl,
+			text:"ceshitext",
+			shareUrl:"http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15",
+			title:"呵呵哒",
+			description:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getLocalPic(){
+		YTF.mediaGetPicture({
+	        sourceType:"album",
+	        isCheckbox:false,
+	        isEdit:false
+	    }, function(ret, err){
+            if(ret.imagePath[0]){
+                 imgUrl=ret.imagePath[0];
+                 alert(imgUrl);
+            }else{
+                 alert(err);
+            }
+        });
+	}
+	
+	
+	function share(type,url){
+		alert(url);
+		alert(type);
+		weiboTest.share({
+			shareType:type,
+			supportType:2,
+			imageUrl:imgUrl,
+			text:"ceshitext",
+			shareUrl:url,
+			title:"呵呵哒",
+			description:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+
+	
+</script>
+</html>

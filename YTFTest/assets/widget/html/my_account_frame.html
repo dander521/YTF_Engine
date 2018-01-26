@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>登录</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="p30 bgff yt yt-ac mt20" id="editPwd">
+			<div class="yt-f1 fz32 c33">
+				修改密码
+			</div>
+			<i class="icon icon-next fz30 db"></i>
+		</div>
+		<div class="pt40 mt30">
+			<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36" id="changeBtn">
+				更换账号
+			</div>
+			<div class="btn btn-b bg-red yt-f1 db ml30 mr30 mt50 fz36" id="exit">
+				退出登录
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			
+		};
+		/**
+		 *修改密码 
+		 */
+		$("#editPwd").bind("tap",function(){
+			YTF.winOpen({
+	            winName: 'forget_pwd_win',
+	            htmlUrl: './forget_pwd_win.html'
+            });
+		});
+		/**
+		 *更换账号 
+		 */
+		$("#changeBtn").bind("tap",function(){
+			openLoginWin("login_win","./login_win.html");
+		});
+		/**
+		 *退出登录 
+		 */
+		$("#exit").bind("tap",function(){
+			openLoginWin("login_win","./login_win.html");
+		});
+		
+	</script>
+</html>

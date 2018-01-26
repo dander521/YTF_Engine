@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>邮件</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<script id="listTmpl" type="text/x-dot-template">
+			{{ for(var i= 0; i < it.length; i ++){ }}
+			<div class="mt30 bgff bt bb mail-div" data-id="{{=it[i].id}}" data-uid="{{=it[i].from_uid}}" data-address="{{=it[i].fprovince}}{{=it[i].fcity}}" data-name="{{=it[i].fname}}" data-face="{{=it[i].fface}}" data-code="{{=it[i].fpostcode}}">
+			<div class="p30 fz28 bb">
+			<div class="yt yt-ac lh1 c66">
+			<div class="yt-f1 yt-te">
+			寄信时间：
+			</div>
+			<div class="yt-f1 yt-te tx-r">
+			收信时间：
+			</div>
+			</div>
+			<div class="yt yt-ac lh1 mt20">
+			<div class="yt-f1 yt-te color-orange">
+			{{=it[i].time}}
+			</div>
+			<div class="yt-f1 yt-te color-green tx-r">
+			{{=it[i].to_time}}
+			</div>
+			</div>
+			</div>
+			<div class="p30">
+			<div class="bg-envelope-hmc">
+			<div class="stamp-wrap clear">
+			<div class="sw">
+			<div class="bg-yc yt yt-ac yt-pc yt-ver c66 lh1">
+			<p class="fz20">
+			{{=it[i].time.substring(5,7)}}月{{=it[i].time.substring(8,10)}}日
+			</p>
+			<h3 class="fz24">{{=it[i].fcity}}
+			<br />
+			{{=it[i].fprovince}}</h3>
+			<p class="fz20">
+			{{=it[i].time.substring(0,4)}}年
+			</p>
+			</div>
+			</div>
+			<div class="sw">
+			<div class="bg-stamp-collecting-list-li-img-wrap">
+			<div class="img-wrap user-photo" style="background-image: url('{{=photoUrl}}{{=it[i].postage}}');">
+			</div>
+			</div>
+			</div>
+			</div>
+			<div class="beh-list">
+			<ul>
+			<li class="yt yt-ac fz28 c33 yt-te">
+			<div class="max-w400-hmc yt-te">
+			{{=it[i].tprovince}}{{=it[i].tcity}}
+			</div>
+			</li>
+			<li class="yt yt-ac fz28 c33 yt-te">
+			<div class="user-photo round size44-hmc" style="background-image: url('{{=photoUrl}}{{=it[i].tface}}');"></div>
+			<h3 class="pl10 pr20 yt-te max-w220-hmc">{{=it[i].tname}}</h3>
+			<收>
+			</li>
+			<li class="yt yt-ac fz24 c66 yt-te">
+			<div class="yt-te mr10">
+			{{=it[i].fprovince}}{{=it[i].fcity}}
+			</div>
+			<div class="user-photo round size44-hmc mr10" style="background-image: url('{{=photoUrl}}{{=it[i].fface}}');"></div>
+			<div class="yt-te mr10">
+			{{=it[i].fname}}
+			</div>
+			寄
+			</li>
+			</ul>
+			</div>
+			<div class="postcode postcode-lt">
+			{{ for(var j=0;j<it[i].tpostcode.length;j++){ }}
+			<span class="dib">{{=(it[i].tpostcode).charAt(j)}}</span>
+			{{ } }}
+			</div>
+			<div class="postcode postcode-rb clear">
+			{{ for(var s=0;s<it[i].fpostcode.length;s++){ }}
+			<span class="dib">{{=(it[i].fpostcode).charAt(s)}}</span>
+			{{ } }}
+			</div>
+			</div>
+			</div>
+			</div>
+			{{ } }}
+		</script>
+	</head>
+
+	<body>
+		<div class="tabs-nav-line tabs-nav-line-second bgff">
+			<a href="#" class="tabs-nav-line-li" id="posting" data-type='2' style="display: none;">
+			<p class="dib fz28">
+				邮寄中
+			</p> </a>
+			<a href="#" class="tabs-nav-line-li active" data-type="0">
+			<p class="dib fz28">
+				待查看
+			</p> </a>
+			<span class="ptb20 br dib"></span>
+			<a href="#" class="tabs-nav-line-li" data-type="1">
+			<p class="dib fz28">
+				已查看
+			</p> </a>
+		</div>
+		<!--<div class="mt30 bgff bt bb" onclick="details();">
+		<div class="p30 fz28 bb">
+		<div class="yt yt-ac lh1 c66">
+		<div class="yt-f1 yt-te">
+		寄信时间：
+		</div>
+		<div class="yt-f1 yt-te tx-r">
+		收信时间：
+		</div>
+		</div>
+		<div class="yt yt-ac lh1 mt20">
+		<div class="yt-f1 yt-te color-orange">
+		2016-8-9 14:09:23
+		</div>
+		<div class="yt-f1 yt-te color-green tx-r">
+		2016-8-9 14:09:28
+		</div>
+		</div>
+		</div>
+		<div class="p30">
+		<div class="bg-envelope-hmc">
+		<div class="stamp-wrap clear">
+		<div class="sw">
+		<div class="bg-yc yt yt-ac yt-pc yt-ver c66 lh1">
+		<p class="fz20">
+		12月13日
+		</p>
+		<h3 class="fz24">成都市
+		<br />
+		四川省</h3>
+		<p class="fz20">
+		2016年
+		</p>
+		</div>
+		</div>
+		<div class="sw">
+		<div class="bg-stamp-collecting-list-li-img-wrap">
+		<div class="img-wrap user-photo" style="background-image: url(../images/img-stamp-collecting-list-li.png);">
+		<img src="../images/img-stamp-collecting-list-li.png" />
+		</div>
+		</div>
+		</div>
+		</div>
+		<div class="beh-list">
+		<ul>
+		<li class="yt yt-ac fz28 c33 yt-te">
+		<div class="max-w400-hmc yt-te">
+		四川省成都市四川省成都市四川省成都市四川省成都市四川省成都市
+		</div>
+		</li>
+		<li class="yt yt-ac fz28 c33 yt-te">
+		<div class="user-photo round size44-hmc" style="background-image: url(../images/bg-img-avatar.png);"></div>
+		<h3 class="pl10 pr20 yt-te max-w220-hmc">爱吃西红柿的小猫爱吃西红柿的小猫</h3>
+		<收>
+		</li>
+		<li class="yt yt-ac fz24 c66 yt-te">
+		<div class="yt-te mr10">
+		四川省成都市
+		</div>
+		<div class="user-photo round size44-hmc mr10" style="background-image: url(../images/bg-img-avatar.png);"></div>
+		<div class="yt-te mr10">
+		尼古拉斯赵四
+		</div>
+		寄
+		</li>
+		</ul>
+		</div>
+		<div class="postcode postcode-lt">
+		<span class="dib">1</span>
+		<span class="dib">2</span>
+		<span class="dib">3</span>
+		<span class="dib">4</span>
+		<span class="dib">5</span>
+		<span class="dib">6</span>
+		<span class="dib">7</span>
+		<span class="dib">8</span>
+		</div>
+		<div class="postcode postcode-rb clear">
+		<span class="dib">1</span>
+		<span class="dib">2</span>
+		<span class="dib">3</span>
+		<span class="dib">4</span>
+		<span class="dib">5</span>
+		<span class="dib">6</span>
+		<span class="dib">7</span>
+		<span class="dib">8</span>
+		</div>
+		</div>
+		</div>
+		</div>-->
+		<div class="h943-hmc yt yt-ac yt-pc yt-ver no-tip" style="display: none;">
+			<div class="img-wrap user-photo bg-img-blank" style="background-image: url(../images/bg-img-blank.png);"></div>
+			<div class="fz36 c66 lh1 mt30 pt30">
+				暂无信件
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/doT.min.js" type="text/javascript"></script>
+	<script>
+		var page = 1;
+		var totalPage = 1;
+		var type = "receive";
+		var isRead = 0;
+		ytfready = function() {
+			showInfos(type, isRead);
+			/**
+			 *查看更多
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'scrollToBottom',
+				attr : {
+					scrollToBottomHeight : 10
+				}
+			}, function(ret, err) {
+				if (ret) {
+					if ((page + 1) > totalPage) {
+						YTF.toast({
+							msg : '当前已为最后一页！'
+						});
+					} else {
+						page++;
+						showInfos(type, isRead);
+					}
+				}
+			});
+		};
+
+		/**
+		 *已收/已发按钮切换
+		 */
+		function emailSelect(index) {
+			switch(index) {
+			case 0:
+				showTab(index);
+				$("#posting").hide();
+				type = "receive";
+				isRead = 0;
+				showInfos(type, isRead);
+				break;
+			case 1:
+				showTab(index);
+				$("#posting").show();
+				type = "send";
+				isRead = 2;
+				showInfos(type, isRead);
+				break;
+			}
+		};
+
+		/**
+		 * 显示初始标签
+		 */
+		function showTab(index) {
+			$('.tabs-nav-line a').removeClass("active");
+			switch(index) {
+			case 0:
+				$('.tabs-nav-line a').each(function() {
+					if ($(this).attr("data-type") == '0') {
+						$(this).addClass("active");
+					}
+				});
+				break;
+			case 1:
+				$('.tabs-nav-line a').each(function() {
+					if ($(this).attr("data-type") == '2') {
+						$(this).addClass("active");
+					}
+				});
+				break;
+			}
+		};
+
+		$(function() {
+			$(".tabs-nav-line a").bind("tap", function() {
+				$('.tabs-nav-line a').removeClass("active");
+				isRead = $(this).attr("data-type");
+				showInfos(type, isRead);
+				$(this).addClass("active");
+			});
+			/**
+			 *查看邮件
+			 */
+			$("body").delegate("div.mail-div", "tap", function() {
+				var id = $(this).attr("data-id");
+				var uid = $(this).attr("data-uid");
+				var address = $(this).attr("data-address");
+				var face = $(this).attr("data-face");
+				var name = $(this).attr("data-name");
+				var code = $(this).attr("data-code");
+				YTF.winOpen({
+					winName : 'email_detail_win',
+					htmlUrl : './email_detail_win.html',
+					htmlParam : {
+						id : id,
+						type : type,
+						uid : uid,
+						address : address,
+						face : face,
+						name : name,
+						code : code
+					}
+				});
+			});
+		});
+
+		/**
+		 *展示数据
+		 */
+		function showInfos(type, isRead) {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/letter/list',
+				methodType : 'get',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						type : type,
+						is_read : isRead,
+						page : page,
+						pageSize : 10
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				$("body").children(".mail-div").remove();
+				console.log("-------9000------" + JSON.stringify(ret));
+				if (ret) {
+					switch(ret.status) {
+					case 0:
+						openLoginWin("login_win","./login_win.html");
+						break;
+					case 1:
+						//计算总页数
+						//console.log((parseInt(ret.data.total) + ret.data.pageSize - 1));
+						totalPage = (parseInt(ret.data.total) + parseInt(ret.data.pageSize) - 1) / ret.data.pageSize;
+						console.log(totalPage);
+						var userList = doT.template($("#listTmpl").text());
+						$(".no-tip").hide();
+						$("body").append(userList(ret.data.data));
+						break;
+					case 2:
+						$(".no-tip").show();
+						break;
+					default:
+						YTF.toast({
+							msg : ret.msg
+						});
+					};
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+	</script>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>注册</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<link rel="stylesheet" type="text/css" href="../css/LArea.css" />
+		<!-- 日期必备样式 开始 -->
+		<link href="../css/mobiscroll/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+		<!-- 日期必备样式 结束 -->
+		<style>
+			.hidden {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="bgff yt yt-ac yt-ver p30 bb step-info" data-step=1>
+			<div class="user-photo photo-s" style="background-image: url(../images/by-photo.png);"></div>
+			<b class="db fz24 c99 mt20">请上传您的个人资料头像</b>
+		</div>
+		<div class="dx-psw bgff bb step-info hidden" data-step=2>
+			<input type="text" id="nickname" class="input-text bgn bn dx-input" placeholder="给自己起个笔名吧！">
+		</div>
+		<p class="fz28 c66 p30 hidden step-info" data-step=2>
+			2至4个字为佳，最多不超过6个字
+		</p>
+		<ul class="fz32 c33 bgff step-info hidden" data-step=3>
+			<li class="yt yt-ac p30 bb" id="sex">
+				<b class="yt-f1 db">性别</b>
+				<span class="fz28 c66 sex-content"></span>
+			</li>
+			<li class="yt yt-ac p30 bb" id="birth">
+				<b class="yt-f1 db">年龄</b>
+				<span class="fz28 c66 birth-content"></span>
+			</li>
+			<li class="yt yt-ac p30 bb" id="star">
+				<b class="yt-f1 db">星座</b>
+				<span class="fz28 c66 star-content"></span>
+			</li>
+		</ul>
+		<ul class="bgff step-info hidden" data-step=4>
+			<li class="yt yt-ac p30 bb" id="address">
+				<h3 class="max-w220-hmc yt-te list-title">坐标</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--四川省成都市高新区-->
+					<div class="yt-f1 yt yt-ac">
+						<input class="db yt-f1 tx-r input-text pr0 bn bgn" id="demo1" type="text" readonly="" placeholder="未设置" />
+						<input id="value1" type="hidden" value="24,272,6004" />
+					</div>
+				</div>
+				<!--<i class="icon icon-next fz24 ml20 mt5"></i>-->
+			</li>
+			<li class="yt yt-ac p30 bb" id="status">
+				<b class="db fz32 c33 yt-f1">状态</b>
+				<span class="fz28 c66 status-content"></span>
+				<i class="icon icon-next fz24 ml20 mt5"></i>
+			</li>
+		</ul>
+		<div class="bgff mt20 step-info hidden" data-step=4>
+			<ul>
+				<li class="yt yt-ac p30 bb" id="hobby">
+					<b class="db fz32 c33 yt-f1">爱好</b>
+					<i class="icon icon-next fz24 ml20 mt5"></i>
+				</li>
+			</ul>
+			<div class="love-list clear c66 fz28 ptb30 bb" id="hobbyList">
+
+			</div>
+		</div>
+		<div class="bgff mt20 step-info hidden" data-step=4>
+			<ul>
+				<li class="yt yt-ac p30 bb" id="need">
+					<b class="db fz32 c33 yt-f1">需求</b>
+					<i class="icon icon-next fz24 ml20 mt5"></i>
+				</li>
+			</ul>
+			<div class="love-list clear c66 fz28 ptb30 bb" id="needList">
+
+			</div>
+		</div>
+		<div class="bgff dx-textarea p30 mt20 bb bt step-info hidden" data-step=5>
+			<textarea placeholder="输入您的个性签名！" id="sign"></textarea>
+		</div>
+		<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36" id="nextStep">
+			下一步
+		</div>
+		<!--弹窗 性别-->
+		<div class="dx-dialog dialog-sex">
+			<div class="dialogmask"></div>
+			<div class="dx-dialogcontent">
+				<div class="dialog-cbox">
+					<h2 class="dialog-tit fz32 tx-c c33">性别</h2>
+					<div class="sex-select yt ptb50">
+						<label class="yt-f1 yt yt-ac fz28 c66 yt-pc">
+							<input type="radio" name="sex" value="1" checked="checked" class="select-sex mr20 db" />
+							<span>男</span> </label>
+						<label class="yt-f1 yt yt-ac fz28 c66 yt-pc">
+							<input type="radio" name="sex" value="2" class="select-sex mr20 db" />
+							<span>女</span> </label>
+					</div>
+					<div class="fz32 tx-c know-btn yt yt-ac yt-pc sex-btn">
+						<div class="yt-f1 bg99 dilog-h80 yt yt-ac yt-pc" data-type="cancel">
+							取消
+						</div>
+						<div class="yt-f1 bg-second dilog-h80 yt yt-ac yt-pc" data-type="ok">
+							确定
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dx-dialog dialog-star">
+			<div class="dialogmask"></div>
+			<div class="dx-dialogcontent">
+				<div class="constellation">
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">白羊座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">金牛座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">双子座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">巨蟹座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">狮子座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">处女座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">天秤座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">天蝎座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">射手座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">摩羯座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">水瓶座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+					<label class="yt yt-ac fz32 c33"> <b class="db yt-f1">双鱼座</b>
+						<input type="radio" name="constellation" />
+						<i class="icon-duigou"></i> </label>
+				</div>
+			</div>
+		</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/LArea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/LAreaData1.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/LAreaData2.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 日期必备脚本 开始 -->
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.zepto.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.core.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.frame.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.scroller.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.util.datetime.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.datetimebase.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.datetime.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.android-holo-light.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.i18n.zh.js"></script>
+	<!-- 日期必备脚本 结束 -->
+	<script>
+		var curstep = 1,
+		    face = "",
+		    sex = "",
+		    birth = "",
+		    star = "",
+		    address = "",
+		    userStatus = "",
+		    hobbys = "",
+		    nickName = "",
+		    sign = "",
+		    needs = "";
+		ytfready = function() {
+
+			/**
+			 *用户状态监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'status_select'
+			}, function(ret, err) {
+				if (ret) {
+					userStatus = ret.status;
+					$(".status-content").html(userStatus);
+				}
+			});
+
+			/**
+			 *兴趣爱好监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'hobby_select'
+			}, function(ret, err) {
+				console.log(JSON.stringify(ret));
+				if (ret) {
+					hobbys = ret.hobby;
+					var hobbyArr = hobbys.split(",");
+					var html = "";
+					for (var i = 0; i < hobbyArr.length; i++) {
+						html += "<span>" + hobbyArr[i] + "</span>";
+					}
+					$("#hobbyList").html(html);
+				}
+			});
+
+			/**
+			 *需求监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'needs_select'
+			}, function(ret, err) {
+				if (ret) {
+					needs = ret.need;
+					var needArr = needs.split(",");
+					var html = "";
+					for (var i = 0; i < needArr.length; i++) {
+						html += "<span>" + needArr[i] + "</span>";
+					}
+					$("#needList").html(html);
+				}
+			});
+
+		}
+		/**
+		 *选择生日
+		 */
+		Zepto(function($) {
+			var myDate = new Date()
+			$('#birth').mobiscroll().date({
+				theme : "android-holo-light",
+				mode : "scroller",
+				lang : "zh",
+				display : "bottom",
+				dateFormat : "yy/mm/dd",
+				headerText : "选择日期",
+				endYear : myDate.getFullYear(),
+				onSelect : function(val, inst) {
+					birth = val;
+					$(".birth-content").html(ages(val));
+				}
+			});
+		});
+		/**
+		 *进入首页
+		 */
+		$("#nextStep").bind("tap", function() {
+			var flag = false;
+			switch(curstep) {
+			case 1:
+				if (checkIsEmpty(face)) {
+					YTF.toast({
+						msg : '请上传头像！'
+					});
+				} else {
+					flag = true;
+				}
+				break;
+			case 2:
+				nickName = $("#nickname").val().trim();
+				if (checkIsEmpty(nickName)) {
+					YTF.toast({
+						msg : '请输入笔名！'
+					});
+				} else if (nickName.length > 6) {
+					YTF.toast({
+						msg : '格式有误！'
+					});
+				} else {
+					flag = true;
+				}
+				break;
+			case 3:
+				if (checkIsEmpty(sex)) {
+					YTF.toast({
+						msg : '请选择性别！'
+					});
+				} else if (checkIsEmpty(birth)) {
+					YTF.toast({
+						msg : '请选择年龄！'
+					});
+				} else if (checkIsEmpty(star)) {
+					YTF.toast({
+						msg : '请选择星座'
+					});
+				} else {
+					flag = true;
+				}
+				break;
+			case 4:
+				address = $("#demo1").val().trim();
+				if (checkIsEmpty(address)) {
+					YTF.toast({
+						msg : '请选择坐标！'
+					});
+				} else if (checkIsEmpty(userStatus)) {
+					YTF.toast({
+						msg : '请选择状态！'
+					});
+				} else if (checkIsEmpty(hobbys)) {
+					YTF.toast({
+						msg : '请选择爱好'
+					});
+				} else if (checkIsEmpty(needs)) {
+					YTF.toast({
+						msg : '请选择需求'
+					});
+				} else {
+					flag = true;
+				}
+				break;
+			case 5:
+				sign = $("#sign").val().trim();
+				if (checkIsEmpty(sign)) {
+					YTF.toast({
+						msg : '请输入签名！'
+					});
+				} else {
+					YTF.showProgress({
+						bottomText : "加载中...",
+						gifSize : {
+							w : 60,
+							h : 60
+						},
+						xywh : {
+							w : 130,
+							h : 130
+						}
+					});
+					var locaArr = address.split(",");
+					YTF.ajax({
+						url : serverUrl + '/app/user/edit-info',
+						methodType : 'post',
+						isReport : false,
+						headers : {
+							logtoken : localStorage.getItem("logtoken")
+						},
+						data : {
+							values : {
+								face : face,
+								biname : nickName,
+								sex : sex,
+								age : birth,
+								constellation : star,
+								province : locaArr[0],
+								city : locaArr[1],
+								job : userStatus,
+								hobby : hobbys,
+								demand : needs,
+								sign : sign,
+
+							}
+						}
+					}, function(ret, err) {
+						//console.log("-------" + JSON.stringify(ret));
+						YTF.hideProgress();
+						if (ret) {
+							if (ret.status == 0) {
+								openLoginWin("login_win", "./login_win.html");
+							} else if (ret.status == 1) {
+								var data = eval("(" + localStorage.getItem("userInfo") + ")");
+								data.face = face;
+								data.biname = nickName;
+								data.sex = sex;
+								data.age = birth;
+								data.constellation = star;
+								data.province = locaArr[0];
+								data.city = locaArr[1];
+								data.job = userStatus;
+								data.hobby = hobbys;
+								data.demand = needs;
+								data.sign = sign;
+								data.nage = ages(birth);
+								localStorage.setItem("userInfo", JSON.stringify(data));
+								YTF.winOpen({
+									winName : 'index_main',
+									htmlUrl : './index.html'
+								});
+							} else {
+								YTF.toast({
+									msg : ret.msg
+								});
+							}
+						} else {
+							YTF.toast({
+								msg : err.msg
+							});
+						}
+					});
+				}
+				break;
+			}
+
+			if (flag && curstep < 5) {
+				curstep++;
+				$(".step-info").hide();
+				$(".step-info").each(function() {
+					var step = $(this).attr("data-step");
+					if (step == curstep) {
+						$(this).show();
+						if (curstep == 5) {
+							$("#nextStep").html("大功告成");
+						}
+					}
+				});
+			}
+
+		});
+		/**
+		 *头像上传
+		 */
+		$(".user-photo").bind("tap", function() {
+			var data = {
+				isEdit : true,
+				isCheckbox : false
+			}
+			YTF.mediaGetPicture(data, function(ret, err) {
+				//console.log("---------" + JSON.stringify(ret));
+				if (ret) {
+					$(".user-photo").css("background-image", "url(" + ret.imagePath + ")");
+					uploadImg(ret.imagePath);
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				};
+			});
+		});
+
+		/**
+		 *上传图片
+		 */
+		function uploadImg(path) {
+			YTF.showProgress({
+				bottomText : "上传中...",
+				gifSize : {
+					w : 60,
+					h : 60
+				},
+				xywh : {
+					w : 130,
+					h : 130
+				}
+			});
+			YTF.ajax({
+				url : serverUrl + 'app/user/upimg',
+				methodType : 'post',
+				isReport : false,
+				data : {
+					files : {
+						s : path
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				//alert(JSON.stringify(ret));
+				if (ret) {
+					if (ret.status == 1) {
+						face = ret.data.path;
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+		/**
+		 *性别选择
+		 */
+		$("#sex").bind("tap", function() {
+			$(".dialog-sex").addClass("active");
+		});
+		/**
+		 *性别弹窗选择
+		 */
+		$(".sex-btn>div").bind("tap", function() {
+			var type = $(this).attr("data-type");
+			if (type == "ok") {
+				sex = $("input[name='sex']:checked").val();
+				$(".sex-content").html(sexArr[sex]);
+			}
+			$(".dialog-sex").removeClass("active");
+		});
+		/**
+		 *星座选择
+		 */
+		$("#star").bind("tap", function() {
+			$(".dialog-star").addClass("active");
+		});
+
+		$(".constellation>label").bind("tap", function() {
+			star = $(this).children("b").html();
+			$(".star-content").html(star);
+			$(".dialog-star").removeClass("active");
+		});
+
+		var area1 = new LArea();
+		area1.init({
+			'trigger' : '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+			'valueTo' : '#value1', //选择完毕后id属性输出到该位置
+			'keys' : {
+				id : 'id',
+				name : 'name'
+			}, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+			'type' : 1, //数据源类型
+			'data' : LAreaData //数据源
+		});
+		area1.value = [1, 13, 0];
+		//控制初始位置，注意：该方法并不会影响到input的value
+
+		/**
+		 *状态选择
+		 */
+		$("#status").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_status_win',
+				htmlUrl : './my_info_status_win.html',
+				htmlParam : {
+					status : userStatus
+				}
+			});
+		});
+		/**
+		 * 兴趣爱好
+		 */
+		$("#hobby").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_hobby_win',
+				htmlUrl : './my_info_hobby_win.html',
+				htmlParam : {
+					hobby : hobbys
+				}
+			});
+		});
+		/**
+		 *需求
+		 */
+		$("#need").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_needs_win',
+				htmlUrl : './my_info_needs_win.html',
+				htmlParam : {
+					need : needs
+				}
+			});
+		});
+	</script>
+</html>

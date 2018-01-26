@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>找笔友</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<style>
+			.hidden {
+
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="friends_select">
+			<div class="p30 fz28 c66">
+				设定匹配条件
+			</div>
+			<div class="p30 bgff bt bb yt yt-ac">
+				<div class="mr40 fz28">
+					<span class="dib c33"> 性别： </span><span class="dib c66 sex">不限</span>
+				</div>
+				<div class="mr40 fz28">
+					<span class="dib c33"> 年龄： </span><span class="dib c66 age">不限</span>
+				</div>
+				<div class="mr40 fz28">
+					<span class="dib c33"> 距离： </span><span class="dib c66 distance">不限</span>
+				</div>
+				<div class="yt-f1 tx-r fz28 color-green select_edit">
+					修改>
+				</div>
+			</div>
+			<div class="h943-hmc yt yt-ac yt-pc yt-ver">
+				<div class="mt40 pt40 fz36 c66 mb30 search-gc" style="display: none;">
+					正在寻找您的有缘人
+				</div>
+				<div class="fz28 round size240-hmc bd bdc-fff bd-w6-hmc yt yt-ac yt-pc search-init" id="search-init">
+					寻找笔友
+				</div>
+				<div class="img-wrap user-photo round size240-hmc bd bdc-fff bd-w6-hmc" style="background-image: url(../images/bg-img-avatar.png);display: none;">
+					<!--<img src="wgts/images/bg-img-avatar.png"/>-->
+				</div>
+				<div class="mt30 yt-te search1-info" style="display: none;">
+					<h3 class="list-title lh1 dib yt-te max-w600-hmc biname"></h3>
+					<span class="ml10 dib bg-sex bg-sex-w fz24 cff base-info"></span>
+				</div>
+				<div class="mt20 fz28 c66 lh1 search1-info" style="display: none;">
+					<span class="mr40" id="star"></span><span id="city"></span>
+				</div>
+				<div class="mt20 fz24 c99 lh1 yt yt-ac search1-info" style="display: none;">
+					<i class="icon icon-map-marker db mr10"></i>
+					<div id="distance">
+
+					</div>
+				</div>
+				<div class="mt30 pt30 search1-info" style="display: none;">
+					<button class="btn btn-bd-green btn-s mr30 reSearch">
+						重新匹配
+					</button>
+					<button class="btn btn-bd-green btn-s ml30 friends-add" data-id="">
+						加为笔友
+					</button>
+				</div>
+				<div class="mt40 pt40 fz36 c66">
+					今天还可以匹配 <span class="color-red num"></span> 次
+				</div>
+			</div>
+		</div>
+		<div id="acquaintances_select" style="display:none">
+			<div class="dx-psw bgff bb mt20">
+				<input type="text" id="phone" class="input-text bgn bn dx-input" placeholder="请输入TA的手机号！">
+			</div>
+			<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36" id="goSelect">
+				查找
+			</div>
+		</div>
+		<div id="acquaintances_add" style="display:none">
+			<div class="yt bgff p30 mt20">
+				<div class="img-wrap user-photo user-photo-s round mr30" id="searchPhoto" data-id="0"></div>
+				<div class="yt-te">
+					<h2 class="fz32 c33 yt-te" id="sr_name"></h2>
+					<div class="yt yt-ac mt20">
+						<i class="iconfont-dianhua db"></i>
+						<span class="fz28 c66 ml10" id="sr_phone"></span>
+					</div>
+				</div>
+			</div>
+			<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36" id="shuren_add">
+				添加熟人
+			</div>
+			<div class="btn btn-b bg-f9 yt-f1 db ml30 mr30 mt50 fz36 cff select_res">
+				重新找人
+			</div>
+		</div>
+		<div id="acquaintances_yaoqing" style="display:none">
+			<div class="p30 m30 fz28 c66 tx-c lh16 "id="message">
+				138 7463 8888，此手机号码用户尚未注册
+				<br />
+				赶快邀请TA一起来加入“笔遇”吧！
+			</div>
+			<!--无结果 end-->
+			<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36 " id="yaoqing" >
+				邀请
+			</div>
+			<div class="btn btn-b bg-f9 yt-f1 db ml30 mr30 mt50 fz36 cff select_res">
+				重新找人
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var isSearched = true;
+		var sex = "";
+		var age = "";
+		var star = "";
+		var status = "";
+		var distance = "";
+		var needs = false;
+		var hobbys = false;
+		var lat = 30.5656544;
+		var lon = 104.077898;
+		var cishu = 0;
+		ytfready = function() {
+			initData();
+
+			/**
+			 *查询条件监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'search_infos'
+			}, function(ret, err) {
+				if (ret) {
+					sex = ret.sex;
+					age = ret.age;
+					star = ret.star;
+					status = ret.status;
+					distance = ret.distance;
+					needs = ret.need;
+					hobbys = ret.hobby;
+					if (sex == "0") {
+						$(".sex").html("不限");
+					} else {
+						$(".sex").html(sexArr[sex]);
+					}
+					$(".age").html(getAgeTitle(age));
+					$(".distance").html(getDistanceTitle(distance));
+				}
+			});
+		};
+		/**
+		 *初始化数据
+		 */
+		function initData() {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/friends/get-user',
+				methodType : 'get',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						length : 30
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				if(ret){
+					if(ret.status == 0){
+						openLoginWin("login_win","./login_win.html");
+					}else if(ret.status == 1){	
+						cishu = ret.data.count;
+						$(".num").html(cishu);
+						localStorage.setItem("search_user", JSON.stringify(ret.data.data));
+					}
+				}
+				
+			});
+		};
+		/**
+		 *条件选择
+		 */
+		$(".select_edit").bind("tap", function() {
+			if (isSearched) {
+				YTF.winOpen({
+					winName : 'friends_select_win',
+					htmlUrl : './friends_select_win.html',
+					htmlParam : {
+						sex : sex,
+						age : age,
+						star : star,
+						status : status,
+						distance : distance,
+						need : needs,
+						hobby : hobbys
+					}
+				});
+			}
+		});
+		/**
+		 *根据手机号查找
+		 */
+		$("#goSelect").bind("tap", function() {
+			var phone = $("#phone").val().trim();
+			if (checkIsEmpty(phone)) {
+				YTF.toast({
+					msg : '请输入手机号！'
+				});
+			} else if (!checkPhone(phone)) {
+				YTF.toast({
+					msg : '手机号格式有误！'
+				});
+			} else {
+				showProgress("搜索中...");
+				YTF.ajax({
+					url : serverUrl + 'app/friends/search-shu',
+					methodType : 'get',
+					isReport : false,
+					data : {
+						values : {
+							phone : phone
+						}
+					}
+				}, function(ret, err) {
+					//console.log("22222" + JSON.stringify(ret));
+					YTF.hideProgress();
+					if (ret) {
+						switch(ret.status) {
+						case 1:
+							$("#searchPhoto").css("background-image", "url(" + photoUrl + ret.data.face + ")").attr("data-id", ret.data.uid);
+							$("#sr_name").html(ret.data.biname);
+							$("#sr_phone").html(phone);
+							$("#acquaintances_add").show().siblings().hide();
+							break;
+						case 2:
+							$("#message").html(phone + '，此手机号码用户尚未注册<br/>赶快邀请TA一起来加入“笔遇”吧！');
+							$("#acquaintances_yaoqing").show().siblings().hide();
+							break;
+						default:
+							YTF.toast({
+								msg : ret.msg
+							});
+						};
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			}
+		});
+		/**
+		 *查看资料信息
+		 */
+		$("#searchPhoto").bind("tap", function() {
+			var uid = $(this).attr("data-id");
+			YTF.winOpen({
+				winName : 'friends_shuren_info_win',
+				htmlUrl : './friends_shuren_info_win.html',
+				htmlParam : {
+					uid : uid
+				}
+			});
+		});
+		/**
+		 *添加熟人
+		 */
+		$("#shuren_add").bind("tap", function() {
+			var uid = $("#searchPhoto").attr("data-id");
+			YTF.winOpen({
+				winName : 'friends_add_apply_win',
+				htmlUrl : './friends_add_apply_win.html',
+				htmlParam : {
+					uid : uid,
+					type : 2
+				}
+			});
+		});
+		/**
+		 *邀请
+		 */
+		$("#yaoqing").bind("tap", function() {
+			openNewWin("friends_shuren_yaoqing_win", "./friends_shuren_yaoqing_win.html");
+		});
+
+		/**
+		 *重新查找
+		 */
+		$(".select_res").bind("tap", function() {
+			$("#acquaintances_select").show().siblings().hide();
+		});
+		/**
+		 *重新匹配
+		 */
+		$(".reSearch").bind("tap", function() {
+			if (cishu > 0) {
+				$(".search1-info").hide();
+				$(".search-gc").show();
+				startSearch();
+			} else {
+				YTF.toast({
+					msg : '您的次数已用完！'
+				});
+			}
+		});
+		/**
+		 *添加笔友
+		 */
+		$(".friends-add").bind("tap", function() {
+			var uid = $(this).attr("data-id");
+			YTF.winOpen({
+				winName : 'friends_add_apply_win',
+				htmlUrl : './friends_add_apply_win.html',
+				htmlParam : {
+					uid : uid,
+					type : 1
+				}
+			});
+		});
+
+		/**
+		 *tab 切换
+		 */
+		function friends_tab(f) {
+			if (isSearched) {
+				if (f == 1) {
+					$("#friends_select").show().siblings().hide();
+				}
+				if (f == 2) {
+					$("#acquaintances_select").show().siblings().hide();
+				}
+			}
+		};
+		/**
+		 *开始搜索
+		 */
+		$(".search-init").bind("tap", function() {
+			if (cishu > 0) {
+				startSearch($(this));
+			} else {
+				YTF.toast({
+					msg : '您的次数已用完！'
+				});
+			}
+
+		});
+		/**
+		 *开始匹配
+		 */
+		function startSearch(obj) {
+			if (isSearched) {
+				var data = eval("(" + localStorage.getItem("search_user") + ")");
+				var newArr = [];
+				var length = data.length;
+				if (length > 0) {
+					var index = Math.ceil(Math.random() * (length - 1));
+					var count = 150;
+					isSearched = false;
+					if (obj != null && obj != undefined) {
+						obj.hide();
+					}
+					$(".search-gc").show();
+					$(".user-photo").show();
+					showSearchGc(data[index]);
+					console.log(JSON.stringify(data) + "--------" + data.length);
+					timer = setInterval(function() {
+						if (count == 0) {
+							clearInterval(timer);
+							isSearched = true;
+							return;
+						}
+
+						if (data.length <= 0) {
+							data = newArr;
+						}
+						index = getRandomNum(index, data.length);
+						showSearchGc(data[index]);
+						newArr.push(data[index]);
+						data.splice(index, 1);
+						count--;
+					}, 200);
+					getSearchResult(timer);
+				} else {
+					YTF.toast({
+						msg : '暂无信息！'
+					});
+				}
+
+			}
+		};
+
+		/**
+		 *获取指定范围内的随机整数
+		 */
+		function getRandomNum(num, length) {
+			var nindex = Math.ceil(Math.random() * length);
+			return nindex <= 0 ? 0 : nindex - 1;
+		};
+
+		/**
+		 * 显示搜索过程
+		 */
+		function showSearchGc(obj) {
+			$(".user-photo").css("background-image", "url(" + photoUrl + obj.face + ")");
+			/*$(".biname").html(obj.biname);
+			 var html = "";
+			 switch(obj.sex) {
+			 case '1':
+			 html += '<i class="icon icon-sex-m mr10"></i>';
+			 break;
+			 case '2':
+			 html += '<i class="icon icon-sex-w mr10"></i>'
+			 break;
+			 };
+			 $(".base-info").html(html + obj.nage);*/
+		};
+
+		/**
+		 *获取搜索结果
+		 */
+		function getSearchResult(timer) {
+			YTF.ajax({
+				url : serverUrl + 'app/friends/search-biyou',
+				methodType : 'get',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						sex : sex,
+						age : age,
+						constellation : star,
+						job : status,
+						coord : distance,
+						demand : needs,
+						hobby : hobbys,
+						lat : lat,
+						lon : lon
+					}
+				}
+			}, function(ret, err) {
+				//console.log("-----6666-----" + JSON.stringify(ret));
+				if (ret) {
+					if(ret.status == 0){
+						openLoginWin("login_win","./login_win.html");
+					}if (ret.status == 1) {
+						cishu--;
+						var count1 = 5;
+						timer1 = setInterval(function() {
+							if (count1 == 0) {
+								isSearched = true;
+								clearInterval(timer);
+								clearInterval(timer1);
+								$(".search-gc").hide();
+								$(".user-photo").css("background-image", "url(" + photoUrl + ret.data.face + ")");
+								$(".biname").html(ret.data.biname);
+								var html = "";
+								switch(ret.data.sex) {
+								case '1':
+									html += '<i class="icon icon-sex-m mr10"></i>';
+									break;
+								case '2':
+									html += '<i class="icon icon-sex-w mr10"></i>'
+									break;
+								};
+								$(".base-info").html(html + ret.data.nage);
+								$("#star").html(ret.data.constellation);
+								$("#city").html(ret.data.city);
+								var dist = ret.data.distance.replace(new RegExp(",", 'gm'), "");
+								if (Number(dist) > 1000) {
+									$("#distance").html((Number(dist) / 1000) + "km");
+								} else {
+									$("#distance").html(dist + "m");
+								}
+								$(".friends-add").attr("data-id", ret.data.uid);
+								$(".search1-info").show();
+								$(".num").html(cishu);
+								YTF.toast({
+									msg : '缘分来了，应该珍惜，错过了，不再来！'
+								});
+								return;
+							}
+							count1--;
+						}, 1000);
+					} else {
+						clearInterval(timer);
+						$(".search-gc").hide();
+						$(".user-photo").hide();
+						$(".search-init").show();
+						isSearched = true;
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+	</script>
+</html>

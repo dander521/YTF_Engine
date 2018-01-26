@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>登录</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body class="nav-fixed" style="display: none;">
+<div class="mb30 plr30 ptb40 bgff bb yt yt-ac">
+  <div class="img-wrap round user-photo mr30 bd bdc-fff"></div>
+  <div class="yt-f1 yt-te">
+    <div class="yt yt-ac">
+      <h3 class="list-title yt-te max-w680-hmc biname"></h3>
+      <span class="ml10 dib bg-sex sex"><i class="icon fz32 cff sex-icon"></i></span> </div>
+    <p class="fz28 c66 yt-te mt20 postcode"> </p>
+  </div>
+</div>
+<ul class="list bn mb30">
+  <li class="yt yt-ac">
+    <h3 class="list-title">出身年月</h3>
+    <div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66"> 
+      <!--1990-03-24-->
+      <input type="text" class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 birth" disabled="disabled" value="" />
+    </div>
+  </li>
+  <li class="yt yt-ac">
+    <h3 class="list-title">星座</h3>
+    <div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66"> 
+      <!--巨蟹座-->
+      <input type="text" class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 star" disabled="disabled" value="" />
+    </div>
+  </li>
+  <li class="yt yt-ac">
+    <h3 class="list-title">坐标</h3>
+    <div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66"> 
+      <!--四川省成都市高新区-->
+      <input type="text" class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 distance" disabled="disabled" value="" />
+    </div>
+  </li>
+  <li class="yt yt-ac">
+    <h3 class="list-title">目前状态</h3>
+    <div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66"> 
+      <!--上班-->
+      <input type="text" class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 status" disabled="disabled" value="" />
+    </div>
+  </li>
+</ul>
+<div class="mb30 bgff">
+  <div class="p30 yt yt-ac">
+    <h3 class="list-title yt-f1 yt-te">兴趣爱好</h3>
+  </div>
+  <div class="p30 pb0 bt bb personal-tags-list">
+    <ul class="clear" id="hobbys">
+    </ul>
+  </div>
+</div>
+<div class="mb30 bgff">
+  <div class="p30 yt yt-ac">
+    <h3 class="list-title yt-f1 yt-te">需求</h3>
+  </div>
+  <div class="p30 pb0 bt bb personal-tags-list">
+    <ul class="clear" id="needs">
+    </ul>
+  </div>
+</div>
+<div class="mb30 bgff">
+  <div class="p30 yt yt-ac">
+    <h3 class="list-title yt-f1 yt-te">个性签名</h3>
+  </div>
+  <div class="p30 bt bb yt fz28 c66 lh14 wb-ba-hmc sign"> </div>
+</div>
+<div class="m30 ptb30">
+  <div class="tabs-nav-hmc yt yt-ac">
+
+  </div>
+</div>
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+ytfready = function() {
+	uid = YTF.htmlParam.uid;
+	type = YTF.htmlParam.type;
+    showInfos();
+};
+
+$(".tabs-nav-hmc").delegate("div","tap",function(){
+	switch($(this).attr("data-type")){
+		case "addgz":
+			addgz(this);
+			break;
+		case "delgz":
+			delgz(this);
+			break;
+		case "addmsg":
+			YTF.winOpen({
+					  winName : 'email_send_step_win',
+					  htmlUrl : './email_send_step_win.html',
+					  htmlParam : {
+						toid : uid,
+						toName : userName,
+						tface : userFace,
+						taddress : userAddress,
+						tpostcode : userCode
+					  }
+					});
+			break;
+		case "addbiyou":
+			YTF.winOpen({
+					winName : "friends_add_apply_win",
+					htmlUrl : "./friends_add_apply_win.html",
+					htmlParam : {
+							type : 1,
+							uid : uid
+						}
+					});
+			break;
+		}
+	});
+//添加关注	
+function addgz(e){
+    showProgress("数据提交中...");
+    YTF.ajax({
+        url: serverUrl + 'app/attention/add',
+        methodType: 'post',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+                'toid': uid
+            }
+        }
+    },
+    function(ret,err){
+		console.log("添加关注："+JSON.stringify(ret));
+		YTF.hideProgress();
+		if(ret){
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else{
+				$(e).toggleClass("orange-tnh");
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+			}
+			}else{
+				YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+			}
+		});
+}
+
+//取消关注
+function delgz(e){
+    showProgress("数据提交中...");
+    YTF.ajax({
+        url: serverUrl + 'app/attention/add',
+        methodType: 'post',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+                'toid': uid
+            }
+        }
+    },
+    function(ret,err){
+		console.log("取消关注："+JSON.stringify(ret));
+		YTF.hideProgress();
+		if(ret){
+			if(ret.status == 0){
+				openLoginWin("login_win","./login_win.html");
+			}else{
+				$(e).toggleClass("orange-tnh");
+				YTF.toast({
+						msg:ret.msg,
+						duration:2000,
+						global:false,
+					});
+			}
+			
+			}else{
+				YTF.toast({
+						msg:"网络错误",
+						duration:2000,
+						global:false,
+					});
+			}
+		});
+}
+
+/**
+*展示数据
+*/
+function showInfos(){
+    showProgress("加载中...");
+    YTF.ajax({
+        url: serverUrl + 'app/user/get-tainfo',
+        methodType: 'get',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values: {
+                'uid': uid
+            }
+        }
+    },
+    function(ret, err) {
+		console.log(JSON.stringify(ret));
+        YTF.hideProgress();
+        if (ret){
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					$(".user-photo").css("background-image", "url(" + photoUrl + ret.data.face + ")");
+					$(".biname").html(ret.data.biname);
+					userFace = ret.data.face;
+					userName = ret.data.biname;
+					userCode = ret.data.postcode;
+					userAddress = ret.data.province + ret.data.city;
+					switch (ret.data.sex) {
+					case '1':
+						$(".sex").addClass("bg-sex-m");
+						$("sex-icon").addClass("icon-sex-m");
+						break;
+					case '2':
+						$(".sex").addClass("bg-sex-w");
+						$("sex-icon").addClass("icon-sex-w");
+						break;
+					}
+					$(".postcode").html("邮编：" + ret.data.postcode);
+					$(".birth").val(ret.data.age);
+					$(".star").val(ret.data.constellation);
+					$(".distance").val(ret.data.province + "," + ret.data.city);
+					$(".status").val(ret.data.job);
+					//兴趣爱好
+					var hobbyArr = ret.data.hobby.split(",");
+					var html = "";
+					for (var i = 0; i < hobbyArr.length; i++) {
+						html += '<li class="bd fz28 c66">' + hobbyArr[i] + '</li>';
+					}
+					$("#hobbys").html(html);
+					//需求
+					var needArr = ret.data.demand.split(",");
+					var needhtml = "";
+					for (var i = 0; i < needArr.length; i++) {
+						needhtml += '<li class="bd fz28 c66">' + needArr[i] + '</li>';
+					}
+					$("#needs").html(needhtml);
+					//签名
+					$(".sign").html(ret.data.sign);
+					//关注现实
+					if(ret.data.is_attention){
+						var gztempl = '<div class="yt-f1 tx-c" data-type="delgz"> 取消关注 </div>';
+						}else{
+							var gztempl = '<div class="yt-f1 tx-c orange-tnh" data-type="addgz"> 关注TA </div> ';
+							}
+					if(type == 0){
+						var caozuo = '<div class="yt-f1 tx-c green-tnh" data-type="addbiyou"> 成为笔友 </div>';
+						}else{
+							var caozuo = '<div class="yt-f1 tx-c green-tnh" data-type="addmsg"> 给TA写信 </div>';
+							}
+						$(".tabs-nav-hmc").html(gztempl + caozuo);
+					break;
+				case 2:
+					noData("body","showInfos()",ret.msg);
+					break;
+				default:
+					noData("body","showInfos()",ret.msg);
+				}
+				$("body").show();
+        } else {
+			netErr("body","showInfos()");
+			$("body").show();
+        }
+    });
+};
+</script>
+</html>

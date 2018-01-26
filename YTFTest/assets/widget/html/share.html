@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>笔遇</title>
+<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+<link rel="stylesheet" href="../css/main.css" />
+</head>
+
+<body class="bgf8">
+<header class="header-bar bg-main" id="header">
+  <div href="javascript:;" class="header-left"> <i class="icon icon-pre"></i> </div>
+  <h2 class="header-title">分享</h2>
+</header>
+<div class="bgff ptb30 bb">
+  <p class="fz28 c66 p30 tx-c">选择您想要分享的方式</p>
+  <div class="yt yt-ac yt-pc tx-c m30 sns-login pt20">
+    <div class="yt-f1 yt yt-ac yt-pc yt-ver" id="icon-sns-wechat"> <i class="icon-hi icon-sns-wechat-hmc"></i>
+      <p>微信</p>
+    </div>
+    <div class="yt-f1 yt yt-ac yt-pc yt-ver" id="icon-sns-qq"> <i class="icon-hi icon-sns-qq-hmc"></i>
+      <p>QQ</p>
+    </div>
+    <div class="yt-f1 yt yt-ac yt-pc yt-ver" id="icon-sns-weibo"> <i class="icon-hi icon-sns-weibo-hmc"></i>
+      <p>微博</p>
+    </div>
+  </div>
+</div>
+</body>
+<script src="../script/zepto.min.js" type="text/javascript"></script>
+<script src="../script/common.js" type="text/javascript"></script>
+<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+<script>
+ytfready = function(){
+	id = YTF.htmlParam.id;
+	wind = YTF.htmlParam.wind;
+	statusBarFix(document.getElementById("header"));
+	$(".header-left").bind("tap",function(){
+			YTF.winClose();
+		})
+}
+$(".sns-login").delegate("div","tap",function(){
+	var type = $(this).attr("id");
+		shareGet(type);
+	})
+
+function shareGet(t){
+    showProgress("数据提交中...");
+    YTF.ajax({
+        url: serverUrl + 'app/share/share',
+        methodType: 'get',
+        isReport: false,
+        headers: {
+            logtoken: userToken
+        },
+        data: {
+            values:{
+                'id': id
+            }
+        }
+    },
+    function(ret,err){
+		console.log("分享："+JSON.stringify(ret));
+		YTF.hideProgress();
+		if(ret){
+			switch(ret.status){
+				case 0:
+					openLoginWin("login_win","./login_win.html");
+					break;
+				case 1:
+					data = ret.data;
+					switch(t){
+						case "icon-sns-wechat":
+							//微信分享
+							share_weixin();
+							break;
+						case "icon-sns-qq":
+							//qq分享
+							share_qq();
+							break;
+						case "icon-sns-weibo":
+							//微博分享
+							share_sina();
+							break;
+						}
+					break;
+				case 2:
+					break;
+				default:
+
+				}
+			}else{
+				YTF.toast({
+						msg:"网络错误",
+						duration:1500,
+						global:false,
+					});
+			}
+		});
+}
+	
+function share_weixin(){
+	var weixin = YTF.require("weixin");
+	var isInstalled = weixin.isInstalled();
+	if(isInstalled == 0){
+		YTF.toast({
+				msg:"未找到相关应用",
+				duration:1500,
+				global:false,
+			});
+		return;
+		}
+		weixin.shareWebPage({
+				imageUrl: data.img,
+				scene: "1",
+				path: data.url,
+				title: "【笔遇】："+data.content,
+				description: data.content
+		},
+		function(ret, err){
+			if(ret){
+				switch(ret.status){
+					case 0:
+						YTF.eventSend({
+							　eventName: 'resShare',
+							　attr: {
+								   'id':id,
+								   'proof':data.proof,
+								　　'wind':wind
+								　　}
+							},function(ret,err){
+							　　if(ret){
+									//////
+							　　}
+							});
+						YTF.toast({
+								msg:"分享成功",
+								duration:1500,
+								global:false,
+							});
+						window.setTimeout(function(){
+							YTF.winClose();
+							},1500);
+						break;
+					case -2:
+						YTF.toast({
+								msg:"取消分享",
+								duration:1500,
+								global:false,
+							});
+						break;
+					case -3:
+						YTF.toast({
+								msg:"分享失败",
+								duration:1500,
+								global:false,
+							});
+						break;
+					case -4:
+						YTF.toast({
+								msg:"授权失败",
+								duration:1500,
+								global:false,
+							});
+						break;
+					case -5:
+						YTF.toast({
+								msg:"微信不支持",
+								duration:1500,
+								global:false,
+							});
+						break;
+					default:
+						YTF.toast({
+								msg:"Error:status - ".ret.status,
+								duration:1500,
+								global:false,
+							});
+					}
+				}else{
+					YTF.toast({
+							msg:"网络错误",
+							duration:1500,
+							global:false,
+						});
+					}
+				
+		});
+}
+
+function share_qq(){
+	var qq = YTF.require("qq");
+	var isInstalled = qq.isInstalled();
+	if(isInstalled == 0){
+		YTF.toast({
+				msg:"未找到相关应用",
+				duration:1500,
+				global:false,
+			});
+		return;
+		}
+		qq.shareWebPage({
+				imageUrl: data.img,
+				targetUrl: data.url,
+				title: "【笔遇】："+data.content,
+				summary: data.content
+		},
+		function(ret, err) {
+			if(ret){
+				switch(ret.status){
+					case 0:
+						YTF.toast({
+								msg:"分享失败",
+								duration:1500,
+								global:false,
+							});
+						break;
+					case 1:
+						YTF.eventSend({
+							　eventName: 'resShare',
+							　attr: {
+								   'id':id,
+								   'proof':data.proof,
+								　　'wind':wind
+								　　}
+							},function(ret,err){
+							　　if(ret){
+									//////
+							　　}
+							});
+						YTF.toast({
+								msg:"分享成功",
+								duration:1500,
+								global:false,
+							});
+						window.setTimeout(function(){
+							YTF.winClose();
+							},1500);
+						break;
+					case 2:
+						YTF.toast({
+								msg:"取消分享",
+								duration:1500,
+								global:false,
+							});
+						break;
+					default:
+						YTF.toast({
+								msg:"Error:status - ".ret.status,
+								duration:1500,
+								global:false,
+							});
+					}
+				}else{
+					YTF.toast({
+							msg:"网络错误",
+							duration:1500,
+							global:false,
+						});
+					}
+		});
+}
+
+function share_sina(){
+	var share_ = YTF.require("weibo");
+		share_.share({
+				shareType: "webpage",
+				text: "8888",
+				title: "【笔遇】："+data.content,
+				description: data.content,
+				imageUrl:"widget://res/logo.png",//data.img,
+				shareUrl: data.url
+		},
+		function(ret, err) {
+			if(ret){
+				alert(JSON.stringify(ret));
+				}else{
+					alert(JSON.stringify(err));
+					}
+		});
+}
+</script>
+</html>

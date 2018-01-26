@@ -1,0 +1,50 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "80C9620418CEE1E917094D9A6F01C47023A1C5FA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "2a0a2a76-10ea-44db-b1e0-b784392de608++9043" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "76866F0EE4F8FD4EF66081A98CDFC7970D4E4E28" : 0,
+    "80C9620418CEE1E917094D9A6F01C47023A1C5FA" : 0,
+    "2a0a2a76-10ea-44db-b1e0-b784392de608++9043" : 9223372036854775807,
+    "19AD98B5D49E08FEF011DB99139B20ECA975BE54" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DE9C43BE-FED3-4EA5-ACB8-0FE08FB767E5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "76866F0EE4F8FD4EF66081A98CDFC7970D4E4E28" : "YTFTest\/",
+    "80C9620418CEE1E917094D9A6F01C47023A1C5FA" : "engine_IOS_new\/",
+<<<<<<< HEAD
+    "2a0a2a76-10ea-44db-b1e0-b784392de608++9043" : "engine_IOS_new\/YTFTest\/assets\/widgetChuanFu9\/",
+=======
+    "2a0a2a76-10ea-44db-b1e0-b784392de608++9043" : "engine_IOS_new\/YTFTest\/assets\/widgetChuanFu\/",
+>>>>>>> e5d6bd7cfbedcb9a3e9698224d4f6dd7d3f4ff09
+    "19AD98B5D49E08FEF011DB99139B20ECA975BE54" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "YTFTest",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "YTFTest.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.100.10:3000\/chengronggang\/YTFTest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "19AD98B5D49E08FEF011DB99139B20ECA975BE54"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/192.168.100.10\/user-linchuanfu",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2a0a2a76-10ea-44db-b1e0-b784392de608++9043"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.100.10:3000\/chengronggang\/YTFTest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "76866F0EE4F8FD4EF66081A98CDFC7970D4E4E28"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.100.10:3000\/engine_team\/engine_IOS_new.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "80C9620418CEE1E917094D9A6F01C47023A1C5FA"
+    }
+  ]
+}

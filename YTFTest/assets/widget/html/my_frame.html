@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>个人</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="nav-fixed">
+		<ul class="list mb30">
+			<li class="yt yt-ac" id="my">
+				<div class="img-wrap round user-photo mr30 bd bdc-fff">
+
+				</div>
+				<h3 class="yt-f1 yt-te list-title nickName"></h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+		</ul>
+		<ul class="list mb30">
+			<li class="yt yt-ac" id="youbi">
+				<i class="mr20 icon-hi icon-big-stamp" style="width: 1.6rem;height: 1.6rem;"></i>
+				<h3 class="list-title yt-f1 yt-te">我的邮币</h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac" id="score">
+				<i class="mr20 icon-hi icon-personal-li1"></i>
+				<h3 class="list-title yt-f1 yt-te">我的积分</h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac" id="dynamic">
+				<i class="mr20 icon-hi icon-personal-li2"></i>
+				<h3 class="list-title yt-f1 yt-te">我的动态</h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac" id="account">
+				<i class="mr20 icon-hi icon-personal-li3"></i>
+				<h3 class="list-title yt-f1 yt-te">账号管理</h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+		</ul>
+		<ul class="list mb30">
+			<li class="yt yt-ac" id="sysconf">
+				<i class="mr20 icon-hi icon-personal-li4"></i>
+				<h3 class="list-title yt-f1 yt-te">系统设置</h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac" id="collect">
+				<i class="mr20 icon-hi icon-personal-li5"></i>
+				<h3 class="list-title yt-f1 yt-te">集邮</h3>
+				<i class="icon icon-next db fz32 c99"></i>
+			</li>
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			var data = eval("(" + localStorage.getItem("userInfo") + ")");
+			$(".user-photo").css("background-image", "url(" + photoUrl + data.face + ")");
+			$(".nickName").html(data.biname);
+
+			/**
+			 *个人资料修改监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'info_edit'
+			}, function(ret, err) {
+				$(".user-photo").css("background-image", "url(" + photoUrl + ret.face + ")");
+				$(".nickName").html(ret.nickName);
+			});
+		}
+		/**
+		 *个人资料
+		 */
+		$("#my").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_win',
+				htmlUrl : './my_info_win.html'
+			});
+		});
+		/**
+		 *我的邮币 
+		 */
+		$("#youbi").bind("tap",function(){
+			YTF.winOpen({
+				winName : 'my_youbi_win',
+				htmlUrl : './my_youbi_win.html'
+			});
+		});
+		/**
+		 *我的积分
+		 */
+		$("#score").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_score_win',
+				htmlUrl : './my_score_win.html'
+			});
+		});
+		/**
+		 *我的动态
+		 */
+		$("#dynamic").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_dynamic_win',
+				htmlUrl : './my_dynamic_win.html'
+			});
+		});
+		/**
+		 *账号管理
+		 */
+		$("#account").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_account_win',
+				htmlUrl : './my_account_win.html'
+			});
+		});
+		/**
+		 *系统设置
+		 */
+		$("#sysconf").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_sysconf_win',
+				htmlUrl : './my_sysconf_win.html'
+			});
+		});
+		/**
+		 *集邮
+		 */
+		$("#collect").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_collect_win',
+				htmlUrl : './my_collect_win.html'
+			});
+		});
+	</script>
+</html>

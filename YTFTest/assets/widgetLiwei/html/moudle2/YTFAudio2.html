@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>音乐测试</title>
+		<meta name="viewport"
+		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/release.css"/>
+
+	</head>
+	<body style="background: #134351;">
+
+		<div align="center">
+			<img src="../../images/music_header.png" height="100%" width="100%">
+		</div>
+
+		<div style="text-align: center;height:50px">
+			<button style="width:30%" onclick="Init('/storage/emulated/0/邓紫棋-泡沫.mp3')">
+				泡沫
+			</button>
+			<button style="width:30%" onclick="Init('/storage/emulated/0/张雨生 - 大海.mp3')">
+				大海
+			</button>
+			<button style="width:30%" onclick="Init('http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3')">
+				网络地址
+			</button>
+			<button style="width:30%" onclick="Init('/storage/emulated/0/郑伊健-花正好.wav')">
+				花正好
+			</button>
+
+		</div>
+
+		<div style="text-align: center">
+			<img id="pauseId" src="../../images/btn_pause.png" onclick="Pause()"/>
+			<img id="playId" src="../../images/btn_play.png" onclick="Play()"/>
+		</div>
+
+		<section>
+			<div style="width:30%;display:inline;text-align: center;">
+				<img src="../../images/music_image.jpg" height="40px" width="40px" onclick="Scan()">
+			</div>
+
+			<div style="width:60%;display:inline;text-align: center;">
+				<label id="left">00:00</label>
+				<input type="range" id="range" value="0" onchange="change();">
+				<label id="right">00:00</label>
+			</div>
+
+		</section>
+		<div>
+			<label id="singName">歌名</label>
+		</div>
+
+		<div style="text-align: center;height:50px">
+			<button style="width:20%" onclick="Speed()">
+				快进
+			</button>
+			<button style="width:20%" onclick="Stop()">
+				停止
+			</button>
+			<button style="width:20%" onclick="Reverse()">
+				快退
+			</button>
+			<button style="width:20%" onclick="getCurr()">
+				当前时间
+			</button>
+		</div>
+
+		<div style="text-align: center;height:50px">
+			<button style="width:20%" onclick="getAttr()">
+				getAttr
+			</button>
+			<button style="width:20%" onclick="RemoveListrnner()">
+				RemoveListrnner
+			</button>
+		</div>
+
+		<div style="text-align: center">
+			<img id="voiceL" src="../../images/btn_prev.png" onclick="setVoiceL()"/>
+			<img id="voiceH" src="../../images/btn_next.png" onclick="setVoiceH()"/>
+		</div>
+
+	</body>
+	<script src="../../script/common.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/zepto.js"></script>
+	<script>
+		var YTFFS = YTF.require("File");
+		YTFFS.closeFile({
+			fd : fileDes
+		}, function(ret, err) {
+			if (ret) {
+				alert(JSON.stringify(ret));
+			} else {
+				alert(JSON.stringify(err));
+			}
+		});
+	</script>
+</html>

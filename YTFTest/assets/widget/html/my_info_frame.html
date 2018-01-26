@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>个人资料</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<link rel="stylesheet" type="text/css" href="../css/LArea.css" />
+		<script src="../script/LArea.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/LAreaData1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../script/LAreaData2.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 日期必备样式 开始 -->
+		<link href="../css/mobiscroll/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+		<!-- 日期必备样式 结束 -->
+	</head>
+
+	<body>
+		<div class="mb30 ptb30 bgff bb yt yt-ac yt-pc">
+			<div id="face" class="img-wrap round user-photo size-b mr30 bd bdc-fff"></div>
+		</div>
+		<ul class="list bn mb30">
+			<li class="yt yt-ac">
+				<h3 class="list-title">邮编</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--643100-->
+					<span class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 db" id="postcode"></span>
+				</div>
+			</li>
+			<li class="yt yt-ac" id="nick">
+				<h3 class="yt-f1 yt-te list-title">笔名</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--起个名字好难-->
+					<span class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 db biname"></span>
+				</div>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</li>
+		</ul>
+		<ul class="list mb30">
+			<li class="yt yt-ac" id="sex">
+				<h3 class="yt-f1 yt-te list-title">性别</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--男-->
+					<span class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 db sex"></span>
+				</div>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac" id="birth">
+				<h3 class="yt-f1 yt-te list-title">年龄</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--24-->
+					<span class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 db birth"></span>
+				</div>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac" id="star">
+				<h3 class="yt-f1 yt-te list-title">星座</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--巨蟹座-->
+					<span class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 db star"></span>
+				</div>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</li>
+			<li class="yt yt-ac">
+				<h3 class="max-w220-hmc yt-te list-title">坐标</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--四川省成都市高新区-->
+					<div class="yt-f1 yt yt-ac">
+						<input class="db yt-f1 tx-r input-text pr0 bn bgn address" id="demo1" type="text" readonly="" placeholder="未设置" />
+						<input id="value1" type="hidden" value="24,272,6004" />
+					</div>
+				</div>
+			</li>
+			<li class="yt yt-ac" id="status">
+				<h3 class="yt-f1 yt-te list-title">目前状态</h3>
+				<div class="yt-f1 yt-te yt yt-ac yt-pe fz28 c66 lh1">
+					<!--上班-->
+					<span class="yt-f1 input-text c66 bgn bn tx-r pt0 pb0 pr0 db status"></span>
+				</div>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</li>
+		</ul>
+		<div class="mb30 bgff">
+			<div class="p30 yt yt-ac" id="hobby">
+				<h3 class="list-title yt-f1 yt-te">兴趣爱好</h3>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</div>
+			<div class="p30 pb0 bt bb personal-tags-list">
+				<ul class="clear" id="hobbyList">
+
+				</ul>
+			</div>
+		</div>
+		<div class="mb30 bgff">
+			<div class="p30 yt yt-ac" id="needs">
+				<h3 class="list-title yt-f1 yt-te">需求</h3>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</div>
+			<div class="p30 pb0 bt bb personal-tags-list">
+				<ul class="clear" id="needList">
+
+				</ul>
+			</div>
+		</div>
+		<div class="mb30 bgff">
+			<div class="p30 yt yt-ac" id="sign">
+				<h3 class="list-title yt-f1 yt-te">个性签名</h3>
+				<i class="pl10 icon icon-next db fz32 c99"></i>
+			</div>
+			<div class="p30 bt bb yt fz28 c66 lh14 sign">
+
+				<!--<textarea class="yt-f1 input-text c66 bgn bn pt0 pb0 pr0 pr0 lh14 mh116-hmc wb-ba-hmc" readonly>问风儿人何时归，梅花独开人憔悴，雪中独行 月光泻千里。穿透岁月的记忆轮回，君问红妆为谁醉，白衣似雪两行泪。</textarea>-->
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 日期必备脚本 开始 -->
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.zepto.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.core.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.frame.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.scroller.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.util.datetime.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.datetimebase.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.datetime.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.android-holo-light.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.i18n.zh.js"></script>
+	<!-- 日期必备脚本 结束 -->
+	<script>
+		var face = "";
+		var biname = "";
+		var sex = "";
+		var birth = "";
+		var star = "";
+		var address = "";
+		var status = "";
+		var hobbys = "";
+		var needs = "";
+		var sign = "";
+		ytfready = function() {
+			showInfos();
+
+			/**
+			 *头像修改监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'face_edit'
+			}, function(ret, err) {
+				face = ret.face;
+				$("#face").css("background-image", "url(" + photoUrl + face + ")");
+			});
+
+			/**
+			 *笔名修改监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'biname_edit'
+			}, function(ret, err) {
+				biname = ret.biname;
+				$(".biname").html(biname);
+				;
+			});
+
+			/**
+			 *性别修改监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'sex_edit'
+			}, function(ret, err) {
+				sex = ret.sex;
+				$(".sex").html(sexArr[sex]);
+			});
+
+			/**
+			 *星座修改监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'star_edit'
+			}, function(ret, err) {
+				star = ret.star;
+				$(".star").html(star);
+			});
+
+			/**
+			 *用户状态监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'status_select'
+			}, function(ret, err) {
+				if (ret) {
+					status = ret.status;
+					$(".status").html(status);
+				}
+			});
+
+			/**
+			 *兴趣爱好监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'hobby_select'
+			}, function(ret, err) {
+				//console.log(JSON.stringify(ret));
+				if (ret) {
+					hobbys = ret.hobby;
+					var hobbyArr = hobbys.split(",");
+					var html = "";
+					for (var i = 0; i < hobbyArr.length; i++) {
+						html += '<li class="bd fz28 c66">' + hobbyArr[i] + '</li>';
+					}
+					$("#hobbyList").html(html);
+				}
+			});
+
+			/**
+			 *需求监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'needs_select'
+			}, function(ret, err) {
+				if (ret) {
+					needs = ret.need;
+					var needArr = needs.split(",");
+					var html = "";
+					for (var i = 0; i < needArr.length; i++) {
+						html += '<li class="bd fz28 c66">' + needArr[i] + "</li>";
+					}
+					$("#needList").html(html);
+				}
+			});
+
+			/**
+			 *签名修改监听
+			 */
+			YTF.eventListenerAdd({
+				eventName : 'sign_edit'
+			}, function(ret, err) {
+				sign = ret.sign;
+				$(".sign").html(sign);
+			});
+
+		}
+		/**
+		 *展示数据
+		 */
+		function showInfos() {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/user/get-myinfo',
+				isReport : false,
+				methodType : 'get',
+				headers : {
+					logtoken : localStorage.getItem("logtoken")
+				}
+			}, function(ret, err) {
+				console.log("---1111----" + JSON.stringify(ret));
+				YTF.hideProgress();
+				if (ret) {
+					if (ret.status == 0) {
+						openLoginWin("login_win", "./login_win.html");
+					} else if (ret.status == 1) {
+						face = ret.data.face;
+						$("#face").css("background-image", "url(" + photoUrl + face + ")");
+						$("#postcode").html(ret.data.postcode);
+						biname = ret.data.biname;
+						$(".biname").html(ret.data.biname);
+						sex = ret.data.sex;
+						$(".sex").html(sexArr[sex]);
+						birth = ret.data.age;
+						$(".birth").html(ret.data.nage);
+						star = ret.data.constellation;
+						$(".star").html(star);
+						address = ret.data.province + "," + ret.data.city;
+						$(".address").val(address);
+						status = ret.data.job;
+						$(".status").html(status);
+
+						hobbys = ret.data.hobby;
+						var hobbyArr = hobbys.split(",");
+						var html = "";
+						for (var i = 0; i < hobbyArr.length; i++) {
+							html += '<li class="bd fz28 c66">' + hobbyArr[i] + "</li>";
+						}
+						$("#hobbyList").html(html);
+
+						needs = ret.data.demand;
+						var needArr = needs.split(",");
+						var html = "";
+						for (var i = 0; i < needArr.length; i++) {
+							html += '<li class="bd fz28 c66">' + needArr[i] + "</li>";
+						}
+						$("#needList").html(html);
+
+						sign = ret.data.sign;
+						$(".sign").html(sign);
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+		/**
+		 *保存
+		 */
+		function submitInfo() {
+			showProgress("保存中,请稍后...");
+			address = $("#demo1").val().trim();
+			var locaArr = address.split(",");
+			YTF.ajax({
+				url : serverUrl + 'app/user/edit-info',
+				methodType : 'post',
+				isReport : false,
+				headers : {
+					logtoken : localStorage.getItem("logtoken")
+				},
+				data : {
+					values : {
+						face : face,
+						biname : biname,
+						sex : sex,
+						age : birth,
+						constellation : star,
+						province : locaArr[0],
+						city : locaArr[1],
+						job : status,
+						hobby : hobbys,
+						demand : needs,
+						sign : sign,
+					}
+				}
+			}, function(ret, err) {
+				//console.log("-------" + JSON.stringify(ret));
+				YTF.hideProgress();
+				if (ret) {
+					if (ret.status == 0) {
+						openLoginWin("login_win", "./login_win.html");
+					} else if (ret.status == 1) {
+						var data = eval("(" + localStorage.getItem("userInfo") + ")");
+						data.face = face;
+						data.biname = biname;
+						data.sex = sex;
+						data.age = birth;
+						data.constellation = star;
+						data.province = locaArr[0];
+						data.city = locaArr[1];
+						data.job = status;
+						data.hobby = hobbys;
+						data.demand = needs;
+						data.sign = sign;
+						data.nage = ages(birth);
+						localStorage.setItem("userInfo", JSON.stringify(data));
+						YTF.eventSend({
+							eventName : 'info_edit',
+							attr : {
+								face : face,
+								nickName : biname
+							}
+						}, function(ret, err) {
+							YTF.winClose();
+						});
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		}
+
+		var area1 = new LArea();
+		area1.init({
+			'trigger' : '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+			'valueTo' : '#value1', //选择完毕后id属性输出到该位置
+			'keys' : {
+				id : 'id',
+				name : 'name'
+			}, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+			'type' : 1, //数据源类型
+			'data' : LAreaData //数据源
+		});
+		area1.value = [1, 13, 0];
+		//控制初始位置，注意：该方法并不会影响到input的value
+
+		/**
+		 *选择生日
+		 */
+		Zepto(function($) {
+			var myDate = new Date()
+			$('#birth').mobiscroll().date({
+				theme : "android-holo-light",
+				mode : "scroller",
+				lang : "zh",
+				display : "bottom",
+				dateFormat : "yy/mm/dd",
+				headerText : "选择日期",
+				endYear : myDate.getFullYear(),
+				onSelect : function(val, inst) {
+					//alert(val);
+					birth = val;
+					$(".birth").html(ages(val));
+				}
+			});
+		});
+		/**
+		 *头像
+		 */
+		$("#face").on("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_face_win',
+				htmlUrl : './my_info_face_win.html',
+				htmlParam : {
+					face : face
+				}
+			});
+		});
+		/**
+		 *笔名
+		 */
+		$("#nick").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_nick_win',
+				htmlUrl : './my_info_nick_win.html',
+				htmlParam : {
+					biname : biname
+				}
+			});
+		});
+		/**
+		 *性别
+		 */
+		$("#sex").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_sex_win',
+				htmlUrl : './my_info_sex_win.html',
+				htmlParam : {
+					sex : sex
+				}
+			});
+		});
+		/**
+		 *星座
+		 */
+		$("#star").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_star_win',
+				htmlUrl : './my_info_star_win.html',
+				htmlParam : {
+					star : star
+				}
+			});
+		});
+		/**
+		 *目前状态
+		 */
+		$("#status").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_status_win',
+				htmlUrl : './my_info_status_win.html',
+				htmlParam : {
+					status : status
+				}
+			});
+		});
+		/**
+		 *兴趣爱好
+		 */
+		$("#hobby").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_hobby_win',
+				htmlUrl : './my_info_hobby_win.html',
+				htmlParam : {
+					hobby : hobbys
+				}
+			});
+		});
+		/**
+		 *需求
+		 */
+		$("#needs").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_needs_win',
+				htmlUrl : './my_info_needs_win.html',
+				htmlParam : {
+					need : needs
+				}
+			});
+		});
+		/**
+		 *个性签名
+		 */
+		$("#sign").bind("tap", function() {
+			YTF.winOpen({
+				winName : 'my_info_sign_win',
+				htmlUrl : './my_info_sign_win.html',
+				htmlParam : {
+					sign : sign
+				}
+			});
+		});
+	</script>
+</html>

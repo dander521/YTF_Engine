@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+                    <title>YTUI-BUTTON</title>
+                    <link rel="stylesheet" href="../css/ytui.css"/>
+    </head>
+    
+    <body class="bgfb ">
+        <div class="mt20">
+            <ul class="list" id="list_sortID">
+            </ul>
+            <script id="list_sort_tmpID" type="text/template">
+                {{ for(var i=0,l=it.length; i< l;i++){ }}
+                    <li data-args={{=it[i].method}} >
+                    <a class="yt yt-ac">
+                    <div class="yt-f1">
+                    <div class="list-title">{{=it[i].brief}}</div>
+                    <p class="fz24 um-vp">{{=it[i].name}}</p>
+                    </div>
+                    <i class="icon icon-next"></i>
+                    </a>
+                    </li>
+                {{}}}
+            </script>
+        </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript" src="../script/ui.js"></script>
+    <script type="text/javascript" src="../script/event.js"></script>
+    <script type="text/javascript" src="../script/deviceInfo.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/zepto.js"></script>
+    <script type="text/javascript" src="../script/eventJq.js"></script>
+    <script type="text/javascript" src="../script/touch.js"></script>
+    <script type="text/javascript" src="../script/Data.js"></script>
+    <script>
+        ytfready = function(){
+            var dataList = window.win;
+            buildList(dataList);
+            YTF.launchRemove();
+        }
+    
+    //自动运行绑定事件
+    $(function($){
+      $("#list_sortID").delegate("li","tap",function(){
+                                 var args = $(this).attr("data-args");
+                                 eval(args);
+                                 });
+      });
+      
+      /**
+       * 构建列表
+       * @param {Object} list
+       */
+    function buildList(list){
+        var listTmp = doT.template($("#list_sort_tmpID").text());
+        $("#list_sortID").html(listTmp(list));
+    }
+    /**
+     * 打开一个新的功能窗口
+     * @param {Object} url
+     * @param {Object} param
+     */
+    function openNewWin(title, winUrl, frameUrl, winType, frameType) {
+        YTF.winOpen({
+                    winName: winType,
+                    htmlUrl: winUrl,
+                    htmlParam: {
+                    title: title,
+                    frameUrl: frameUrl,
+                    frameType: frameType
+                    }
+                    });
+    }
+    
+    function openFrameGroupWin() {
+        YTF.winOpen({
+                    winName:"frameGroupWin",
+                    htmlUrl:filePath+'win/newFrameGroupWin.html',
+                    slipCloseWin:false
+                    });
+    }
+    
+        </script>
+</html>

@@ -1,0 +1,500 @@
+var filePath = "./";
+window.win = [
+		{
+			id :0,
+			name:"win",
+			brief:"打开win操作页面",
+			method:"openNewWin('窗口1',filePath+'win/newWin.html',filePath+'newFrame.html','newWin1','newFrame1')"
+		},
+		{
+			id :1,
+			name:"sideWin",
+			brief:"打开侧滑操作的win",
+			method:"openNewWin('侧滑操作窗口',filePath+'win/newWin.html',filePath+'sideWinFrame.html','sideWin','sideWinFrame')"
+		},
+		{
+			id :2,
+			name:"frameGroupWin",
+			brief:"打开演示frameGroup操作的win",
+			method:"openFrameGroupWin()"
+		},
+		{
+			id :3,
+			name:"frameWin",
+			brief:"打开演示frame子窗口操作的win",
+			method:"openNewWin('子窗口1',filePath+'win/newWin.html',filePath+'newFrameAct1.html','newFrameActWin','newFrameAct1')"
+		},
+		{
+			id :4,
+			name:"excJS",
+			brief:"跨窗口操作",
+			method:"openNewWin('子窗口1',filePath+'win/newWin.html',filePath+'newFrameExcjs1.html','newFrameExcjsWin','newFrameExcjs1')"
+		}
+	];
+	
+window.ui = [
+		{
+			id :0,
+			name:"alert",
+			brief:"打开alert弹出框",
+			method:"Alert()"
+		},
+		{
+			id :1,
+			name:"confirm",
+			brief:"弹出带两个或者三个按钮的confirm对话框",
+			method:"Alert1()"
+		},
+		{
+			id :2,
+			name:"prompt",
+			brief:"弹出带有输入框和按钮的对话框",
+			method:"Alert2()"
+		},
+		{
+			id :3,
+			name:"toast",
+			brief:"打开toast提示框",
+			method:"toast()"
+		},
+		{
+			id :4,
+			name:"refreshDone",
+			brief:"设置下拉刷新组件为下拉刷新结束，恢复默认状态",
+			method:"closePull()"
+		},
+		{
+			id :5,
+			name:"setPullRefresh",
+			brief:"设置下拉刷新",
+			method:"setPull()"
+		},
+		{
+			id :6,
+			name:"refreshLoading",
+			brief:"设置下拉刷新组件为下拉刷新状态",
+			method:"openPull()"
+		},
+		{
+			id :7,
+			name:"progress",
+			brief:"显示加载动画",
+			method:"Progress()"
+		},
+		{
+			id :8,
+			name:"hideProgress",
+			brief:"移除加载动画",
+			method:"closeProgress()"
+		},
+		{
+			id :9,
+			name:"webProgress",
+			brief:"显示加载动画",
+			method:"webProgress()"
+		},
+		{
+			id :10,
+			name:"webHideProgress",
+			brief:"移除加载动画",
+			method:"webCloseProgress()"
+		},
+		{
+			id :11,
+			name:"pullUpCloseLoading",
+			brief:"设置上拉加载组件为上拉加载结束，恢复默认状态",
+			method:"pullUpCloseLoading()"
+		},
+		{
+			id :12,
+			name:"setPullUpLoading",
+			brief:"设置上拉加载",
+			method:"setPullUpLoading()"
+		},
+		{
+			id :13,
+			name:"PullUpOpenLoading",
+			brief:"设置上拉加载组件为上拉加载状态",
+			method:"pullUpOpenLoading()"
+		},
+		{
+			id :14,
+			name:"qqtest",
+			brief:"测试qq插件，qq是否安装",
+			method:"qqtest()"
+		},
+		{
+			id :14,
+			name:"aliPay",
+			brief:"测试aliPay插件，支付宝是否安装",
+			method:"aliPaytest()"
+		},
+		{
+			id :14,
+			name:"weixin",
+			brief:"测试weixin插件，微信是否安装",
+			method:"weixintest()"
+		}
+	];
+	
+	window.media = [
+		{
+			id :0,
+			name:"getPictureCut",
+			brief:"获取单个图片，并裁剪",
+			method:"openNewWin('获取单个图片',filePath+'moduleWin.html',filePath+'media/imgFrame.html','mediaWin','getPictureCutFrame')"
+		},
+		{
+			id :2,
+			name:"getPictures",
+			brief:"获取多个图片",
+			method:"openNewWin('获取多个图片',filePath+'moduleWin.html',filePath+'media/imgsFrame.html','mediaWin','getPicturesCutFrame')"
+		}
+	];
+	
+	window.event = [
+		{
+			id :0,
+			name:"onOffLine",
+			brief:"设置网络状态变化监听",
+			method:"eventListenerAdd('onOffLine')"
+		},
+		{
+			id :1,
+			name:"appBack",
+			brief:"设置APP后台运行监听",
+			method:"eventListenerAdd('appBack')"
+		},
+		{
+			id :2,
+			name:"event1",
+			brief:"设置自定义事件1监听",
+			method:"eventListenerAdd('event1')"
+		},
+		{
+			id :3,
+			name:"event2",
+			brief:"设置自定义事件2监听",
+			method:"eventListenerAdd('event2')"
+		},
+		{
+			id :4,
+			name:"sendMyEvent1",
+			brief:"发送自定义事件1",
+			method:"sendEvent('event1')"
+		},
+		{
+			id :5,
+			name:"sendMyEvent2",
+			brief:"发送自定义事件2",
+			method:"sendEvent('event2')"
+		},
+		{
+			id :6,
+			name:"cancleOnlineEvent",
+			brief:"取消网络状态变化监听",
+			method:"cancleEvent('onOffLine')"
+		},
+		{
+			id :7,
+			name:"cancleAppBackEvent",
+			brief:"取消APP后台运行状态监听",
+			method:"cancleEvent('appBack')"
+		},
+		{
+			id :8,
+			name:"bottomEvent",
+			brief:"滑动到页面底部事件监听",
+			method:"openNewWin('底部滑动监听',filePath+'moduleWin.html',filePath+'event/eventBottom.html','mediaWin','eventBottom')"
+		}
+	];
+	
+	window.ajax = [
+		{
+			id :0,
+			name:"ajax",
+			brief:"ajax获取接口数据",
+			method:"openNewWin('ajax请求',filePath+'moduleWin.html',filePath+'ajax/ajax.html','mediaWin','ajaxFrame')"
+		},
+		{
+			id :1,
+			name:"ajaxPost",
+			brief:"ajax网络请求Post操作",
+			method:"openNewWin('ajax的POST操作',filePath+'moduleWin.html',filePath+'ajax/ajaxPost.html','mediaWin','ajaxPostFrame')"
+		},
+		{
+			id :2,
+			name:"ajaxDownload",
+			brief:"ajax网络请求下载功能",
+			method:"openNewWin('ajax下载操作',filePath+'moduleWin.html',filePath+'ajax/ajaxDownload.html','mediaWin','ajaxDownloadFrame')"
+		}
+		,{
+			id :3,
+			name:"ajaxUpload",
+			brief:"ajax网络请求上传文件",
+			method:"openNewWin('ajax上传文件操作',filePath+'moduleWin.html',filePath+'ajax/ajaxUpload.html','mediaWin','ajaxUploadFrame')"
+		}
+	];
+	window.deviceInfo = [
+		{
+			id :0,
+			name:"systemType",
+			brief:"获取设备系统类型",
+			method:"AlertTitleMsg('设备系统类型',YTF.systemType)"
+		},
+		{
+			id :1,
+			name:"systemVersion",
+			brief:"获取系统版本",
+			method:"AlertTitleMsg('设备系统版本',YTF.systemVersion)"
+		},
+		{
+			id :2,
+			name:"deviceId",
+			brief:"获取设备ID",
+			method:"AlertTitleMsg('设备ID',YTF.deviceId)"
+		},
+		{
+			id :3,
+			name:"deviceModel",
+			brief:"获取设备型号",
+			method:"AlertTitleMsg('设备型号',YTF.deviceModel)"
+		},
+		{
+			id :6,
+			name:"screenWidth",
+			brief:"获取屏幕宽度",
+			method:"AlertTitleMsg('屏幕宽度',YTF.screenWidth)"
+		},
+		{
+			id :7,
+			name:"screenHeight",
+			brief:"获取屏幕高度",
+			method:"AlertTitleMsg('屏幕高度',YTF.screenHeight)"
+		}
+	];
+	
+	window.winInfo = [
+		{
+			id :0,
+			name:"windowHeight",
+			brief:"获取窗口高度",
+			method:"AlertTitleMsg('窗口高度',YTF.windowHeight)"
+		},
+		{
+			id :1,
+			name:"windowWidth",
+			brief:"获取窗口宽度",
+			method:"AlertTitleMsg('窗口宽度',YTF.windowWidth)"
+		},
+		{
+			id :2,
+			name:"windowName",
+			brief:"获取窗口名",
+			method:"AlertTitleMsg('窗口名',YTF.windowName)"
+		},
+		{
+			id :3,
+			name:"htmlParam",
+			brief:"获取窗口参数",
+			method:"AlertTitleMsg('窗口参数',YTF.htmlParam)"
+		},
+		{
+			id :4,
+			name:"appId",
+			brief:"获取APP的ID号",
+			method:"AlertTitleMsg('APP的ID号',YTF.appId)"
+		},
+		{
+			id :5,
+			name:"appName",
+			brief:"获取APP名",
+			method:"AlertTitleMsg('APP名',YTF.appName)"
+		},
+		{
+			id :6,
+			name:"appVersion",
+			brief:"获取APP版本号",
+			method:"AlertTitleMsg('APP版本号',YTF.appVersion)"
+		},
+		{
+			id :7,
+			name:"frameHight",
+			brief:"获取子窗口高度",
+			method:"AlertTitleMsg('子窗口高度',YTF.frameHight)"
+		},
+		{
+			id :8,
+			name:"frameWidth",
+			brief:"获取子窗口宽度",
+			method:"AlertTitleMsg('子窗口宽度',YTF.frameWidth)"
+		},
+		{
+			id :9,
+			name:"frameName",
+			brief:"获取子窗口名",
+			method:"AlertTitleMsg('子窗口名',YTF.frameName)"
+		}
+	];
+	
+	
+	window.moudles = [
+		{
+			id :16,
+			name:"pingpp",
+			brief:"pingpp",
+			method:"openNewWin('pingpp测试',filePath+'moduleWin.html',filePath+'moudle/pingpp.html','moudlesWin','pingppFrame')"
+		},
+		{
+			id :15,
+			name:"citySelector",
+			brief:"citySelector",
+			method:"openNewWin('citySelector测试',filePath+'moduleWin.html',filePath+'moudle/citySelector.html','moudlesWin','citySelectorFrame')"
+		},
+		{
+			id :14,
+			name:"timeSelector",
+			brief:"timeSelector测试",
+			method:"openNewWin('timeSelector测试',filePath+'moduleWin.html',filePath+'moudle/timeSelector.html','moudlesWin','timeSelectorFrame')"
+		},
+		{
+			id :13,
+			name:"SystemLocation",
+			brief:"SystemLocation测试",
+			method:"openNewWin('SystemLocation测试',filePath+'moduleWin.html',filePath+'moudle/SystemLocation.html','moudlesWin','SystemLocationFrame')"
+		},
+		{
+			id :0,
+			name:"qq",
+			brief:"qq测试",
+			method:"openNewWin('qq测试',filePath+'moduleWin.html',filePath+'moudle/qq.html','moudlesWin','qqFrame')"
+		},
+		{
+			id :1,
+			name:"weixin",
+			brief:"weixin测试",
+			method:"openNewWin('weixin测试',filePath+'moduleWin.html',filePath+'moudle/weixin.html','moudlesWin','weixinPostFrame')"
+		},
+		{
+			id :2,
+			name:"alipay",
+			brief:"alipay测试",
+			method:"openNewWin('alipay测试',filePath+'moduleWin.html',filePath+'moudle/alipay.html','moudlesWin','alipayDownloadFrame')"
+		}
+		,{
+			id :3,
+			name:"erweima",
+			brief:"erweima测试",
+			method:"openNewWin('erweima测试',filePath+'moduleWin.html',filePath+'moudle/erweima.html','moudlesWin','erweimaFrame')"
+		}
+		,{
+			id :4,
+			name:"weibo",
+			brief:"weibo",
+			method:"openNewWin('weibo测试',filePath+'moduleWin.html',filePath+'moudle/weibo.html','moudlesWin','weiboFrame')"
+		}
+		,{
+			id :5,
+			name:"Amap",
+			brief:"Amap",
+			method:"openNewWin('Amap',filePath+'moduleWin.html',filePath+'moudle/Amap.html','moudlesWin','AmapFrame')"
+		}
+		,{
+			id :6,
+			name:"ImageBrowser",
+			brief:"ImageBrowser",
+			method:"openNewWin('ImageBrowser测试',filePath+'moduleWin.html',filePath+'moudle/ImageBrowser.html','moudlesWin','ImageBrowserFrame')"
+		}
+		,{
+			id :7,
+			name:"YTFAudio",
+			brief:"AYTFAudio",
+			method:"openNewWin('AYTFAudio测试',filePath+'moduleWin.html',filePath+'moudle/YTFAudio.html','moudlesWin','YTFAudioFrame')"
+		}
+		,{
+			id :8,
+			name:"DB",
+			brief:"DB",
+			method:"openNewWin('DB测试',filePath+'moduleWin.html',filePath+'moudle/DB.html','moudlesWin','DBFrame')"
+		}
+		,{
+			id :9,
+			name:"File",
+			brief:"File",
+			method:"openNewWin('File测试',filePath+'moduleWin.html',filePath+'moudle/File.html','moudlesWin','FileFrame')"
+		}
+		,{
+			id :10,
+			name:"DBsyn",
+			brief:"DBsyn",
+			method:"openNewWin('DBsyn测试',filePath+'moduleWin.html',filePath+'moudle/DBsyn.html','moudlesWin','DBsynFrame')"
+		}
+		,{
+			id :11,
+			name:"Filesyn",
+			brief:"Filesyn",
+			method:"openNewWin('Filesyn测试',filePath+'moduleWin.html',filePath+'moudle/Filesyn.html','moudlesWin','FilesynFrame')"
+		}
+		,{
+			id :12,
+			name:"YTFMovie",
+			brief:"YTFMovie",
+			method:"openNewWin('YTFMovie测试',filePath+'moduleWin.html',filePath+'moudle/YTFMovie.html','moudlesWin','YTFMovieFrame')"
+		},{
+			id :13,
+			name:"pingpp",
+			brief:"pingpp",
+			method:"openNewWin('pingpp测试',filePath+'moduleWin.html',filePath+'moudle/pingpp.html','moudlesWin','pingppFrame')"
+		}
+		
+	];
+window.sort = [
+		{
+			id :0,
+			name:"win",
+			brief:"窗口系统",
+			content: "window.win"
+		},
+		{
+			id :1,
+			name:"ui",
+			brief:"UI功能",
+			content: "window.ui"
+		},
+		{
+			id :2,
+			name:"media",
+			brief:"多媒体插件",
+			content:"window.media"
+		},
+		{
+			id :3,
+			name:"event",
+			brief:"消息事件",
+			content: "window.event"
+		},
+		{
+			id :4,
+			name:"ajax",
+			brief:"网络通信",
+			content:"window.ajax"
+		},
+		{
+			id :5,
+			name:"deviceInfo",
+			brief:"设备属性",
+			content:"window.deviceInfo"
+		},
+		{
+			id :6,
+			name:"winInfo",
+			brief:"窗口属性",
+			content:"window.winInfo"
+		},
+		{
+			id :7,
+			name:"moudleTest",
+			brief:"插件测试",
+			content:"window.moudles"
+		}
+	];

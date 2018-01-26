@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxButton {
+			text-align: center;
+		}
+		.btn {
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getVersion()">
+					pingpp：getVersion
+				</div>
+			</div>
+
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="setDebugMode()">
+					pingpp：setDebugMode
+				</div>
+			</div>
+
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getCharge(channelwx)">
+					pingpp：createPayment wx
+				</div>
+			</div>
+			
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getCharge(channelalipay)">
+					pingpp：createPayment alipay
+				</div>
+			</div>
+			
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getCharge(channelbyb)">
+					pingpp：createPayment byb
+				</div>
+			</div>
+			
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getCharge(channelupacp)">
+					pingpp：createPayment pacp
+				</div>
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script>
+		var pingppTest;
+		var charge;
+		var channelwx="wx";//微信
+		var channelalipay="alipay";//alipay
+		var channelbyb="byb";//baidu
+		var channelupacp="upacp";//银联
+		ytfready = function() {
+			pingppTest = YTF.require("pingpp");
+			alert(JSON.stringify(pingppTest));
+		}
+		function getVersion() {
+			pingppTest.getVersion(function(ret, err) {
+				if (ret) {
+					alert(ret.version);
+				}
+			});
+		}
+
+		function setDebugMode() {
+			var ver = pingppTest.getVersion();
+			alert(ver);
+		}
+
+		function createPayment() {
+			pingppTest.createPayment({
+				charge : charge,
+				scheme : "www.baidu.com"
+			}, function(ret, err) {
+				if (ret) {
+					alert(JSON.stringify(ret));
+				}
+				if (err) {
+					alert(JSON.stringify(err));
+				}
+			});
+		}
+
+		function getCharge(channel) {
+			var urlPost = "http://biyu.iyuantuan.org.cn/app/youbi/buy";
+			YTF.ajax({
+				url : urlPost,
+				signName : 'ajaxPost',
+				methodType : 'post',
+				data: {
+                    values: {
+						youbi: 1,
+						channel:channel
+                    }
+                }
+			}, function(ret, err) {
+				if (ret.data && ret.status==1) {
+					alert(JSON.stringify(ret));
+					charge=JSON.stringify(ret.data);
+					createPayment();
+				} else if(err){
+					alert(ret.msg)
+				}
+			});
+		}
+
+	</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>猿团新闻</title>
+    <link rel="stylesheet" href="./css/ytui.css" />
+    <link rel="stylesheet" href="./css/lch-cc.css" />
+</head>
+
+<body class="">
+</body>
+<script src="script/common.js"></script>
+<script>
+var YTFTouch;
+	ytfready = function(){
+		openSideWin();
+		YTFTouch=YTF.require("Touch");
+		YTFTouch.config3DTouchListener({},function(ret,err){
+			alert(123);
+			if(ret){
+				alert(ret);
+			}
+		});
+		//setMenu();
+    }
+
+	function setMenu(){
+		YTFTouch.config3DTouchMenu({
+			items:[{
+				type: 'com.yuantuan.YTF.add',
+				title: 'Add',
+				icon: {
+					file: 'widget://images/home.png'
+					},
+				userInfo:{
+					'key1': 'value1'
+				}
+			},{
+				type: 'com.yuantuan.YTF.done',
+				title: 'Done',
+				icon: {
+					type: 0
+					},
+				userInfo:{
+					'key2': 'value2'
+				}
+			}]
+		},function(ret,err){
+			if(ret){
+				alert(ret);
+			}
+		});
+	}
+	
+	
+    /**打开侧滑Win*/
+	function openSideWin(){
+	    YTF.drawerWinOpen({
+	        drawerName:"side",
+	        type:"left",
+	        sideDrawerStyle:{
+	            leftEdge:0.6,
+	            leftZone:1.0,
+	            leftScale:1.0
+	        },
+	        mainDrawerStyle:{
+	            leftMaskBg:"#55555533"
+	        },
+	        mainPane:{
+	            mainName:"side_main",
+	            htmlUrl:filePath+"html/mainWin.html",
+	        },
+	        sidePane:{
+                sideName:"side_drawer",
+                htmlUrl:filePath+"html/sideWin.html"
+	        }
+	    });
+	}
+
+	/**打开侧滑*/
+	function openSide(){
+        YTF.drawerOpen({
+            sideName:"side_drawer"
+        });
+	}
+
+	/**关闭侧滑*/
+	function sideClose(){
+        YTF.drawerClose({
+            sideName:"side_drawer"
+        });
+	}
+    
+</script>
+
+</html>

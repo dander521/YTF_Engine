@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="excFrame1()">执行子窗口1的切换隐藏状态方法</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	
+	ytfready = function(){
+		
+	}
+	/**
+	 * 打开子窗口2
+	 */
+	function excFrame1(){
+		YTF.excJs({
+            winName:"newFrameExcjsWin",
+            script:"changeTitle()"
+	  });
+		YTF.excJs({
+            frameName:"newFrameExcjs1",
+            script:"changeHide()"
+	  });
+	   activeFrame1();
+	}
+	
+	function activeFrame1(){
+		YTF.frameActive({from: 'newFrameExcjs1'});
+	}
+</script>
+</html>

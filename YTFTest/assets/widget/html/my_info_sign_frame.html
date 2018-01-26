@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>个性签名</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body class="bgf8">
+		<div class="bgff dx-textarea p30 mt20 bb bt">
+			<textarea id="sign" placeholder="输入您的个性签名！"></textarea>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var sign = "";
+		ytfready = function() {
+			sign = YTF.htmlParam.sign;
+			$("#sign").val(sign);
+		}
+		/**
+		 *确定
+		 */
+		function submitInfo() {
+			sign = $("#sign").val().trim();
+			YTF.eventSend({
+				eventName : 'sign_edit',
+				attr : {
+					sign : sign
+				}
+			}, function(ret, err) {
+				YTF.winClose();
+			});
+		}
+	</script>
+</html>

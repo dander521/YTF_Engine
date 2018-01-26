@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>错误提示</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<style>
+			body {
+				margin: 0;
+				background: #fff;
+				color: #666;
+				font-family: "PingFang SC" , "Lantinghei SC", "Microsoft YaHei", "微软雅黑", SimSun, Arial;
+			}
+			
+			h2 {
+				font-size:  0.96rem;
+				text-align: center;
+				padding: 3.7rem 0 0.3rem;
+				line-height: 1;
+				margin: 0 0.8rem;
+			}
+			
+			strong {
+				font-size: 0.86rem;
+				text-align: center;
+				display: block;
+				margin: 0 0.8rem;
+			}
+		</style>
+		<script>
+			(function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						if(clientWidth<320){
+							clientWidth=320
+						}else if(clientWidth>1024){
+							clientWidth=1024
+						}
+						docEl.style.fontSize = 16 * (clientWidth / 320) + 'px';
+					};
+
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+				
+			})(document, window);
+		</script>
+	</head>
+
+	<body>
+		<h2> Don't'</h2>
+        <strong>The page is run, please refresh !</strong>
+	</body>
+</html>

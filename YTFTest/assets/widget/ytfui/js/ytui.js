@@ -1,0 +1,9 @@
+$(function(){
+    $(".search>div").on("touchend",function(){
+        $(this).closest(".search").addClass("search-focus");
+        $(this).siblings("input").focus();
+    });
+    $(".search>p").on("touchend",function(){
+        $(this).siblings("input").val("").closest(".search").removeClass("search-focus");
+    })
+})

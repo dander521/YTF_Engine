@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+			font-size:29px;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setCT_U()">File：setCT_U</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setCT_G()">File：setCT_G</div>
+			</div>
+			<!-- 创建相应目录及文件 -->
+            <!-- ...fs://.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="createDirectorySync('fs://111/222')">File：createDirectory创建222目录</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="createFileSync('fs://111/222/333.txt')">File：createFile在222目录下创建333文件</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111')">File：removeDirectory读取111目录，看222目录是否创建成功</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111/222')">File：removeDirectoryFile读取222目录，看333文件是否创建成功</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="fileExistSync('fs://111/222/333.txt')">File：fileExist，判断333文件是否存在</div>
+			</div>
+			<!-- 目录及文件确认创建成功，下一步对文件进行读写操作测试 -->
+				<!-- 可写模式打开文件测试 -->
+                <!-- ...读写模式.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openFileSync('fs://111/222/333.txt',2)">File：openFile，打开333文件,可写模式</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readFileSync()">File：readFile，读取空文件</div>
+			</div>
+            <!-- ...参数补全.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="wirteFileSync('aaaaaaaaaa',0,false)">File：wirteFile，在文件中写入aaaaaaaaaa</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readUpFileSync(8)">File：readFile，从句柄向上读取,应该读取出8个a,aaaaaaaa</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDownFileSync(8)">File：readDownFile，从句柄向下读取,无法读取到</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getFileAttributeSync('fs://111/222/333.txt')">File：getFileAttribute，获取文件属性</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="getFileMD5Sync('fs://111/222/333.txt')">File：getFileMD5，获取文件MD5</div>
+			</div>
+            <!-- ...参数补全.. -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLengthSync('fs://111/222/333.txt',0,4)">File：readTxtFileByLength，从0开始读取4个数字，应该读取4个a</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="writeTxtFileByLengthSync('fs://111/222/333.txt','bb',2,0)">File：writeTxtFileByLength，从第二位，不覆盖插入bb</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLengthSync('fs://111/222/333.txt',0,100)">File：readTxtFileByLength，读取不覆盖插入后的字段，应该读取到aabbaaaaaaaa</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="writeTxtFileByLengthSync('fs://111/222/333.txt','cc',0,3)">File：writeTxtFileByLength，从0开始用cc覆盖三位，得到baaaaaaaa</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLengthSync('fs://111/222/333.txt',0,100)">File：readTxtFileByLength，查看结果</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="writeTxtFileByLengthSync('fs://111/222/333.txt','ddd',3,-1)">File：writeTxtFileByLength，从3开始用ddd覆盖之后所有，得到baaddd或者baddd</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLengthSync('fs://111/222/333.txt',0,100)">File：readTxtFileByLength，查看结果</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="writeTxtFileByLengthSync('fs://111/222/333.txt','ee',3)">File：writeTxtFileByLength，从3开始用ee覆盖之后所有，得到baaee</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLengthSync('fs://111/222/333.txt',0,100)">File：readTxtFileByLength，查看结果</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeFileSync('fs://111/222/333.txt')">File：closeFile，关闭文件</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readTxtFileByLengthSync('fs://111/222/333.txt',0,100)">File：readTxtFileByLength，检测文件是否正常关闭</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openFileSync('fs://111/222/333.txt',2)">File：openFile，重新打开333文件</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readUpFileSync(8)">File：readFile，从句柄向上读取,应该读不出8位,因为实际长度应该不足8位</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeFileSync('fs://111/222/333.txt')">File：closeFile，关闭文件</div>
+			</div>
+			
+			
+			<!-- 读写操作测试完毕，进行文件重命名、移动、复制、删除等操作测试 -->
+            <!-- copy 将文件copy到文件夹 -->
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="copyFileToDirSync('fs://111/222/333.txt','fs://111/444')">File：拷贝333文件为111目录下的444文件</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111/444')">File：removeDirectory读取111目录，看444.txt是否拷贝成功</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openFileSync('fs://111/444/333.txt',2)">File：openFile，打开444文件</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readUpFileSync(8)">File：readFile，从句柄向上读取,应该读取不出8位,实际长度应该不足8位，应该跟333一致</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeFileSync('fs://111/444/333.txt')">File：closeFile，关闭文件444</div>
+			</div>
+			
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="renameFileSync('fs://111/444/333.txt','fs://111/444/555.txt')">File：renameFile，444重命名为555</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111/444')">File：removeDirectory读取111目录，看444.txt是否重命名为555</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="moveFileToDirSync('fs://111/444/555.txt','fs://111/222')">File：removeFile，将555移动到111、222目录</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111/444')">File：removeDirectory读取111目录，555.txt是否移动出去</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111/222')">File：removeDirectory读取222目录，看555.txt是否移动过来</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="removeFileSync('fs://111/222/555.txt')">File：removeFile删除222目录下的555.txt</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111/222')">File：removeDirectory读取222目录，看555.txt是否删除</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="removeDirectorySync('fs://111/222')">File：removeDirectory，删除222目录</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="readDirectorySync('fs://111')">File：removeDirectory读取111目录，看222是否删除</div>
+			</div>
+			
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script>
+	var FileTest;
+	var fd;
+	var codingType="utf8";
+
+	ytfready = function(){
+		FileTest= YTF.require("File");
+	}
+	
+	function setCT_U(){
+		codingType="utf8";
+	}
+	function setCT_G(){
+		codingType="gbk";
+	}
+	function createDirectorySync(path){
+		var ret=FileTest.createDirectorySync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function removeDirectorySync(path){
+		var ret=FileTest.removeDirectorySync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function createFileSync(path){
+		var ret=FileTest.createFileSync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	function removeFileSync(path){
+		var ret=FileTest.removeFileSync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function copyFileToDirSync(oldPath,newPath){
+		var ret=FileTest.copyFileToDirSync({
+			oldPath:oldPath,
+			newPath:newPath
+		});
+		alert(JSON.stringify(ret));
+	}
+
+	function moveFileToDirSync(oldPath,newPath){
+		var ret=FileTest.moveFileToDirSync({
+			oldPath:oldPath,
+			newPath:newPath
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function renameFileSync(oldPath,newPath){
+		var ret=FileTest.renameFileSync({
+			oldPath:oldPath,
+			newPath:newPath
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readDirectorySync(path){
+		var ret=FileTest.readDirectorySync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function openFileSync(path,flags){
+		var ret=FileTest.openFileSync({
+			path:path,
+			flags:flags
+		});
+		alert(JSON.stringify(ret));
+		if(ret.fd){
+			fd = ret.fd;
+		}
+		alert(JSON.stringify(ret));
+	}
+
+	function readFileSync(offset,length){
+		var ret=FileTest.readFileSync({
+			fd:fd,
+			offset:offset,
+			codingType:codingType,
+			length:length
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readUpFileSync(length){
+		var ret=FileTest.readUpFileSync({
+			fd:fd,
+			codingType:codingType,
+			length:length
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readDownFileSync(length){
+		var ret=FileTest.readDownFileSync({
+			fd:fd,
+			codingType:codingType,
+			length:length
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function wirteFileSync(data,offset,overwrite){
+		var ret=FileTest.wirteFileSync({
+			fd:fd,
+			data:data,
+			offset:offset,
+			overwrite:overwrite,
+			codingType:codingType
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function closeFileSync(){
+		var ret=FileTest.closeFileSync({
+			fd:fd
+		});
+		alert(JSON.stringify(ret));
+	}
+	function fileExistSync(path){
+		var ret=FileTest.fileExistSync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function getFileAttributeSync(path){
+		var ret=FileTest.getFileAttributeSync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readTxtFileByLengthSync(path,start,length){
+		var ret=FileTest.readTxtFileByLengthSync({
+			path:path,
+			substring:{
+				start:start,
+				length:length
+			}
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function writeTxtFileByLengthSync(path,content,start,strategy){
+		var ret=FileTest.writeTxtFileByLengthSync({
+			path:path,
+			content:content,
+			place:{
+				start:start,
+				strategy:strategy
+			},
+			codingType:codingType
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	
+	function getFileMD5Sync(path){
+		var ret=FileTest.getFileMD5Sync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+
+</script>
+</html>

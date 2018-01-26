@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>猿团新闻</title>
+    <link rel="stylesheet" href="../css/ytui.css" />
+
+</head>
+
+<body class="">
+    <div id="wrap">
+    	<!--header部分开始-->
+        <div id="header">
+		    <header class="header-bar bg-main">
+		        <div class="header-left " onclick="closeWin()">
+		            <i class="icon icon-pre"></i>
+		        </div>
+		        <h2 id="title" class="header-title">YTF
+		        	<!--<img src="./images/header-ccyt.png" alt=""/>-->
+		        </h2>
+		        <div class="header-right">
+		            <!--<i class="icon icon-search"></i>-->
+		        </div>
+		    </header>
+
+        </div>
+        <!--header部分结束-->
+        <!--main部分开始-->
+        <div id="main">
+                
+        </div>
+
+    </div>
+
+
+</body>
+<script type="text/javascript" src="../script/common.js"></script>
+<!--<SCRIPT src="../SCRIPT/ytf.js"></SCRIPT>-->
+<script src="../script/zepto.js"></script>
+<script>
+	ytfready = function(){
+		var htmlParam = YTF.htmlParam;
+		var Tmp= eval("("+htmlParam+")");
+		var frameUrl = Tmp.frameUrl;
+		var frameType = Tmp.frameType;
+		var title = Tmp.title;
+		$('#title').text(title);
+	    openFrame(frameType,frameUrl);
+    }
+  
+    /**
+	 * 打开窗口1
+	 */
+		function openFrame(type,frameUrl){
+			var htmlUrl = frameUrl;
+			var width = YTF.windowWidth;
+            var windowHeight = YTF.windowHeight;
+	        var headerEl = $('header');
+            var y= headerEl.height();
+            var height = windowHeight - y;
+			YTF.frameOpen({
+					frameName:type,
+					htmlUrl:htmlUrl,
+					isBounces:true,
+					isVScrollBar:true,
+					isHScrollBar:true,
+					isScale:true,
+					xywh:{
+						x: 0,
+						y: y,
+						w: width,
+						h: height,
+						marginLeft:0,    //相对父 window 左外边距的距离
+   						marginTop:0,    //相对父 window 上外边距的距离
+    					marginBottom:0,    //相对父 window 下外边距的距离
+   						marginRight:0    //相对父 window 右外边距的距离
+					},
+					isReload:false,
+					isEdit:true
+				});
+//				alert("==");
+		}
+		
+		/**
+		 * 关闭窗口
+		 */
+		function closeWin(){
+			YTF.winClose();
+		}
+</script>
+
+</html>

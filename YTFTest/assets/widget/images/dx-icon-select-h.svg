@@ -1,0 +1,17 @@
+<svg id="组_2" data-name="组 2" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #02b875;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        fill: #02b875;
+      }
+    </style>
+  </defs>
+  <circle id="椭圆_4" data-name="椭圆 4" class="cls-1" cx="15" cy="15" r="14"/>
+  <circle id="椭圆_5" data-name="椭圆 5" class="cls-2" cx="15" cy="15" r="9"/>
+</svg>

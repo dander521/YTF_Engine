@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="closeWin1()">关闭窗口1</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="YTF.winClose()">关闭当前窗口</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openWin1()">将窗口1重新打开到页面最前面</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	function openWin1(){
+		openNewWin('窗口1',filePath+'newWin.html',filePath+'newFrame.html','newWin1','newFrame1');
+	}
+	function closeWin1(){
+		YTF.winClose(
+			{
+				winName: 'newWin1'
+			}
+		);
+	}
+</script>
+</html>

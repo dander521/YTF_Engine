@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>头像</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+	</head>
+
+	<body>
+		<div class="p30 bgff bb yt yt-ac mt30">
+			<h3 class="list-title yt-f1 yt-te">我的积分</h3>
+			<i class="icon-hi icon-integral"></i>
+			<div class="fz28 ml20 color-red score">
+				
+			</div>
+		</div>
+		<div class="bgff mt30">
+			<div class="yt yt-ac p30 bb">
+				<h3 class="list-title yt-f1 yt-te">如何获取积分</h3>
+			</div>
+			<div class="bb ptb20 plr40 fz28 c99 lh16 wb-ba-hmc my-integral-how">
+				<p>
+					每日登陆<em class="dib plr20 color-red">+1</em>(每日限5分)
+				</p>
+				<p>
+					发布动态<em class="dib plr20 color-red">+3</em>(每日限15分)
+				</p>
+				<p>
+					评论动态<em class="dib plr20 color-red">+1</em>(每日限5分)
+				</p>
+				<p>
+					分享动态<em class="dib plr20 color-red">+5</em>(每日限25分)
+				</p>
+				<p>
+					发送信件<em class="dib plr20 color-red">+10</em>(每日限50分)
+				</p>
+				<p>
+					注册赠送<em class="dib plr20 color-red">+50</em>
+				</p>
+			</div>
+		</div>
+		<div class="bgff mt30">
+			<div class="yt yt-ac p30 bb">
+				<h3 class="list-title yt-f1 yt-te">积分用途</h3>
+			</div>
+			<div class="p30 fz28 c99 lh16 wb-ba-hmc">
+				<p>
+					兑换邮币：<em class="dib color-red">10</em>积分=<em class="dib color-red">1</em>邮币（邮币用于寄信时支付邮资）
+				</p>
+			</div>
+		</div>
+		<div class="mt60 plr30 yt yt-ac sstf-db-btn">
+			<button class="btn btn-b db yt-f1">
+				积分兑换
+			</button>
+			<button class="btn btn-b bg-second db yt-f1">
+				购买邮币
+			</button>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		ytfready = function() {
+			showInfos();
+		};
+
+		function showInfos() {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/user/get-integral',
+				methodType : 'get',
+				isReport : false,
+				headers : {
+					logtoken : localStorage.getItem("logtoken")
+				}
+			}, function(ret, err) {
+				//console.log("-------" + JSON.stringify(ret));
+				YTF.hideProgress();
+				if (ret) {
+					if (ret.status == 0) {
+						openLoginWin("login_win", "./login_win.html");
+					} else if (ret.status == 1) {
+						$(".score").html(ret.data.integral);
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+	</script>
+</html>

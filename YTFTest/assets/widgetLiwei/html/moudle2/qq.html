@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxButton{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+			font-size:29px;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="isInstalled()">isInstalled</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="login()">login</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="logout()">logout</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getUserInfo()">getUserInfo</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareText()">shareText</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareImage()">shareImage</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareWebPage()">shareWebPage</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareMusic()">shareMusic</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareVideo()">shareVideo</div>
+			</div>
+		
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	var qqTest;
+	var imgUrl;
+	ytfready= function(){
+		qqTest = YTF.require("qq");
+		alert(JSON.stringify(qqTest));
+	}
+	
+	function isInstalled(){
+		var isInstalled = qqTest.isInstalled();
+		alert(isInstalled);
+	}
+	
+	function login(){
+		qqTest.login(function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function logout(){
+		qqTest.logout(function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getUserInfo(){
+		qqTest.getUserInfo(function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareText(){
+		qqTest.shareText({
+			text:"texttest"
+		});
+	}
+	
+	function shareImage(){
+		qqTest.shareImage({
+			imageUrl:imgUrl,
+			shareToFriend:false
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareWebPage(){
+		qqTest.shareWebPage({
+			imageUrl:imgUrl,
+			shareToFriend:false,
+			targetUrl:"http://www.baidu.com",
+			title:"呵呵哒",
+			summary:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	function shareMusic(){
+		qqTest.shareMusic({
+			imageUrl:imgUrl,
+			shareToFriend:false,
+			audioUrl:"http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15",
+			targetUrl:"http://y.qq.com/i/song.html?songid=XXX&source=mobileQQ#wechat_redirect",
+			title:"测试音乐分享",
+			summary:"测试音乐分享的简述"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	function shareVideo(){
+		qqTest.shareVideo({
+			imageUrl:imgUrl,
+			shareToFriend:false,
+			targetUrl:"https://v.qq.com/x/cover/ixq8wba4w2vh08n/b0022j1ja62.html",
+			title:"测试视频分享",
+			summary:"测试视频分享的简述"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getLocalPic(){
+		YTF.mediaGetPicture({
+	        sourceType:"album",
+	        isCheckbox:false
+	    }, function(ret, err){
+            if(ret.imagePath[0]){
+                 imgUrl=ret.imagePath[0];
+                 alert(imgUrl);
+            }else{
+                 alert(err);
+            }
+        });
+	}
+	
+	
+</script>
+</html>

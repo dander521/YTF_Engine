@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>注册</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<ul class="plr30 lgrlist mt30">
+			<li class="yt bb yt-ac">
+				<i class="dx-icon-phone"></i>
+				<div class="yt-f1">
+					<input type="text" class="input-text bgn bn" id="phone" placeholder="手机号/用户名" value="">
+				</div>
+			</li>
+			<li class="yt bb yt-ac">
+				<i class="dx-icon-lock"></i>
+				<div class="yt-f1">
+					<input type="text" id="code" class="input-text bgn bn" placeholder="输入验证码">
+				</div>
+				<div class="code" id="getCode" onclick="sendSms()">
+					发送验证码
+				</div>
+			</li>
+		</ul>
+		<label class="fz28 plr30 mt30 yt yt-ac">
+			<input type="checkbox" checked="checked" name="xieyi" id="" value="" class="dx-checkbox mr10" />
+			我已阅读并同意<span class="color-second">《用户协议》</span> </label>
+		<div class="btn btn-b bg-second yt-f1 db ml30 mr30 mt120 fz36">
+			下一步
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var sessionId = "";
+		ytfready = function() {
+
+		}
+		//发送验证码
+		function sendSms() {
+			var phone = $("#phone").val().trim();
+			//console.log(phone);
+			if (phone == '' || phone == undefined) {
+				YTF.toast({
+					msg : '请输入手机号！'
+				});
+			} else if (!checkPhone(phone)) {
+				YTF.toast({
+					msg : '手机号格式有误！'
+				});
+			} else {
+				YTF.showProgress({
+					bottomText : "加载中...",
+					gifSize : {
+						w : 60,
+						h : 60
+					},
+					xywh : {
+						w : 130,
+						h : 130
+					}
+				});
+				YTF.ajax({
+					url : serverUrl + '/app/login/send-code',
+					methodType : 'post',
+					isReport : false,
+					data : {
+						values : {
+							phone : phone,
+							type : 'reg'
+						}
+					}
+				}, function(ret, err) {
+					YTF.hideProgress();
+					//alert(JSON.stringify(ret));
+					if (ret) {
+						if (ret.status == 1) {
+							send_sms_jsshi(60);
+							sessionId = ret.data.sessionId;
+						}
+						YTF.toast({
+							msg : ret.msg
+						});
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			}
+		};
+		//倒计时
+		function send_sms_jsshi(count) {
+			$("#getCode").attr("onclick", "");
+			timer = setInterval(function() {
+				if (count == 0) {
+					clearInterval(timer);
+					$("#getCode").html("获取验证码");
+					$("#getCode").attr("onclick", "sendSms()");
+					return;
+				}
+				$("#getCode").html(count + "秒");
+				count--;
+			}, 1000);
+		};
+		/**
+		 *下一步
+		 */
+		$(".bg-second").bind("tap", function() {
+			var checked = $("input[name='xieyi']").prop("checked");
+			var phone = $("#phone").val().trim();
+			var code = $("#code").val().trim();
+			if (!checked) {
+				YTF.toast({
+					msg : '请先同意协议！'
+				});
+			} else if (phone == "" || phone == null || phone == undefined) {
+				YTF.toast({
+					msg : '请输入手机号！'
+				});
+			} else if (!checkPhone(phone)) {
+				YTF.toast({
+					msg : '手机号格式有误！'
+				});
+			} else if (code == "" || code == null || code == undefined) {
+				YTF.toast({
+					msg : '请输入验证码！'
+				});
+			} else if (!checkSmsCode(code)) {
+				YTF.toast({
+					msg : '验证码格式有误！'
+				});
+			} else {
+				YTF.showProgress({
+					bottomText : "加载中...",
+					gifSize : {
+						w : 60,
+						h : 60
+					},
+					xywh : {
+						w : 130,
+						h : 130
+					}
+				});
+				//console.log(sessionId + "------2-----" + code);
+				//sessionId = "c6yVTlRmkXG9U3QOS-nwby";
+				YTF.ajax({
+					url : serverUrl + '/app/login/verify-code',
+					methodType : 'post',
+					isReport : false,
+					data : {
+						values : {
+							sessionId : sessionId,
+							code : code
+						}
+					}
+				}, function(ret, err) {
+					YTF.hideProgress();
+					//alert(JSON.stringify(ret));
+					if (ret) {
+						if (ret.status == 1) {
+							var proof = ret.data.proof;
+							YTF.winOpen({
+								winName : 'fill_pwd_win',
+								htmlUrl : './fill_pwd_win.html',
+								htmlParam : {
+									type : 1,
+									proof : proof
+								}
+							});
+						} else {
+							YTF.toast({
+								msg : ret.msg
+							});
+						}
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			}
+		});
+	</script>
+</html>

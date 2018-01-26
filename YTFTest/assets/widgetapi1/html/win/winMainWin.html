@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>媒体插件</title>
+    <link rel="stylesheet" href="../../css/ytui.css" />
+
+</head>
+
+<body class="">
+    <div id="wrap">
+    	<!--header部分开始-->
+        <div id="header">
+		    <header class="header-bar bg-main">
+		        <div class="header-left " onclick="openSide()">
+		            <i class="icon icon-menu"></i>
+		        </div>
+		        <h2 class="header-title">侧滑窗口
+		        </h2>
+		        <div class="header-right" onclick="closeSideWinAll()">
+		            <i class="icon icon-close"></i>
+		        </div>
+		    </header>
+
+        </div>
+        <!--header部分结束-->
+        <!--main部分开始-->
+        <div id="main">
+                
+        </div>
+
+    </div>
+
+
+</body>
+<script src="../../script/common.js"></script>
+<script src="../../script/zepto.js"></script>
+<script>
+	ytfready = function(){
+		var Tmp = YTF.htmlParam;
+		var htmlUrl = Tmp.htmlUrl;
+	    openFrame('winMainFrame',htmlUrl);
+    }
+  
+    /**
+	 * 打开窗口1
+	 */
+		function openFrame(type,htmlUrl){
+			var width = YTF.windowWidth;
+            var windowHeight = YTF.windowHeight;
+	        var headerEl = $('#header');
+            var y= headerEl.height();
+            var height = windowHeight - y;
+			YTF.frameOpen({
+					frameName:type,
+					htmlUrl:htmlUrl,
+					isBounces:true,
+					isVScrollBar:true,
+					isHScrollBar:true,
+					isScale:true,
+					xywh:{
+						x: 0,
+						y: y,
+						w: width,
+						h: height,
+						marginLeft:0,    //相对父 window 左外边距的距离
+   						marginTop:0,    //相对父 window 上外边距的距离
+    					marginBottom:0,    //相对父 window 下外边距的距离
+   						marginRight:0    //相对父 window 右外边距的距离
+					},
+					isReload:false,
+					isEdit:true
+				});
+		}
+		
+		/**打开侧滑*/
+	function openSide(){
+        YTF.drawerOpen({
+            sideName:"WinSideName"
+        });
+	}
+
+	/**关闭侧滑*/
+	function sideClose(){
+        YTF.drawerClose({
+            sideName:"WinSideName"
+        });
+	}
+	/**
+	 * 关闭侧滑布局
+	 */
+	function closeSideWinAll(){
+		YTF.drawerWinClose({drawerName:"winDrawerName"});
+	}
+</script>
+
+</html>

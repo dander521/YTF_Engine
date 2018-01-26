@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 100%;
+		}
+		.hideNone{
+			display: none;
+		}
+	</style>
+	<body>
+		<div id="wrap"class="tx-c">
+			<div class="mt30 ajaxdiv pl30 pr30">
+				<div class="btn bg-main db" onclick="openframe2()">打开测试子窗口2</div>
+			</div>			
+			<div class="mt30 ajaxdiv pl30 pr30">
+				<div class="btn bg-main db" onclick="changeHide()">切换按钮隐藏状态</div>
+			</div>
+			<div class="mt30 pl30 pr30 ajaxdiv">
+				<div id="noneId" class="btn bg-main  hideNone" onclick="toastMsg('窗口状态已经切换为显示状态')">子窗口2调用子窗口1成功</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/zepto.js" ></script>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	
+	ytfready = function(){
+		
+	}
+	/**
+	 * 打开子窗口2
+	 */
+	function openframe2(){
+		var type = "newFrameExcjs2";
+		var frameUrl = filePath +"newFrameExcjs2.html";
+		var frameName = "子窗口2";
+		YTF.excJs({
+            winName:"newFrameExcjsWin",
+            script:"openFrame('"+type+"','"+frameUrl+"','"+frameName+"');"
+	   });
+	}
+	
+	function changeHide(){
+		$('#noneId').toggle();
+	}
+	
+	
+</script>
+</html>

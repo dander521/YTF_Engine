@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>邮件</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<!-- 日期必备样式 开始 -->
+		<link href="../css/mobiscroll/mobiscroll.animation.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.frame.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.frame.android-holo.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.scroller.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.scroller.android-holo.css" rel="stylesheet" type="text/css" />
+		<link href="../css/mobiscroll/mobiscroll.android-holo-light.css" rel="stylesheet" type="text/css" />
+		<!-- 日期必备样式 结束 -->
+	</head>
+
+	<body>
+		<div class="mt30 p30 bgff bt bb">
+			<div class="bg-envelope-hmc">
+				<div class="stamp-wrap clear">
+					<div class="sw" id="youImg" style="display: none;">
+						<div class="bg-yc yt yt-ac yt-pc yt-ver c66 lh1">
+							<p class="fz20 date1">
+
+							</p>
+							<h3 class="fz24 area"></h3>
+							<p class="fz20 year">
+
+							</p>
+						</div>
+					</div>
+					<div class="sw">
+						<div class="bg-stamp-collecting-list-li-img-wrap">
+							<div class="img-wrap user-photo" id="mailImg">
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="beh-list">
+					<ul>
+						<li class="yt yt-ac fz28 c33 yt-te">
+							<div class="max-w400-hmc yt-te" id="taddress">
+
+							</div>
+						</li>
+						<li class="yt yt-ac fz28 c33 yt-te">
+							<div class="user-photo round size44-hmc" id="tface"></div>
+							<h3 class="pl10 pr20 yt-te max-w220-hmc" id="tname"></h3>
+							<收>
+						</li>
+						<li class="yt yt-ac fz24 c66 yt-te">
+							<div class="yt-te mr10" id="faddress">
+
+							</div>
+							<div class="user-photo round size44-hmc mr10" id="fface"></div>
+							<div class="yt-te mr10" id="fname">
+
+							</div>
+							寄
+						</li>
+					</ul>
+				</div>
+				<div class="postcode postcode-lt tpost">
+					
+				</div>
+				<div class="postcode postcode-rb clear fpost">
+					
+				</div>
+			</div>
+		</div>
+		<div class="send-wrap">
+			<div class="ptb30 yt yt-pc yt-ver process-hmc">
+				<div class="yt yt-ac yt-pc ph-status">
+					<!--第一步，active状态下，图标高亮-->
+					<div class="yt yt-ac yt-pc step1 active">
+						<em>1</em>
+					</div>
+					<!--第二步，active状态下，图标高亮且进度条span高亮-->
+					<span class="db yt-f1 step2span"></span>
+					<div class="yt yt-ac yt-pc step2">
+						<em>2</em>
+					</div>
+					<!--第三步，active状态下，图标高亮且进度条span高亮-->
+					<span class="db yt-f1 step3span"></span>
+					<div class="yt yt-ac yt-pc step3">
+						<em>3</em>
+					</div>
+					<!--第四步，active状态下，图标高亮且进度条span高亮-->
+					<span class="db yt-f1 step4span"></span>
+					<div class="yt yt-ac yt-pc step4">
+						<em>4</em>
+					</div>
+				</div>
+				<div class="yt yt-ac mt10 plr30 tx-c fz24 c66 ph-txt">
+					<div class="tx-l step1 active">
+						放信纸
+					</div>
+					<div class="pr30 step2">
+						贴邮票
+					</div>
+					<div class="pl30 step3">
+						盖邮戳
+					</div>
+					<div class="tx-r step4">
+						寄出
+					</div>
+				</div>
+			</div>
+			<!--以下代码分四步，默认每一步均隐藏，追加active类则显示；
+			如需同页面进行切换，则每一步追加active类；
+			如果不同页面进行切换，则需删除其他三步多余代码。-->
+			<!--第一步：放信纸-->
+			<div class="mt30 send-step send-fir active">
+				<!--以下代码默认不显示图片div只显示上传div，
+				当类sf-upload-img后追加active时，则隐藏上传div，显示图片div，
+				图片div可以使用背景行内样式style="background-image: url(wgts/images/bg-img-avatar.png);"-->
+				<div class="clear plr40 sui-list">
+
+				</div>
+				<div class="sf-upload-img" id="mailUpload">
+					<label> </label>
+				</div>
+				<div class="fz24 c99 lh1 mt20 mb30 pb30 tx-c">
+					点击将写好的信件拍照后上传
+				</div>
+				<div class="plr30 yt yt-ac">
+					<button class="btn btn-b bg-second db yt-f1 next-step" data-step='1'>
+						下一步
+					</button>
+				</div>
+			</div>
+			<!--第二步：贴邮票-->
+			<div class="mt30 send-step send-sec">
+				<!--以下代码默认不显示图片div只显示上传div，
+				当类bg-stamp-collecting-list-li-img-wrap后追加active时，则隐藏上传div，显示图片div,
+				图片div可以使用背景行内样式style="background-image: url(wgts/images/bg-img-avatar.png);"-->
+				<div class="sf-upload-img" id="youpiao">
+					<label> </label>
+					<div class="img-wrap user-photo" style="background-image: url(../images/bg-img-avatar.png);">
+
+					</div>
+				</div>
+				<div class="fz24 c99 lh1 mt20 mb30 pb30 tx-c">
+					上传一张照片制作个性邮票
+				</div>
+				<div class="plr30 yt yt-ac sstf-db-btn">
+					<button class="btn btn-b db yt-f1 back-step" data-step='1'>
+						上一步
+					</button>
+					<button class="btn btn-b bg-second db yt-f1 next-step" data-step='2'>
+						下一步
+					</button>
+				</div>
+			</div>
+			<!--第三步：盖邮戳-->
+			<div class="mt30 send-step send-thr">
+				<div class="bg-yc yt yt-ac yt-pc yt-ver c66 lh1 youchuo">
+					<p class="fz20 date1">
+
+					</p>
+					<h3 class="fz24 area"></h3>
+					<p class="fz20 year">
+
+					</p>
+				</div>
+				<div class="fz24 c99 lh1 mt20 mb30 pb30 tx-c">
+					点击上面邮戳盖上去
+				</div>
+				<div class="plr30 yt yt-ac sstf-db-btn">
+					<button class="btn btn-b db yt-f1 back-step" data-step='2'>
+						上一步
+					</button>
+					<button class="btn btn-b bg-second db yt-f1 next-step" data-step='3'>
+						下一步
+					</button>
+				</div>
+			</div>
+			<!--第四步：寄出-->
+			<div class="send-step send-fou">
+				<ul class="list">
+					<li class="yt yt-ac">
+						<label class="yt-f2 yt yt-ac pr20">
+							<input type="radio" name="state" value="1" class="select-sex mr20 db">
+							<h3 class="list-title">平邮：</h3> <p class="fz28 c66 yt-f1 yt-te py"></p> </label>
+						<div class="yt-f1 yt yt-ac">
+							<div class="yt-f1 tx-r fz26 c66 ml30">
+								<em class="dib fz36 color-red fw-b">-3</em>邮币
+							</div>
+						</div>
+						<!--<i class="icon icon-edit db color-green"></i>-->
+					</li>
+					<li class="yt yt-ac">
+						<label class="yt-f2 yt yt-ac">
+							<input type="radio" name="state" value="2" class="select-sex mr20 db" checked="checked">
+							<h3 class="list-title">快件：</h3> <p class="fz28 c66 yt-f1 yt-te kj"></p> </label>
+						<div class="yt-f1 yt yt-ac">
+							<i class="icon icon-edit db color-green pick-select"></i>
+							<div class="yt-f1 tx-r fz26 c66 ml30">
+								<em class="dib fz36 color-red fw-b">-8</em>邮币
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="fz24 c99 lh16 p20 wb-ba-hmc">
+					<p>
+						平邮：依据双方地理位置自动计算出收信时间！
+					</p>
+					<p>
+						快件：自由设定收信时间，每次使用消耗50积分！
+					</p>
+					<p>
+						您当前邮币余额为：<em class="dib fz36 color-red fw-b YB"></em>
+						<a class="dib fz20 c33 ml10" href="Javascript:;">获取更多邮币</a>
+					</p>
+				</div>
+				<div class="plr30 yt yt-ac sstf-db-btn">
+					<button class="btn btn-b db yt-f1 back-step" data-step='3'>
+						上一步
+					</button>
+					<button class="btn btn-b bg-second db yt-f1 sendEmail">
+						寄出
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 日期必备脚本 开始 -->
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.zepto.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.core.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.frame.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.scroller.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.util.datetime.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.datetimebase.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.datetime.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.android-holo-light.js"></script>
+	<script  type="text/javascript" src="../script/mobiscroll/mobiscroll.i18n.zh.js"></script>
+	<!-- 日期必备脚本 结束 -->
+	<script>
+		Date.prototype.toLocaleString = function() {
+			var hour = 0;
+			var min = 0;
+			var sec = 0;
+			if (this.getHours() < 10) {
+				hour = "0" + this.getHours();
+			} else {
+				hour = this.getHours();
+			}
+			if (this.getMinutes() < 10) {
+				min = "0" + this.getMinutes();
+			} else {
+				min = this.getMinutes();
+			}
+			if (this.getSeconds() < 10) {
+				sec = "0" + this.getSeconds();
+			} else {
+				sec = this.getSeconds();
+			}
+			return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + hour + ":" + min + ":" + sec;
+		};
+		var mailImg = "";
+		var city = "";
+		var province = "";
+		//是否盖邮戳
+		var isYC = "";
+		//快件需要的时间
+		var sendTime = "";
+		//平邮需要的时间（分钟）
+		var pyMin = 0;
+		var toid = "";
+		var lat = 30.5656544;
+		var lon = 104.077898;
+		//邮币
+		var youbi = 0;
+		ytfready = function() {
+			//寄件人信息
+			var userData = eval("(" + localStorage.getItem("userInfo") + ")");
+			province = userData.province;
+			city = userData.city;
+			youbi = userData.youbi;
+			$(".YB").html(youbi);
+			$("#faddress").html(userData.province + userData.city);
+			$("#fface").css("background-image", "url(" + photoUrl + userData.face + ")");
+			$("#fname").html(userData.biname);
+			var fpost = userData.postcode;
+			var fhtml = "";
+			for (var i = 0; i < fpost.length; i++) {
+				fhtml += '<span class="dib">' + fpost.charAt(i) + '</span>';
+			}
+			$(".fpost").html(fhtml);
+			//收件人信息
+			toid = YTF.htmlParam.toid;
+			$("#taddress").html(YTF.htmlParam.taddress);
+			$("#tface").css("background-image", "url(" + photoUrl + YTF.htmlParam.tface + ")");
+			$("#tname").html(YTF.htmlParam.toName);
+			var tpost = YTF.htmlParam.tpostcode;
+			var thtml = "";
+			for (var i = 0; i < tpost.length; i++) {
+				thtml += '<span class="dib">' + tpost.charAt(i) + '</span>';
+			}
+			$(".tpost").html(thtml);
+		};
+
+		/**
+		 *下一步
+		 */
+		$(".next-step").bind("tap", function() {
+			var step = $(this).attr("data-step");
+			$(this).parent().parent().removeClass("active");
+			$(".process-hmc>div>div").removeClass("active");
+			switch(step) {
+			case '1':
+				if ($(".sui-list img").length > 0) {
+					$(".process-hmc>div>div.step2").addClass("active");
+					$(".send-sec").addClass("active");
+				} else {
+					YTF.toast({
+						msg : '请上传信件！'
+					});
+					$(".process-hmc>div>div.step1").addClass("active");
+					$(this).parent().parent().addClass("active");
+				}
+				break;
+			case '2':
+				if (checkIsEmpty(mailImg)) {
+					YTF.toast({
+						msg : '请上传邮票！'
+					});
+					$(".process-hmc>div>div.step2").addClass("active");
+					$(this).parent().parent().addClass("active");
+				} else {
+					var myDate = new Date();
+					var year = myDate.getFullYear();
+					var month = myDate.getMonth() + 1;
+					var day = myDate.getDate();
+					$(".date1").html(month + "月" + day + "日");
+					$(".area").html(city + "<br />" + province);
+					$(".year").html(year + "年");
+					$(".process-hmc>div>div.step3").addClass("active");
+					$(".send-thr").addClass("active");
+				}
+				break;
+			case '3':
+				if (isYC) {
+					$(".process-hmc>div>div.step4").addClass("active");
+					$(".send-fou").addClass("active");
+					getTime();
+				} else {
+					YTF.toast({
+						msg : '请在信件上盖邮戳！'
+					});
+					$(".process-hmc>div>div.step3").addClass("active");
+					$(".send-thr").addClass("active");
+				}
+				break;
+			};
+		});
+
+		/**
+		 *上一步
+		 */
+		$(".back-step").bind("tap", function() {
+			var step = $(this).attr("data-step");
+			$(this).parent().parent().removeClass("active");
+			$(".process-hmc>div>div").removeClass("active");
+			switch(step) {
+			case '1':
+				$(".process-hmc>div>div.step1").addClass("active");
+				$(".send-fir").addClass("active");
+				$("#mailImg").css("background-image", "");
+				mailImg = "";
+				break;
+			case '2':
+				$("#youImg").hide();
+				isYC = false;
+				$(".process-hmc>div>div.step2").addClass("active");
+				$(".send-sec").addClass("active");
+				break;
+			case '3':
+				$(".process-hmc>div>div.step3").addClass("active");
+				$(".send-thr").addClass("active");
+				break;
+			};
+		});
+		/**
+		 * 盖邮戳
+		 */
+		$(".youchuo").bind("tap", function() {
+			isYC = true;
+			$("#youImg").show();
+		});
+
+		/**
+		 *上传信件
+		 */
+		$("#mailUpload").bind("tap", function() {
+			var data = {
+				isEdit : false,
+				isCheckbox : false,
+
+			}
+			YTF.mediaGetPicture(data, function(ret, err) {
+				if (ret) {
+					uploadMailImg(ret.imagePath, 1);
+				}
+			});
+		});
+		/**
+		 *个性邮票上传
+		 */
+		$("#youpiao").bind("tap", function() {
+			var data = {
+				isEdit : true,
+				isCheckbox : false,
+
+			}
+			YTF.mediaGetPicture(data, function(ret, err) {
+				if (ret) {
+					uploadMailImg(ret.imagePath, 2);
+				}
+			});
+		});
+
+		/**
+		 *上传图片
+		 */
+		function uploadMailImg(imagePath, type) {
+			showProgress("上传中...");
+			YTF.ajax({
+				url : serverUrl + 'app/user/upimg',
+				methodType : 'post',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					files : {
+						s : imagePath
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				if (ret) {
+					switch(ret.status) {
+					case 0:
+						openLoginWin("login_win","./login_win.html");
+						break;
+					case 1:
+						if (type == 1) {
+							var html = "";
+							html += '<div class="sf-upload-img active"><div class="img-wrap user-photo"><img src="' + photoUrl + ret.data.path + '" /></div></div>';
+							$(".sui-list").append(html);
+						} else if (type == 2) {
+							mailImg = ret.data.path;
+							$("#mailImg").css("background-image", "url(" + photoUrl + ret.data.path + ")");
+						}
+						break;
+					default:
+						YTF.toast({
+							msg : ret.msg
+						});
+					};
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+		/**
+		 *获取平邮的收信时间
+		 */
+		function getTime() {
+			showProgress("加载中...");
+			YTF.ajax({
+				url : serverUrl + 'app/letter/receiving-time',
+				methodType : 'get',
+				isReport : false,
+				headers : {
+					logtoken : userToken
+				},
+				data : {
+					values : {
+						toid : toid,
+						lon : lon,
+						lat : lat
+					}
+				}
+			}, function(ret, err) {
+				YTF.hideProgress();
+				//console.log("--222---" + JSON.stringify(ret));
+				if (ret) {
+					switch(ret.status) {
+					case 0:
+						openLoginWin("login_win","./login_win.html");
+						break;
+					case 1:
+						pyMin = ret.data.min;
+						var myDate = new Date();
+						var longM = myDate.getTime() / 1000 + (parseInt(ret.data.min) * 60);
+						$(".py").html(new Date(longM * 1000).toLocaleString());
+						timer = setInterval(function() {
+							longM += 1;
+
+							$(".py").html(new Date(longM * 1000).toLocaleString());
+						}, 1000);
+						break;
+					default:
+						YTF.toast({
+							msg : ret.msg
+						});
+					};
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+		/**
+		 *选择生日
+		 */
+		Zepto(function($) {
+			var myDate = new Date()
+			$('.pick-select').mobiscroll().datetime({
+				theme : "android-holo-light",
+				mode : "scroller",
+				lang : "zh",
+				display : "bottom",
+				dateFormat : "yy-mm-dd",
+				headerText : "选择日期",
+				startYear : myDate.getFullYear(),
+				onSelect : function(val, inst) {
+					sendTime = val + ":00";
+					$(".kj").html(sendTime);
+				}
+			});
+		});
+
+		/**
+		 *检测时间是否晚于当前时间
+		 */
+		function checkDate(time) {
+			var d = new Date(time).getTime();
+			var curD = new Date().getTime();
+			if ((curD - d) > 0) {
+				return true;
+			}
+			return false;
+		};
+
+		/**
+		 * 寄信
+		 */
+		$(".sendEmail").bind("tap", function() {
+			var mail = "";
+			$(".sui-list img").each(function(index) {
+				switch(index) {
+				case 0:
+					mail = $(this).attr("src").replace(photoUrl, "");
+					break;
+				default:
+					mail += "," + $(this).attr("src").replace(photoUrl, "");
+				};
+			});
+
+			var type = $("input[name='state']:checked").val();
+
+			if (checkIsEmpty(mail)) {
+				YTF.toast({
+					msg : '请上传信件！'
+				});
+			} else if (checkIsEmpty(mailImg)) {
+				YTF.toast({
+					msg : '请上传邮票！'
+				});
+			} else if (!isYC) {
+				YTF.toast({
+					msg : '请在信件上盖邮戳'
+				});
+			} else if (type == '1' && youbi < 3) {
+				YTF.toast({
+					msg : '邮币不足！'
+				});
+			} else if (type == '2' && youbi < 8) {
+				YTF.toast({
+					msg : '邮币不足！'
+				});
+			} else if (type == '1' && pyMin == 0) {
+				YTF.toast({
+					msg : '平邮的时间有误！'
+				});
+			} else if (type == '2' && checkIsEmpty(sendTime)) {
+				YTF.toast({
+					msg : '请选择快件的收信时间'
+				});
+			} else if (type == '2' && checkDate(sendTime)) {
+				YTF.toast({
+					msg : '快件的收信时间不能晚于当前时间！'
+				});
+			} else {
+				showProgress("发送中...");
+				YTF.ajax({
+					url : serverUrl + 'app/letter/add',
+					methodType : 'post',
+					isReport : false,
+					headers : {
+						logtoken : userToken
+					},
+					data : {
+						values : {
+							to_uid : toid,
+							img : mail,
+							type : type,
+							postage : mailImg,
+							to_time : sendTime,
+							min : pyMin
+						}
+					}
+				}, function(ret, err) {
+					YTF.hideProgress();
+					//console.log("--222---" + JSON.stringify(ret));
+					if (ret) {
+						switch(ret.status) {
+						case 0:
+							openLoginWin("login_win","./login_win.html");
+							break;
+						case 1:
+							var data = eval("(" + localStorage.getItem("userInfo") + ")");
+							switch(type) {
+							case '1':
+								youbi -= 3;
+								break;
+							case '2':
+								youbi -= 8;
+								break;
+							}
+							//console.log("-------"+youbi);
+							data.youbi = youbi;
+							localStorage.setItem("userInfo", JSON.stringify(data));
+							YTF.winClose({
+								winName : 'email_input_win'
+							});
+							YTF.eventSend({
+								eventName : 'mail_send'
+							}, function(ret, err) {
+								YTF.winClose();
+							});
+						default:
+							YTF.toast({
+								msg : ret.msg
+							});
+						};
+					} else {
+						YTF.toast({
+							msg : err.msg
+						});
+					}
+				});
+			}
+
+		});
+
+	</script>
+</html>

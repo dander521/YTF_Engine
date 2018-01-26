@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>兴趣爱好</title>
+		<link rel="stylesheet" href="../ytfui/css/ytfui.css" />
+		<link rel="stylesheet" href="../css/main.css" />
+		<script id="hobby-template" type="text/x-dot-template">
+			{{ for(var i=0; i< it.length; i++) { }}
+			<li class="bb">
+			<label class="p30 yt yt-ac fz32 c33">
+			<input type="checkbox" name="hobbys" id="" value="{{=it[i].name}}" class="dx-checkbox mr20">
+			<span>{{=it[i].name}}</span>
+			</label>
+			</li>
+			{{ } }}
+		</script>
+	</head>
+
+	<body>
+		<p class="fz26 c66 p30 tx-c">
+			最多选择四项
+		</p>
+		<ul class="interests-list bgff">
+
+		</ul>
+	</body>
+	<script src="../script/zepto.min.js" type="text/javascript"></script>
+	<script src="../script/common.js" type="text/javascript"></script>
+	<script src="../ytfui/js/html-size-calculation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../script/doT.min.js" type="text/javascript"></script>
+	<script>
+		var hobby
+		ytfready = function() {
+			showInfos();
+			hobby = YTF.getHtmlParam().hobby;
+		}
+		/**
+		 *显示数据
+		 */
+		function showInfos() {
+			YTF.ajax({
+				url : serverUrl + '/app/hobby/getinfo',
+				methodType : 'get',
+				isReport : false
+			}, function(ret, err) {
+				$(".interests-list").children().remove();
+				console.log(JSON.stringify(ret))
+				if (ret) {
+					if (ret.status == 1) {
+						var dataList = $('.interests-list');
+						var tpl = doT.template($('#hobby-template').text());
+						dataList.append(tpl(ret.data));
+						if (!checkIsEmpty(hobby)) {
+							$("input[name='hobbys']").each(function(index) {
+								if (hobby.indexOf($(this).val()) != -1) {
+									$(this).prop("checked", true);
+								}
+							});
+						}
+					} else {
+						YTF.toast({
+							msg : ret.msg
+						});
+					}
+
+				} else {
+					YTF.toast({
+						msg : err.msg
+					});
+				}
+			});
+		};
+
+		$(function() {
+			$(".interests-list").delegate("label", "change", function() {
+				var length = $("input[name='hobbys']:checked").length;
+				if (length > 4) {
+					$(this).children("input").prop("checked", false);
+				}
+			})
+		});
+
+		function submitInfo() {
+			var hobbys = "";
+			$("input[name='hobbys']:checked").each(function(index) {
+				if (index == 0) {
+					hobbys = $(this).val();
+				} else {
+					hobbys += "," + $(this).val();
+				}
+			});
+			if (checkIsEmpty(hobbys)) {
+				YTF.toast({
+					msg : '请选择兴趣爱好！'
+				});
+			} else {
+				YTF.eventSend({
+					eventName : 'hobby_select',
+					attr : {
+						hobby : hobbys
+					}
+				}, function(ret, err) {
+					YTF.winClose();
+				});
+			}
+		};
+
+	</script>
+</html>

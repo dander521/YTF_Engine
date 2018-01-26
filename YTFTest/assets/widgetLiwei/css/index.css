@@ -1,0 +1,56 @@
+/*公用布局*/
+#wrap{height: 100%;display: -webkit-box;-webkit-box-orient: vertical;}
+#main{-webkit-box-flex: 1;}
+.space-box{height:1px;display:block;}
+
+html,body{height: 100%;background: #eee;font-size:100%;}
+/*头部布局*/
+#header .header{
+    display: none;
+}
+#header .active{
+    display: block;
+}
+#header{
+    background-color: #00B3D0;
+    color: #000;
+    width: 100%; position: relative;
+    /*border-bottom: solid 1px #DDDDDD;*/
+    /*background-color:rgba(245,245,245,0.9);*/
+    /*opacity :0.8 ;*/
+}
+/*首页header横向盒子布局*/
+/*第一个header横向弹性布局，平分为五份*/
+#header ul{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    /*margin: 0px 8px;*/
+    margin: 0px 0px;
+}
+#header ul li{
+    /*height:49px;*/
+   	height:44px;
+    /*padding:10px 0;*/
+    -webkit-box-flex: 1; 
+    -webkit-flex: 1;
+    flex: 1;
+}
+/*设置第一个header每个元素的边框与样式*/
+#header li a{
+    color: #999999; 
+    font-size: 15px;
+    display: block;
+    text-align: center;
+    /*height: 49px;
+    line-height: 49px;*/
+   	height: 44px;
+    line-height: 44px;
+    border-radius: 4px;
+    /*background:#f65c92*/
+}
+/*设置第一个header元素被选中时的样式*/
+#header .on a{
+	/*background: #FFFFFF;*/
+    color: #fff; 
+}

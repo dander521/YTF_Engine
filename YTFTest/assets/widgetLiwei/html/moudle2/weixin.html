@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxButton{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+			font-size:29px;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getLocalPic()">选取一个缩略图片</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="isInstalled()">isInstalled</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="checkShareTimeline()">checkShareTimeline</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="auth()">auth</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getToken()">getToken</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="refreshToken()">refreshToken</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="getUserInfo()">getUserInfo</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareText()">shareText</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareImage()">shareImage</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareWebPage()">shareWebPage</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareMusic()">shareMusic</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="shareVideo()">shareVideo</div>
+			</div>
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="pay()">pay</div>
+			</div>
+		
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	var weixinTest;
+	var imgUrl;
+	var access_token;
+	var code;
+	var refresh_token;
+	var openid;
+	ytfready= function(){
+		weixinTest = YTF.require("weixin");
+		alert(JSON.stringify(weixinTest));
+	}
+	
+	function isInstalled(){
+		var isInstalled = weixinTest.isInstalled();
+		alert(isInstalled);
+	}
+	
+	function checkShareTimeline(){
+		var isShare = weixinTest.checkShareTimeline();
+		alert(isShare);
+	}
+	
+	function auth(){
+		weixinTest.auth(function(ret,err){
+			if(ret)
+			{
+				alert(JSON.stringify(ret));
+				if(ret.code)
+				code = ret.code;
+			}else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getToken(){
+		weixinTest.getToken({
+			code:code
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+				if(ret.access_token){
+					access_token=ret.access_token;
+				}
+				if(ret.refresh_token){
+					refresh_token=ret.refresh_token;
+				}
+				if(ret.openid){
+					openid=ret.openid;
+				}
+			}else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function refreshToken(){
+		weixinTest.refreshToken({
+			refresh_token:refresh_token
+		},function(ret,err){
+			if(ret){
+				alert(JSON.stringify(ret));
+				if(ret.access_token){
+					access_token=ret.access_token;
+				}
+				if(ret.refresh_token){
+					refresh_token=ret.refresh_token;
+				}
+				if(ret.openid){
+					openid=ret.openid;
+				}
+			}else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	
+	function getUserInfo(){
+		weixinTest.getUserInfo({
+			access_token:access_token,
+			openid:openid
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareText(){
+		weixinTest.shareText({
+			text:"texttest",
+			scene:0
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareImage(){
+		weixinTest.shareImage({
+			imageUrl:imgUrl,
+			scene:0
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function shareWebPage(){
+		weixinTest.shareWebPage({
+			imageUrl:imgUrl,
+			scene:0,
+			path:"http://www.baidu.com",
+			title:"呵呵哒",
+			description:"我就说说"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	function shareMusic(){
+		weixinTest.shareMusic({
+			imageUrl:imgUrl,
+			scene:0,
+			path:"http://stream14.qqmusic.qq.com/30432451.mp3?key=ABD30A88B30BA76C1435598BC67F69EA741DE4082BF8E089&qqmusic_fromtag=15",
+			//targetUrl:"http://y.qq.com/i/song.html?songid=XXX&source=mobileQQ#wechat_redirect",
+			title:"测试音乐分享",
+			description:"测试音乐分享的简述"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	function shareVideo(){
+		weixinTest.shareVideo({
+			imageUrl:imgUrl,
+			scene:0,
+			path:"https://v.qq.com/x/cover/ixq8wba4w2vh08n/b0022j1ja62.html",
+			title:"测试视频分享",
+			description:"测试视频分享的简述"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function getLocalPic(){
+		YTF.mediaGetPicture({
+	        sourceType:"album",
+	        isCheckbox:false
+	    }, function(ret, err){
+            if(ret.imagePath[0]){
+                 imgUrl=ret.imagePath[0];
+                 alert(imgUrl);
+            }else{
+                 alert(err);
+            }
+        });
+	}
+	
+	function pay(){
+		weixinTest.pay({
+			body:"花钱啦",
+			total_fee:"1"
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+</script>
+</html>

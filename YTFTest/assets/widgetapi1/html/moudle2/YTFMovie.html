@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+			font-size:29px;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="instance_YTFMovie()">instance</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="addListener_YTFMovie()">addListener</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setPlayStatus_YTFMovie(0)">setPlayStatus</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setFullScreenStatus_YTFMovie(1)">setFullScreenStatus</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="instance_YTFMovie()">instance</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script>
+	var YTFMovieTest;
+	ytfready = function(){
+		YTFMovieTest= YTF.require("YTFMovie");
+	}
+	
+	function instance_YTFMovie(){
+		YTFMovieTest.instance_YTFMovie({
+			x:0,
+			y:60,
+			w:200,
+			h:200,
+			fixedOn:"YTFMovieFrame",
+			fixed:true,
+			// play:"widget://images/play.png",
+			// pause:"widget://images/stop.png",
+			full_screen:"widget://images/full.png",
+			hdUrl:'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4'
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function addListener_YTFMovie(){
+		YTFMovieTest.addListener_YTFMovie({
+			
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	function setPlayStatus_YTFMovie(play){
+		YTFMovieTest.setPlayStatus_YTFMovie({
+			play:play
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+	
+	
+	function setFullScreenStatus_YTFMovie(fullScreen){
+		YTFMovieTest.setFullScreenStatus_YTFMovie({
+			fullScreen:fullScreen
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+
+</script>
+</html>

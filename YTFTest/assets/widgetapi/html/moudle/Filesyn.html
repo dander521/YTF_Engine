@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxdiv{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="openDataBase('dbName','fs://111/name.db')">File：openDataBase</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setCT_U()">codingType设置为utf-8</div>
+			</div>
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="setCT_G()">codingType设置为gbk</div>
+			</div>
+			
+			<div class="mt30 ajaxdiv">
+				<div class="btn bg-main mr20" onclick="executeSql(sqlInsert)">File：executeSql</div>
+			</div>
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script>
+	var FileTest;
+	var fd;
+	var codingType="utf8";
+
+	ytfready = function(){
+		FileTest= YTF.require("File");
+	}
+	
+	function setCT_U(){
+		codingType="utf8";
+	}
+	function setCT_G(){
+		codingType="gbk";
+	}
+	function createDirectorySync(path){
+		var ret =FileTest.createDirectorySync({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function removeDirectory(path){
+		var ret =FileTest.removeDirectory({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function createFile(path){
+		var ret =FileTest.createFile({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	function removeFile(path){
+		var ret =FileTest.removeFile({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function copyFileToDir(oldPath,newPath){
+		var ret =FileTest.copyFileToDir({
+			oldPath:oldPath,
+			newPath:newPath
+		});
+		alert(JSON.stringify(ret));
+	}
+
+	function moveFileToDir(oldPath,newPath){
+		var ret =FileTest.moveFileToDir({
+			oldPath:oldPath,
+			newPath:newPath
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function renameFile(oldPath,newPath){
+		var ret =FileTest.renameFile({
+			oldPath:oldPath,
+			newPath:newPath
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readDirectory(path){
+		var ret =FileTest.readDirectory({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function openFile(path,flags){
+		var ret =FileTest.openFile({
+			path:path,
+			flags:flags
+		});
+		if(ret){
+				alert(JSON.stringify(err));
+				if(ret.fd){
+					fd = ret.fd;
+				}
+			}else if(err){
+				toastMsg(JSON.stringify(ret));
+			}
+	}
+
+	function readFile(offset,length){
+		var ret =FileTest.readFile({
+			fd:fd,
+			offset:offset,
+			codingType:codingType,
+			length:length
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readUpFile(length){
+		var ret =FileTest.readUpFile({
+			fd:fd,
+			codingType:codingType,
+			length:length
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readDownFile(length){
+		var ret =FileTest.readDownFile({
+			fd:fd,
+			codingType:codingType,
+			length:length
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function wirteFile(data,offset,overwrite){
+		var ret =FileTest.wirteFile({
+			fd:fd,
+			data:data,
+			offset:offset,
+			overwrite:overwrite,
+			codingType:codingType
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function closeFile(){
+		var ret =FileTest.closeFile({
+			fd:fd
+		});
+		alert(JSON.stringify(ret));
+	}
+	function fileExist(path){
+		var ret =FileTest.fileExist({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function getFileAttribute(path){
+		var ret =FileTest.getFileAttribute({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function readTxtFileByLength(path,start,length){
+		var ret =FileTest.readTxtFileByLength({
+			path:path,
+			substring:{
+				start:start,
+				length:length
+			}
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	function writeTxtFileByLength(path,content,start,strategy){
+		var ret =FileTest.writeTxtFileByLength({
+			path:path,
+			content:content,
+			place:{
+				start:start,
+				strategy:strategy
+			},
+			codingType:codingType
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+	
+	function getFileMD5(path){
+		var ret =FileTest.getFileMD5({
+			path:path
+		});
+		alert(JSON.stringify(ret));
+	}
+	
+
+</script>
+</html>

@@ -1,0 +1,54 @@
+#letter {
+  width: 2.66667rem;
+  height: 2.66667rem;
+  border-radius: 0.13333rem;
+  font-size: 2rem;
+  color: #555;
+  text-align: center;
+  line-height: 2.66667rem;
+  background: rgba(145, 145, 145, 0.6);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin: -1.33333rem 0 0 -1.33333rem;
+  z-index: 99;
+  display: none;
+}
+
+.sort_box {
+  width: 100%;
+  overflow: hidden;
+}
+
+.sort_list {
+  padding: 0 0.8rem;
+  position: relative;
+  height: 2.34667rem;
+  line-height: 2.34667rem;
+  border-top: 1px solid #E5E5E5;
+  font-size: 0.85333rem;
+  color: #333;
+  background-color: #FFFFFF;
+}
+
+.sort_letter {
+  height: 1.49333rem;
+  line-height: 1.49333rem;
+  padding-left: 0.53333rem;
+  color: #999999;
+  font-size: 0.64rem;
+  border-top: 1px solid #E5E5E5;
+}
+
+.initials {
+  position: fixed;
+  top: 5.33333rem;
+  right: 0;
+  height: 100%;
+  width: 0.66667rem;
+  padding-right: 0.26667rem;
+  text-align: center;
+  font-size: 0.64rem;
+  z-index: 2016;
+  background: rgba(145, 145, 145, 0);
+}

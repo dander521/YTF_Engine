@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>发布相册</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+	<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/release.css"/>
+	
+</head>
+<body style="background: #FFFFFF;">
+	<div class="editor">
+		<div class="list_div">
+			<p class="span_cover">请上传图片</p>
+			<div class="pic_box">
+				<ul id="pic_list" class="pic_list clearfix">
+					<li class="pic_li add_pic" onclick="uploadPic()" id="add_pic" tapmode="">＋</li>
+				</ul>
+				
+				<ul id="pic_listImg" class="pic_list mt10 ml10  clearfix">
+				</ul>
+			</div>
+			
+			
+		</div>
+	</div>
+</body>
+<script src="../../script/common.js"></script>
+<script src="../../script/zepto.js"></script>
+<script>
+ytfready=function(){
+
+}
+
+function uploadPic(){
+	selectPic(function(src){
+		for(i=0;i<src.length;i++){
+			$('#pic_listImg').append('<li class="pic-item"><div class="img-wrap"><img src="'+src[i]+'"/></div></li>');
+		}
+	});
+}
+function selectPic(callback){
+	var data={
+		sourceType:"album",
+		isEdit:false,
+	    isCheckbox:false
+	}
+	YTF.mediaGetPicture(data, function(ret, err){ 
+		
+		if (ret) {
+				alert(JSON.stringify(ret));
+				callback(ret.imagePath);
+		}else{
+		};
+	});
+}
+
+</script>
+</html>

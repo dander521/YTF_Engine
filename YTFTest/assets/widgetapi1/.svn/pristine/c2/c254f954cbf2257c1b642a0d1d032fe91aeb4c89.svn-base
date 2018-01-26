@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../css/ytui.css" />
+	</head>
+	<style type="text/css">
+		.ajaxButton{
+			text-align:center;
+		}
+		.btn{
+			width: 80%;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div class="mt30 ajaxButton">
+				<div class="btn bg-main mr20" onclick="open2()">citySelector插件：open</div>
+			</div>
+		
+	</div>
+	</body>
+<script type="text/javascript" src="../../script/common.js" ></script>
+<script>
+	var citySelector;
+	ytfready= function(){
+		citySelector = YTF.require("citySelector");
+		alert(JSON.stringify(citySelector));
+	}
+
+	function open2(){
+		citySelector.open({
+		    mode : 2,
+            showMode : 1,
+            enterValue : 'Enter',
+            enterColor : '#f00',
+            cancelColor : '#0f0',
+            cancelValue : 'Cancle',
+            bgColor : '#f00',
+            titleBgColor : '#f00',
+            normalColor : '#00f',
+            selectedColor : '#f00',
+            separateColor : '#0f0',
+            title : 'citySelect',
+            dataSource :'widget://city.json'
+		},function(ret,err){
+			if(ret)
+				alert(JSON.stringify(ret));
+			else if(err)
+				alert(JSON.stringify(err));
+		});
+	}
+
+	
+	
+</script>
+</html>
